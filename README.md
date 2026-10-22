@@ -6,7 +6,8 @@ Plugin gratuito para WordPress desarrollado por Kairoseth para solicitar valorac
 
 - Versión estable: `1.1.3`
 - Plataforma: WordPress
-- Licencia comercial: gratuito
+- Precio: gratuito
+- Licencia: GPLv2 o posterior
 - Marca: Kairoseth
 - Caso de uso recomendado: envío de enlaces de valoración por WhatsApp después de una compra, servicio, reserva, cita o intervención.
 
