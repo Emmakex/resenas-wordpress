@@ -1,0 +1,67 @@
+name: Build WordPress distribution
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "resenas-wordpress.php"
+      - "assets/**"
+      - "readme.txt"
+      - "LICENSE"
+      - ".github/workflows/build-distribution.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Read plugin version
+        id: version
+        shell: bash
+        run: |
+          VERSION="$(sed -n 's/^ \* Version: //p' resenas-wordpress.php | head -1 | tr -d '\r')"
+          test -n "$VERSION"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Validate PHP
+        shell: bash
+        run: php -l resenas-wordpress.php
+
+      - name: Build clean ZIP
+        shell: bash
+        run: |
+          set -euo pipefail
+          VERSION="${{ steps.version.outputs.version }}"
+          rm -rf build
+          mkdir -p build/resenas-wordpress/assets dist
+          cp resenas-wordpress.php build/resenas-wordpress/
+          cp readme.txt LICENSE build/resenas-wordpress/
+          cp assets/front.js assets/front.css build/resenas-wordpress/assets/
+          (
+            cd build
+            zip -qr "../dist/resenas-wordpress-${VERSION}.zip" resenas-wordpress
+          )
+          unzip -t "dist/resenas-wordpress-${VERSION}.zip"
+          unzip -l "dist/resenas-wordpress-${VERSION}.zip"
+          sha256sum "dist/resenas-wordpress-${VERSION}.zip"
+
+      - name: Commit distribution when changed
+        shell: bash
+        run: |
+          set -euo pipefail
+          VERSION="${{ steps.version.outputs.version }}"
+          git add "dist/resenas-wordpress-${VERSION}.zip"
+          if git diff --cached --quiet; then
+            echo "Distribution is already up to date."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Build Reseñas WordPress ${VERSION} distribution"
+          git push
