@@ -1,0 +1,20 @@
+.lad-rf-wrap{background:var(--lad-rf-bg);color:var(--lad-rf-text);padding:24px;border-radius:18px;max-width:680px;margin:24px auto;font-family:inherit}
+.lad-rf-card{background:var(--lad-rf-card);border:1px solid rgba(0,0,0,.08);border-radius:22px;padding:32px 24px;box-shadow:0 12px 40px rgba(0,0,0,.08);text-align:center}
+.lad-rf-logo img{max-width:220px;max-height:90px;width:auto;height:auto;margin:0 auto 18px;display:block}
+.lad-rf-step{display:none}.lad-rf-step.is-active{display:block}
+.lad-rf-card h2{margin:0 0 10px;color:var(--lad-rf-primary);font-size:30px;line-height:1.2}
+.lad-rf-card p{margin:0 0 18px;font-size:16px;line-height:1.6}
+.lad-rf-location{display:inline-block;margin:0 0 16px;padding:8px 14px;border-radius:999px;background:rgba(0,0,0,.05);font-weight:600}
+.lad-rf-stars{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:18px}
+.lad-rf-star{appearance:none;border:none;background:transparent;font-size:54px;line-height:1;cursor:pointer;color:#d1d5db;transition:transform .15s ease,color .15s ease;padding:0}
+.lad-rf-star:hover,.lad-rf-star.is-selected{color:var(--lad-rf-accent);transform:scale(1.06)}
+.lad-rf-reasons{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:18px 0}
+.lad-rf-reason-btn{border:1px solid var(--lad-rf-primary);background:#fff;color:var(--lad-rf-primary);padding:10px 14px;border-radius:999px;cursor:pointer;font-size:14px}
+.lad-rf-reason-btn.is-selected{background:var(--lad-rf-primary);color:#fff}
+.lad-rf-feedback-form textarea{width:100%;border:1px solid #d1d5db;border-radius:14px;padding:14px;min-height:130px;resize:vertical;font:inherit;box-sizing:border-box}
+.lad-rf-btn,.lad-rf-wrap a.lad-rf-btn,.lad-rf-wrap a.lad-rf-btn:link,.lad-rf-wrap a.lad-rf-btn:visited,.lad-rf-wrap a.lad-rf-btn:hover,.lad-rf-wrap a.lad-rf-btn:active{display:inline-block;background:var(--lad-rf-primary)!important;color:var(--lad-rf-button-text)!important;border:none!important;border-radius:14px;padding:14px 22px;text-decoration:none!important;cursor:pointer;margin-top:16px;font-weight:600}
+.lad-rf-btn:disabled{opacity:.7;cursor:not-allowed}
+.lad-rf-status{min-height:24px;margin-top:10px;font-size:14px}
+.lad-rf-status.is-error{color:#b91c1c}
+.lad-rf-meta{margin-top:18px;font-size:12px;opacity:.65}
+@media (max-width:640px){.lad-rf-wrap{padding:10px}.lad-rf-card{padding:24px 16px}.lad-rf-card h2{font-size:24px}.lad-rf-star{font-size:46px}}
