@@ -10,6 +10,12 @@ Plugin gratuito para WordPress desarrollado por Kairoseth para solicitar valorac
 - Marca: Kairoseth
 - Caso de uso recomendado: envío de enlaces de valoración por WhatsApp después de una compra, servicio, reserva, cita o intervención.
 
+## Descarga
+
+La distribución instalable validada está versionada en el propio repositorio:
+
+`dist/resenas-wordpress-1.1.3.zip`
+
 ## Funcionalidad principal
 
 - Valoración de 1 a 5 estrellas.
@@ -50,9 +56,11 @@ Multisede:
 https://empresa.com/resenas/?sede=centro&ref=PEDIDO-123
 ```
 
+El origen puede enviarse mediante el parámetro `source`; el uso recomendado del producto es WhatsApp, pero también puede utilizarse desde web, email, SMS, QR u otros canales.
+
 ## Personalizaciones e integraciones
 
-El plugin funciona de forma independiente dentro de WordPress. Para automatizaciones, WhatsApp, WooCommerce, CRM, ERP, API, dashboards u otras integraciones específicas, el producto podrá enlazar con el servicio de solicitudes personalizadas de Kairoseth.
+El plugin funciona de forma independiente dentro de WordPress. Para automatizaciones, WhatsApp, WooCommerce, CRM, ERP, API, dashboards u otras integraciones específicas, Kairoseth ofrece desarrollos personalizados.
 
 ## Desarrollo
 
