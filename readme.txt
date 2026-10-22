@@ -10,6 +10,8 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Plugin gratuito de Kairoseth para solicitar valoraciones, recoger feedback y gestionar una o múltiples sedes desde WordPress.
 
+Página oficial del producto: https://kairoseth.com/products/resenas-wordpress
+
 == Description ==
 
 Reseñas WordPress permite crear un flujo de valoración post-servicio dentro de WordPress.
