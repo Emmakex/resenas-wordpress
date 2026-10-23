@@ -26,6 +26,7 @@ class Resenas_WordPress {
     public function __construct() {
         register_activation_hook(__FILE__, [$this, 'activate']);
         add_action('plugins_loaded', [$this, 'maybe_upgrade']);
+        add_action('init', [$this, 'load_textdomain']);
 
         add_action('admin_menu', [$this, 'admin_menu']);
         add_action('admin_init', [$this, 'register_settings']);
@@ -51,6 +52,10 @@ class Resenas_WordPress {
 
         add_action('rw_send_low_rating_email', [$this, 'send_low_rating_email_async'], 10, 7);
         add_filter('plugin_action_links_' . plugin_basename(__FILE__), [$this, 'plugin_links']);
+    }
+
+    public function load_textdomain() {
+        load_plugin_textdomain('resenas-wordpress', false, dirname(plugin_basename(__FILE__)) . '/languages');
     }
 
     public function activate() {
@@ -122,16 +127,16 @@ class Resenas_WordPress {
             'button_text_color' => '#ffffff',
             'google_review_url' => '',
             'low_rating_threshold' => 3,
-            'headline' => '¿Qué te ha parecido nuestro servicio?',
-            'subheadline' => 'Tu opinión nos ayuda a mejorar.',
-            'low_title' => 'Sentimos que tu experiencia no haya sido la mejor',
-            'low_text' => 'Cuéntanos qué ha pasado para poder ayudarte y seguir mejorando.',
-            'high_title' => 'Muchas gracias por tu valoración',
-            'high_text' => '¿Nos ayudas dejando tu reseña en Google?',
-            'thanks_title' => 'Gracias por tu opinión',
-            'thanks_text' => 'Hemos recibido tu respuesta correctamente.',
-            'low_button' => 'Enviar comentario',
-            'high_button' => 'Dejar reseña en Google',
+            'headline' => __('¿Qué te ha parecido nuestro servicio?', 'resenas-wordpress'),
+            'subheadline' => __('Tu opinión nos ayuda a mejorar.', 'resenas-wordpress'),
+            'low_title' => __('Sentimos que tu experiencia no haya sido la mejor', 'resenas-wordpress'),
+            'low_text' => __('Cuéntanos qué ha pasado para poder ayudarte y seguir mejorando.', 'resenas-wordpress'),
+            'high_title' => __('Muchas gracias por tu valoración', 'resenas-wordpress'),
+            'high_text' => __('¿Nos ayudas dejando tu reseña en Google?', 'resenas-wordpress'),
+            'thanks_title' => __('Gracias por tu opinión', 'resenas-wordpress'),
+            'thanks_text' => __('Hemos recibido tu respuesta correctamente.', 'resenas-wordpress'),
+            'low_button' => __('Enviar comentario', 'resenas-wordpress'),
+            'high_button' => __('Dejar reseña en Google', 'resenas-wordpress'),
             'show_reason_buttons' => 1,
             'reason_options' => "Atención\nTiempo de espera\nPrecio\nResultado del servicio\nOtro",
             'custom_css' => '',
@@ -177,7 +182,7 @@ class Resenas_WordPress {
             return [
                 'location' => null,
                 'requested_slug' => $requested_slug,
-                'error' => 'La sede indicada no está disponible.',
+                'error' => __('La sede indicada no está disponible.', 'resenas-wordpress'),
             ];
         }
 
@@ -193,7 +198,7 @@ class Resenas_WordPress {
             return [
                 'location' => null,
                 'requested_slug' => '',
-                'error' => 'Este negocio tiene varias sedes. El enlace debe indicar la sede.',
+                'error' => __('Este negocio tiene varias sedes. El enlace debe indicar la sede.', 'resenas-wordpress'),
             ];
         }
 
@@ -211,11 +216,19 @@ class Resenas_WordPress {
     }
 
     public function admin_menu() {
-        add_menu_page('Reseñas WordPress', 'Reseñas WordPress', 'manage_options', 'rw-dashboard', [$this, 'dashboard_page'], 'dashicons-star-filled', 58);
-        add_submenu_page('rw-dashboard', 'Dashboard', 'Dashboard', 'manage_options', 'rw-dashboard', [$this, 'dashboard_page']);
-        add_submenu_page('rw-dashboard', 'Feedback', 'Feedback', 'manage_options', 'rw-feedback', [$this, 'entries_page']);
-        add_submenu_page('rw-dashboard', 'Sedes', 'Sedes', 'manage_options', 'rw-locations', [$this, 'locations_page']);
-        add_submenu_page('rw-dashboard', 'Apariencia y ajustes', 'Apariencia y ajustes', 'manage_options', 'rw-settings', [$this, 'settings_page']);
+        add_menu_page(
+            __('Reseñas WordPress', 'resenas-wordpress'),
+            __('Reseñas WordPress', 'resenas-wordpress'),
+            'manage_options',
+            'rw-dashboard',
+            [$this, 'dashboard_page'],
+            'dashicons-star-filled',
+            58
+        );
+        add_submenu_page('rw-dashboard', __('Dashboard', 'resenas-wordpress'), __('Dashboard', 'resenas-wordpress'), 'manage_options', 'rw-dashboard', [$this, 'dashboard_page']);
+        add_submenu_page('rw-dashboard', __('Feedback', 'resenas-wordpress'), __('Feedback', 'resenas-wordpress'), 'manage_options', 'rw-feedback', [$this, 'entries_page']);
+        add_submenu_page('rw-dashboard', __('Sedes', 'resenas-wordpress'), __('Sedes', 'resenas-wordpress'), 'manage_options', 'rw-locations', [$this, 'locations_page']);
+        add_submenu_page('rw-dashboard', __('Apariencia y ajustes', 'resenas-wordpress'), __('Apariencia y ajustes', 'resenas-wordpress'), 'manage_options', 'rw-settings', [$this, 'settings_page']);
     }
 
     public function register_settings() {
@@ -335,41 +348,90 @@ class Resenas_WordPress {
 
     public function settings_page() {
         $s = $this->get_settings(); ?>
-        <div class="wrap rw-admin">
-            <h1>Reseñas WordPress — Apariencia y ajustes</h1>
-            <p class="rw-admin-intro">Configura la experiencia que verá el cliente. Si no utilizas sedes, la URL global de Google seguirá siendo la referencia principal.</p>
-            <form class="rw-admin-panel" method="post" action="options.php">
+        <div class="wrap rw-admin rw-settings-page">
+            <div class="rw-admin-hero">
+                <h1><?php esc_html_e('Apariencia y ajustes', 'resenas-wordpress'); ?></h1>
+                <p><?php esc_html_e('Configura la experiencia del cliente, la identidad visual y los avisos de seguimiento sin salir de WordPress.', 'resenas-wordpress'); ?></p>
+            </div>
+
+            <form method="post" action="options.php">
                 <?php settings_fields('rw_settings_group'); ?>
-                <table class="form-table" role="presentation">
-                    <tr><th scope="row">Nombre de la empresa</th><td><input type="text" class="regular-text" name="<?php echo esc_attr(self::OPTION_KEY); ?>[company_name]" value="<?php echo esc_attr($s['company_name']); ?>"></td></tr>
-                    <tr><th scope="row">Logo</th><td><input type="url" class="regular-text" id="rw_logo_url" name="<?php echo esc_attr(self::OPTION_KEY); ?>[logo_url]" value="<?php echo esc_attr($s['logo_url']); ?>"> <button class="button rw-upload-logo">Subir / elegir</button></td></tr>
-                    <tr><th scope="row">URL Google global</th><td><input type="url" class="regular-text" name="<?php echo esc_attr(self::OPTION_KEY); ?>[google_review_url]" value="<?php echo esc_attr($s['google_review_url']); ?>"><p class="description">Se usa cuando no hay sedes configuradas. En multisede, cada sede tiene su propia URL.</p></td></tr>
-                    <tr><th scope="row">Umbral de seguimiento</th><td><input type="number" min="1" max="5" name="<?php echo esc_attr(self::OPTION_KEY); ?>[low_rating_threshold]" value="<?php echo esc_attr($s['low_rating_threshold']); ?>"><p class="description">Las valoraciones iguales o inferiores a este valor pedirán feedback interno para facilitar el seguimiento.</p></td></tr>
-                    <tr><th scope="row">Color principal</th><td><input type="text" class="lad-rf-color" name="<?php echo esc_attr(self::OPTION_KEY); ?>[primary_color]" value="<?php echo esc_attr($s['primary_color']); ?>"></td></tr>
-                    <tr><th scope="row">Color acento / estrellas</th><td><input type="text" class="lad-rf-color" name="<?php echo esc_attr(self::OPTION_KEY); ?>[accent_color]" value="<?php echo esc_attr($s['accent_color']); ?>"></td></tr>
-                    <tr><th scope="row">Color fondo</th><td><input type="text" class="lad-rf-color" name="<?php echo esc_attr(self::OPTION_KEY); ?>[background_color]" value="<?php echo esc_attr($s['background_color']); ?>"></td></tr>
-                    <tr><th scope="row">Color tarjeta</th><td><input type="text" class="lad-rf-color" name="<?php echo esc_attr(self::OPTION_KEY); ?>[card_color]" value="<?php echo esc_attr($s['card_color']); ?>"></td></tr>
-                    <tr><th scope="row">Color texto</th><td><input type="text" class="lad-rf-color" name="<?php echo esc_attr(self::OPTION_KEY); ?>[text_color]" value="<?php echo esc_attr($s['text_color']); ?>"></td></tr>
-                    <tr><th scope="row">Color texto botón</th><td><input type="text" class="lad-rf-color" name="<?php echo esc_attr(self::OPTION_KEY); ?>[button_text_color]" value="<?php echo esc_attr($s['button_text_color']); ?>"></td></tr>
-                    <tr><th colspan="2"><h2>Textos</h2></th></tr>
+
+                <nav class="rw-settings-nav" aria-label="<?php esc_attr_e('Secciones de ajustes', 'resenas-wordpress'); ?>">
+                    <a href="#rw-settings-general"><?php esc_html_e('General', 'resenas-wordpress'); ?></a>
+                    <a href="#rw-settings-appearance"><?php esc_html_e('Apariencia', 'resenas-wordpress'); ?></a>
+                    <a href="#rw-settings-copy"><?php esc_html_e('Textos', 'resenas-wordpress'); ?></a>
+                    <a href="#rw-settings-notifications"><?php esc_html_e('Notificaciones', 'resenas-wordpress'); ?></a>
+                </nav>
+
+                <section id="rw-settings-general" class="rw-settings-section" aria-labelledby="rw-settings-general-title">
+                    <div class="rw-settings-section-head">
+                        <span class="dashicons dashicons-admin-settings" aria-hidden="true"></span>
+                        <div><h2 id="rw-settings-general-title"><?php esc_html_e('General', 'resenas-wordpress'); ?></h2><p><?php esc_html_e('Identidad del negocio, Google y comportamiento del seguimiento.', 'resenas-wordpress'); ?></p></div>
+                    </div>
+                    <table class="form-table" role="presentation">
+                        <tr><th scope="row"><?php esc_html_e('Nombre de la empresa', 'resenas-wordpress'); ?></th><td><input type="text" class="regular-text" name="<?php echo esc_attr(self::OPTION_KEY); ?>[company_name]" value="<?php echo esc_attr($s['company_name']); ?>"></td></tr>
+                        <tr><th scope="row"><?php esc_html_e('Logo', 'resenas-wordpress'); ?></th><td><div class="rw-inline-field"><input type="url" class="regular-text" id="rw_logo_url" name="<?php echo esc_attr(self::OPTION_KEY); ?>[logo_url]" value="<?php echo esc_attr($s['logo_url']); ?>"><button type="button" class="button rw-upload-logo"><?php esc_html_e('Subir / elegir', 'resenas-wordpress'); ?></button></div></td></tr>
+                        <tr><th scope="row"><?php esc_html_e('URL Google global', 'resenas-wordpress'); ?></th><td><input type="url" class="large-text" name="<?php echo esc_attr(self::OPTION_KEY); ?>[google_review_url]" value="<?php echo esc_attr($s['google_review_url']); ?>"><p class="description"><?php esc_html_e('Se utiliza cuando no hay sedes configuradas. En multisede, cada sede puede tener su propia URL.', 'resenas-wordpress'); ?></p></td></tr>
+                        <tr><th scope="row"><?php esc_html_e('Umbral de seguimiento', 'resenas-wordpress'); ?></th><td><input type="number" min="1" max="5" name="<?php echo esc_attr(self::OPTION_KEY); ?>[low_rating_threshold]" value="<?php echo esc_attr($s['low_rating_threshold']); ?>"><p class="description"><?php esc_html_e('Las valoraciones iguales o inferiores a este valor pedirán feedback interno para facilitar la recuperación del servicio.', 'resenas-wordpress'); ?></p></td></tr>
+                    </table>
+                </section>
+
+                <section id="rw-settings-appearance" class="rw-settings-section" aria-labelledby="rw-settings-appearance-title">
+                    <div class="rw-settings-section-head">
+                        <span class="dashicons dashicons-art" aria-hidden="true"></span>
+                        <div><h2 id="rw-settings-appearance-title"><?php esc_html_e('Apariencia', 'resenas-wordpress'); ?></h2><p><?php esc_html_e('Colores y ajustes visuales del formulario público.', 'resenas-wordpress'); ?></p></div>
+                    </div>
+                    <table class="form-table" role="presentation">
+                        <tr><th scope="row"><?php esc_html_e('Color principal', 'resenas-wordpress'); ?></th><td><input type="text" class="lad-rf-color" name="<?php echo esc_attr(self::OPTION_KEY); ?>[primary_color]" value="<?php echo esc_attr($s['primary_color']); ?>"></td></tr>
+                        <tr><th scope="row"><?php esc_html_e('Color acento / estrellas', 'resenas-wordpress'); ?></th><td><input type="text" class="lad-rf-color" name="<?php echo esc_attr(self::OPTION_KEY); ?>[accent_color]" value="<?php echo esc_attr($s['accent_color']); ?>"></td></tr>
+                        <tr><th scope="row"><?php esc_html_e('Color de fondo', 'resenas-wordpress'); ?></th><td><input type="text" class="lad-rf-color" name="<?php echo esc_attr(self::OPTION_KEY); ?>[background_color]" value="<?php echo esc_attr($s['background_color']); ?>"></td></tr>
+                        <tr><th scope="row"><?php esc_html_e('Color de tarjeta', 'resenas-wordpress'); ?></th><td><input type="text" class="lad-rf-color" name="<?php echo esc_attr(self::OPTION_KEY); ?>[card_color]" value="<?php echo esc_attr($s['card_color']); ?>"></td></tr>
+                        <tr><th scope="row"><?php esc_html_e('Color de texto', 'resenas-wordpress'); ?></th><td><input type="text" class="lad-rf-color" name="<?php echo esc_attr(self::OPTION_KEY); ?>[text_color]" value="<?php echo esc_attr($s['text_color']); ?>"></td></tr>
+                        <tr><th scope="row"><?php esc_html_e('Color del texto de botones', 'resenas-wordpress'); ?></th><td><input type="text" class="lad-rf-color" name="<?php echo esc_attr(self::OPTION_KEY); ?>[button_text_color]" value="<?php echo esc_attr($s['button_text_color']); ?>"></td></tr>
+                        <tr><th scope="row"><?php esc_html_e('CSS personalizado', 'resenas-wordpress'); ?></th><td><textarea class="large-text code" rows="8" name="<?php echo esc_attr(self::OPTION_KEY); ?>[custom_css]"><?php echo esc_textarea($s['custom_css']); ?></textarea><p class="description"><?php esc_html_e('Solo para ajustes avanzados. El diseño base ya está optimizado para móvil y accesibilidad.', 'resenas-wordpress'); ?></p></td></tr>
+                    </table>
+                </section>
+
+                <section id="rw-settings-copy" class="rw-settings-section" aria-labelledby="rw-settings-copy-title">
+                    <div class="rw-settings-section-head">
+                        <span class="dashicons dashicons-edit-page" aria-hidden="true"></span>
+                        <div><h2 id="rw-settings-copy-title"><?php esc_html_e('Textos', 'resenas-wordpress'); ?></h2><p><?php esc_html_e('Personaliza los mensajes que verá el cliente durante la valoración.', 'resenas-wordpress'); ?></p></div>
+                    </div>
+                    <table class="form-table" role="presentation">
                     <?php
                     $text_fields = [
-                        'headline' => 'Título principal', 'subheadline' => 'Subtítulo',
-                        'low_title' => 'Título para seguimiento', 'low_text' => 'Texto para seguimiento',
-                        'high_title' => 'Título valoración alta', 'high_text' => 'Texto valoración alta',
-                        'thanks_title' => 'Título gracias', 'thanks_text' => 'Texto gracias',
-                        'low_button' => 'Texto botón comentario', 'high_button' => 'Texto botón Google',
+                        'headline' => __('Título principal', 'resenas-wordpress'),
+                        'subheadline' => __('Subtítulo', 'resenas-wordpress'),
+                        'low_title' => __('Título para seguimiento', 'resenas-wordpress'),
+                        'low_text' => __('Texto para seguimiento', 'resenas-wordpress'),
+                        'high_title' => __('Título valoración alta', 'resenas-wordpress'),
+                        'high_text' => __('Texto valoración alta', 'resenas-wordpress'),
+                        'thanks_title' => __('Título de agradecimiento', 'resenas-wordpress'),
+                        'thanks_text' => __('Texto de agradecimiento', 'resenas-wordpress'),
+                        'low_button' => __('Texto botón comentario', 'resenas-wordpress'),
+                        'high_button' => __('Texto botón Google', 'resenas-wordpress'),
                     ];
                     foreach ($text_fields as $key => $label): ?>
-                        <tr><th scope="row"><?php echo esc_html($label); ?></th><td><input type="text" class="regular-text" name="<?php echo esc_attr(self::OPTION_KEY); ?>[<?php echo esc_attr($key); ?>]" value="<?php echo esc_attr($s[$key]); ?>"></td></tr>
+                        <tr><th scope="row"><?php echo esc_html($label); ?></th><td><input type="text" class="large-text" name="<?php echo esc_attr(self::OPTION_KEY); ?>[<?php echo esc_attr($key); ?>]" value="<?php echo esc_attr($s[$key]); ?>"></td></tr>
                     <?php endforeach; ?>
-                    <tr><th scope="row">Mostrar motivos rápidos</th><td><label><input type="checkbox" name="<?php echo esc_attr(self::OPTION_KEY); ?>[show_reason_buttons]" value="1" <?php checked($s['show_reason_buttons'], 1); ?>> Sí</label></td></tr>
-                    <tr><th scope="row">Motivos rápidos</th><td><textarea class="large-text" rows="6" name="<?php echo esc_attr(self::OPTION_KEY); ?>[reason_options]"><?php echo esc_textarea($s['reason_options']); ?></textarea><p class="description">Uno por línea.</p></td></tr>
-                    <tr><th scope="row">Email global de aviso</th><td><input type="email" class="regular-text" name="<?php echo esc_attr(self::OPTION_KEY); ?>[notify_email]" value="<?php echo esc_attr($s['notify_email']); ?>"><p class="description">Cada sede puede tener su propio email. Si no lo tiene, se usa este.</p></td></tr>
-                    <tr><th scope="row">Enviar aviso cuando requiere seguimiento</th><td><label><input type="checkbox" name="<?php echo esc_attr(self::OPTION_KEY); ?>[send_low_rating_email]" value="1" <?php checked($s['send_low_rating_email'], 1); ?>> Sí</label></td></tr>
-                    <tr><th scope="row">CSS personalizado</th><td><textarea class="large-text code" rows="8" name="<?php echo esc_attr(self::OPTION_KEY); ?>[custom_css]"><?php echo esc_textarea($s['custom_css']); ?></textarea></td></tr>
-                </table>
-                <?php submit_button('Guardar ajustes'); ?>
+                        <tr><th scope="row"><?php esc_html_e('Mostrar motivos rápidos', 'resenas-wordpress'); ?></th><td><label><input type="checkbox" name="<?php echo esc_attr(self::OPTION_KEY); ?>[show_reason_buttons]" value="1" <?php checked($s['show_reason_buttons'], 1); ?>> <?php esc_html_e('Sí', 'resenas-wordpress'); ?></label></td></tr>
+                        <tr><th scope="row"><?php esc_html_e('Motivos rápidos', 'resenas-wordpress'); ?></th><td><textarea class="large-text" rows="6" name="<?php echo esc_attr(self::OPTION_KEY); ?>[reason_options]"><?php echo esc_textarea($s['reason_options']); ?></textarea><p class="description"><?php esc_html_e('Uno por línea.', 'resenas-wordpress'); ?></p></td></tr>
+                    </table>
+                </section>
+
+                <section id="rw-settings-notifications" class="rw-settings-section" aria-labelledby="rw-settings-notifications-title">
+                    <div class="rw-settings-section-head">
+                        <span class="dashicons dashicons-email-alt" aria-hidden="true"></span>
+                        <div><h2 id="rw-settings-notifications-title"><?php esc_html_e('Notificaciones', 'resenas-wordpress'); ?></h2><p><?php esc_html_e('Define dónde recibir los avisos cuando una valoración requiere seguimiento.', 'resenas-wordpress'); ?></p></div>
+                    </div>
+                    <table class="form-table" role="presentation">
+                        <tr><th scope="row"><?php esc_html_e('Email global de aviso', 'resenas-wordpress'); ?></th><td><input type="email" class="regular-text" name="<?php echo esc_attr(self::OPTION_KEY); ?>[notify_email]" value="<?php echo esc_attr($s['notify_email']); ?>"><p class="description"><?php esc_html_e('Cada sede puede tener su propio email. Si está vacío, se utiliza este.', 'resenas-wordpress'); ?></p></td></tr>
+                        <tr><th scope="row"><?php esc_html_e('Avisar cuando requiere seguimiento', 'resenas-wordpress'); ?></th><td><label><input type="checkbox" name="<?php echo esc_attr(self::OPTION_KEY); ?>[send_low_rating_email]" value="1" <?php checked($s['send_low_rating_email'], 1); ?>> <?php esc_html_e('Enviar email automático', 'resenas-wordpress'); ?></label></td></tr>
+                    </table>
+                </section>
+
+                <div class="rw-settings-save"><?php submit_button(__('Guardar ajustes', 'resenas-wordpress'), 'primary', 'submit', false); ?></div>
             </form>
         </div>
         <?php
@@ -434,7 +496,7 @@ class Resenas_WordPress {
     }
 
     public function save_location() {
-        if (!current_user_can('manage_options')) wp_die('No autorizado.');
+        if (!current_user_can('manage_options')) wp_die(esc_html__('No autorizado.', 'resenas-wordpress'));
         check_admin_referer('rw_save_location');
 
         $name = sanitize_text_field(wp_unslash($_POST['name'] ?? ''));
@@ -466,7 +528,7 @@ class Resenas_WordPress {
     }
 
     public function delete_location() {
-        if (!current_user_can('manage_options')) wp_die('No autorizado.');
+        if (!current_user_can('manage_options')) wp_die(esc_html__('No autorizado.', 'resenas-wordpress'));
         $slug = sanitize_title(wp_unslash($_POST['slug'] ?? ''));
         check_admin_referer('rw_delete_location_' . $slug);
 
@@ -584,9 +646,9 @@ class Resenas_WordPress {
             'ratingAction' => 'rw_save_rating',
             'feedbackAction' => 'rw_save_feedback',
             'messages' => [
-                'sending' => 'Enviando...',
+                'sending' => __('Enviando...', 'resenas-wordpress'),
                 'send' => $s['low_button'],
-                'error' => 'No se pudo enviar. Inténtalo de nuevo.',
+                'error' => __('No se pudo enviar. Inténtalo de nuevo.', 'resenas-wordpress'),
             ],
             'context' => [
                 'ref' => $ref,
@@ -678,7 +740,7 @@ class Resenas_WordPress {
         $s = $this->get_settings();
 
         $rating = max(1, min(5, intval($_POST['rating'] ?? 0)));
-        if (!$rating) wp_send_json_error(['message' => 'Valoración inválida.'], 400);
+        if (!$rating) wp_send_json_error(['message' => __('Valoración inválida.', 'resenas-wordpress')], 400);
 
         $location_slug = sanitize_title(wp_unslash($_POST['location_slug'] ?? ''));
         $location_name = sanitize_text_field(wp_unslash($_POST['location_name'] ?? ''));
@@ -686,7 +748,7 @@ class Resenas_WordPress {
         if ($location_slug) {
             $locations = $this->get_locations(true);
             if (!isset($locations[$location_slug])) {
-                wp_send_json_error(['message' => 'La sede indicada no es válida.'], 400);
+                wp_send_json_error(['message' => __('La sede indicada no es válida.', 'resenas-wordpress')], 400);
             }
             $location_name = $locations[$location_slug]['name'];
         } else {
@@ -713,7 +775,7 @@ class Resenas_WordPress {
         ];
 
         $inserted = $wpdb->insert($table, $data);
-        if (!$inserted) wp_send_json_error(['message' => 'No se pudo guardar la valoración.'], 500);
+        if (!$inserted) wp_send_json_error(['message' => __('No se pudo guardar la valoración.', 'resenas-wordpress')], 500);
 
         wp_send_json_success([
             'entry_id' => $wpdb->insert_id,
@@ -732,10 +794,10 @@ class Resenas_WordPress {
         $feedback_reason = sanitize_text_field(wp_unslash($_POST['feedback_reason'] ?? ''));
         $feedback_text = sanitize_textarea_field(wp_unslash($_POST['feedback_text'] ?? ''));
 
-        if (!$entry_id) wp_send_json_error(['message' => 'Entrada inválida.'], 400);
+        if (!$entry_id) wp_send_json_error(['message' => __('Entrada inválida.', 'resenas-wordpress')], 400);
 
         $row = $wpdb->get_row($wpdb->prepare("SELECT id, ref_code, rating, location_slug, location_name FROM $table WHERE id = %d", $entry_id));
-        if (!$row) wp_send_json_error(['message' => 'No se encontró la valoración.'], 404);
+        if (!$row) wp_send_json_error(['message' => __('No se encontró la valoración.', 'resenas-wordpress')], 404);
 
         $updated = $wpdb->update(
             $table,
@@ -750,7 +812,7 @@ class Resenas_WordPress {
             ['%d']
         );
 
-        if ($updated === false) wp_send_json_error(['message' => 'No se pudo guardar el comentario.'], 500);
+        if ($updated === false) wp_send_json_error(['message' => __('No se pudo guardar el comentario.', 'resenas-wordpress')], 500);
 
         if (!empty($s['send_low_rating_email'])) {
             $notify_email = sanitize_email($s['notify_email']);
@@ -778,7 +840,7 @@ class Resenas_WordPress {
             }
         }
 
-        wp_send_json_success(['message' => 'Comentario guardado correctamente.', 'entry_id' => $entry_id]);
+        wp_send_json_success(['message' => __('Comentario guardado correctamente.', 'resenas-wordpress'), 'entry_id' => $entry_id]);
     }
 
     public function send_low_rating_email_async($email, $company_name, $entry_id, $location_name, $ref_code, $rating, $feedback) {
