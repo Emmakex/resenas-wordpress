@@ -2,13 +2,13 @@ from pathlib import Path
 import re
 import sys
 
-DOMAIN = "kairoseth-reviews"
+DOMAIN = "gestion-resenas"
 PLUGIN = Path("resenas-wordpress.php")
 LANG_DIR = Path("languages")
 LANG_DIR.mkdir(exist_ok=True)
 
 es = {
-    "Kairoseth Reviews": "Kairoseth Reviews",
+    "Reseñas WordPress": "Reseñas WordPress",
     "Dashboard": "Panel",
     "Settings": "Ajustes",
     "Feedback": "Feedback",
@@ -99,7 +99,7 @@ es = {
     "Notify when follow-up is required": "Avisar cuando requiere seguimiento",
     "Send an automatic email": "Enviar email automático",
     "Save settings": "Guardar ajustes",
-    "Kairoseth Reviews — Locations": "Kairoseth Reviews — Sedes",
+    "Reseñas WordPress — Locations": "Reseñas WordPress — Sedes",
     "Each location can have its own Google review link and notification email. If you only have one location, you can use the global settings.": "Cada sede puede tener su propia ficha de Google y su propio email de avisos. Si solo tienes una ubicación, puedes usar los ajustes globales.",
     "Location saved successfully.": "Sede guardada correctamente.",
     "Location deleted successfully.": "Sede eliminada correctamente.",
@@ -128,7 +128,7 @@ es = {
     "Waiting for feedback": "Pendiente de feedback",
     "Feedback received": "Feedback recibido",
     "Google review option shown": "Opción de Google mostrada",
-    "Kairoseth Reviews — Feedback": "Kairoseth Reviews — Feedback",
+    "Reseñas WordPress — Feedback": "Reseñas WordPress — Feedback",
     "Review received ratings and quickly find the cases that need follow-up.": "Revisa las valoraciones recibidas y localiza rápidamente los casos que necesitan seguimiento.",
     "Location": "Sede",
     "All locations": "Todas las sedes",
@@ -181,7 +181,7 @@ es = {
 }
 
 source = PLUGIN.read_text(encoding="utf-8")
-pattern = re.compile(r"(?:__|_e|esc_html__|esc_html_e|esc_attr__|esc_attr_e)\(\s*'((?:\\'|[^'])*)'\s*,\s*'kairoseth-reviews'\s*\)")
+pattern = re.compile(r"(?:__|_e|esc_html__|esc_html_e|esc_attr__|esc_attr_e)\(\s*'((?:\\'|[^'])*)'\s*,\s*'gestion-resenas'\s*\)")
 msgids = sorted({match.replace("\\'", "'") for match in pattern.findall(source)})
 missing = [msgid for msgid in msgids if msgid not in es]
 if missing:
@@ -197,25 +197,25 @@ def q(value: str) -> str:
 header_pot = [
     'msgid ""',
     'msgstr ""',
-    '"Project-Id-Version: Kairoseth Reviews 1.2.0\\n"',
+    '"Project-Id-Version: Reseñas WordPress 1.2.0\\n"',
     '"Report-Msgid-Bugs-To: https://kairoseth.com/products/resenas-wordpress\\n"',
     '"POT-Creation-Date: 2026-10-23 12:00+0200\\n"',
     '"MIME-Version: 1.0\\n"',
     '"Content-Type: text/plain; charset=UTF-8\\n"',
     '"Content-Transfer-Encoding: 8bit\\n"',
-    '"X-Domain: kairoseth-reviews\\n"',
+    '"X-Domain: gestion-resenas\\n"',
     '',
 ]
 header_po = [
     'msgid ""',
     'msgstr ""',
-    '"Project-Id-Version: Kairoseth Reviews 1.2.0\\n"',
+    '"Project-Id-Version: Reseñas WordPress 1.2.0\\n"',
     '"Language: es_ES\\n"',
     '"MIME-Version: 1.0\\n"',
     '"Content-Type: text/plain; charset=UTF-8\\n"',
     '"Content-Transfer-Encoding: 8bit\\n"',
     '"Plural-Forms: nplurals=2; plural=(n != 1);\\n"',
-    '"X-Domain: kairoseth-reviews\\n"',
+    '"X-Domain: gestion-resenas\\n"',
     '',
 ]
 
@@ -225,6 +225,6 @@ for msgid in msgids:
     pot.extend([f'msgid "{q(msgid)}"', 'msgstr ""', ''])
     po.extend([f'msgid "{q(msgid)}"', f'msgstr "{q(es[msgid])}"', ''])
 
-(LANG_DIR / "kairoseth-reviews.pot").write_text("\n".join(pot), encoding="utf-8")
-(LANG_DIR / "kairoseth-reviews-es_ES.po").write_text("\n".join(po), encoding="utf-8")
+(LANG_DIR / "gestion-resenas.pot").write_text("\n".join(pot), encoding="utf-8")
+(LANG_DIR / "gestion-resenas-es_ES.po").write_text("\n".join(po), encoding="utf-8")
 print(f"Spanish catalog complete: {len(msgids)} strings")

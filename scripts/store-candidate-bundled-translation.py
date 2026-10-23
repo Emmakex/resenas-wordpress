@@ -14,7 +14,7 @@ if "[$this, 'maybe_load_bundled_translation']" not in text:
 marker = "    public function activate() {\n"
 if "public function maybe_load_bundled_translation()" not in text:
     method = r'''    public function maybe_load_bundled_translation() {
-        $domain = 'kairoseth-reviews';
+        $domain = 'gestion-resenas';
         $locale = determine_locale();
 
         // WordPress.org language packs always take priority when available.

@@ -1,4 +1,4 @@
-=== Kairoseth Reviews ===
+=== Reseñas WordPress ===
 Contributors: eduardoyauri
 Tags: reviews, ratings, feedback, customer service, multi-location
 Requires at least: 6.4
@@ -12,7 +12,7 @@ Collect customer ratings and feedback, manage service recovery, and support one 
 
 == Description ==
 
-Kairoseth Reviews adds a simple post-service feedback flow to your WordPress site.
+Reseñas WordPress adds a simple post-service feedback flow to your WordPress site.
 
 Create a page, insert the `[resenas_wordpress]` shortcode, publish it, and share that page URL with customers. A common workflow is to send the link through WhatsApp after a purchase, service, booking, appointment, or intervention. The same page can also be shared by email, SMS, QR code, your website, or another channel.
 
@@ -59,15 +59,15 @@ The plugin does not create a separate public review URL. The URL you share is th
 == Installation ==
 
 1. Upload the plugin ZIP from **Plugins > Add Plugin > Upload Plugin** or install it from the WordPress Plugin Directory when available.
-2. Activate **Kairoseth Reviews**.
-3. Open the Kairoseth Reviews menu in WordPress.
+2. Activate **Reseñas WordPress**.
+3. Open the Reseñas WordPress menu in WordPress.
 4. Configure your business and optional locations.
 5. Create a page and insert `[resenas_wordpress]`.
 6. Publish the page and share its URL with customers.
 
 == Compatibility and migration ==
 
-Kairoseth Reviews preserves the option keys, locations data, database table, and shortcodes used by the validated legacy package. This allows existing installations to move to the WordPress.org Store identity without rebuilding their configuration or losing stored feedback.
+Reseñas WordPress preserves the option keys, locations data, database table, and shortcodes used by the validated legacy package. This allows existing installations to move to the WordPress.org Store identity without rebuilding their configuration or losing stored feedback.
 
 When the Store package is activated, an active legacy plugin whose main file is `resenas-wordpress.php` is deactivated to prevent duplicate hooks and endpoints. Existing data is not deleted.
 
@@ -75,7 +75,7 @@ The source language is English. A validated Spanish catalog is bundled for manua
 
 == Frequently Asked Questions ==
 
-= Is Kairoseth Reviews free? =
+= Is Reseñas WordPress free? =
 
 Yes. The core plugin runs locally in WordPress and does not require a Kairoseth subscription.
 
@@ -97,13 +97,13 @@ Yes. `[resenas_wordpress]` remains the primary shortcode and the legacy shortcod
 
 = I installed an earlier Reseñas WordPress package manually. Will I lose my data? =
 
-No. Kairoseth Reviews keeps the same option keys, locations data, database table, shortcodes, and feedback records used by the validated legacy version. When the new Store package is activated, it deactivates an active legacy `resenas-wordpress.php` plugin file to avoid duplicate hooks while preserving its existing data.
+No. Reseñas WordPress keeps the same option keys, locations data, database table, shortcodes, and feedback records used by the validated legacy version. When the new Store package is activated, it deactivates an active legacy `resenas-wordpress.php` plugin file to avoid duplicate hooks while preserving its existing data.
 
-After confirming Kairoseth Reviews works correctly, the old plugin folder can be removed from the Plugins screen. Do not use a destructive data-removal process for the legacy package during migration.
+After confirming Reseñas WordPress works correctly, the old plugin folder can be removed from the Plugins screen. Do not use a destructive data-removal process for the legacy package during migration.
 
 == Privacy ==
 
-Kairoseth Reviews stores its operational data in the site's own WordPress database.
+Reseñas WordPress stores its operational data in the site's own WordPress database.
 
 New records in the Store Candidate do not store the visitor IP address, user-agent string, or full page URL. The plugin keeps the information required for the feedback workflow, such as rating, feedback, location, optional reference, service/order context, agent, and source when supplied.
 

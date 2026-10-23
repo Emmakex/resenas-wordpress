@@ -18,8 +18,8 @@ text = replace_function(text, "enqueue_admin", "dashboard_page", r'''    public 
         wp_enqueue_media();
         wp_enqueue_script('wp-color-picker');
 
-        $media_title = wp_json_encode(__('Select a logo', 'kairoseth-reviews'));
-        $media_button = wp_json_encode(__('Use logo', 'kairoseth-reviews'));
+        $media_title = wp_json_encode(__('Select a logo', 'gestion-resenas'));
+        $media_button = wp_json_encode(__('Use logo', 'gestion-resenas'));
         wp_add_inline_script(
             'wp-color-picker',
             "jQuery(function($){
@@ -52,16 +52,16 @@ text = replace_function(text, "dashboard_page", "settings_page", r'''    public 
         ?>
         <div class="wrap rw-admin">
             <div class="rw-admin-hero">
-                <h1><?php esc_html_e('Kairoseth Reviews', 'kairoseth-reviews'); ?></h1>
-                <p><?php esc_html_e('Collect ratings, detect customers who need follow-up, and help them share their public experience from a page on your own WordPress site.', 'kairoseth-reviews'); ?></p>
+                <h1><?php esc_html_e('Reseñas WordPress', 'gestion-resenas'); ?></h1>
+                <p><?php esc_html_e('Collect ratings, detect customers who need follow-up, and help them share their public experience from a page on your own WordPress site.', 'gestion-resenas'); ?></p>
             </div>
 
-            <div class="rw-metric-grid" aria-label="<?php esc_attr_e('Activity overview', 'kairoseth-reviews'); ?>">
+            <div class="rw-metric-grid" aria-label="<?php esc_attr_e('Activity overview', 'gestion-resenas'); ?>">
                 <?php $cards = [
-                    [__('Total feedback', 'kairoseth-reviews'), $total],
-                    [__('Average rating', 'kairoseth-reviews'), $total ? number_format_i18n($avg, 2) . ' / 5' : '—'],
-                    [__('Need follow-up', 'kairoseth-reviews'), $low],
-                    [__('Configured locations', 'kairoseth-reviews'), count($locations)],
+                    [__('Total feedback', 'gestion-resenas'), $total],
+                    [__('Average rating', 'gestion-resenas'), $total ? number_format_i18n($avg, 2) . ' / 5' : '—'],
+                    [__('Need follow-up', 'gestion-resenas'), $low],
+                    [__('Configured locations', 'gestion-resenas'), count($locations)],
                 ]; foreach ($cards as $card): ?>
                     <div class="rw-metric-card">
                         <span class="rw-metric-label"><?php echo esc_html($card[0]); ?></span>
@@ -72,23 +72,23 @@ text = replace_function(text, "dashboard_page", "settings_page", r'''    public 
 
             <div class="rw-admin-grid">
                 <section class="rw-admin-panel" aria-labelledby="rw-howto-title">
-                    <h2 id="rw-howto-title"><?php esc_html_e('How it works', 'kairoseth-reviews'); ?></h2>
-                    <p class="rw-admin-intro"><?php esc_html_e('The link you send to the customer is the URL of the WordPress page where you placed the shortcode.', 'kairoseth-reviews'); ?></p>
+                    <h2 id="rw-howto-title"><?php esc_html_e('How it works', 'gestion-resenas'); ?></h2>
+                    <p class="rw-admin-intro"><?php esc_html_e('The link you send to the customer is the URL of the WordPress page where you placed the shortcode.', 'gestion-resenas'); ?></p>
                     <ol class="rw-howto">
-                        <li><strong><?php esc_html_e('Create a page.', 'kairoseth-reviews'); ?></strong> <?php esc_html_e('For example, create a page called Reviews.', 'kairoseth-reviews'); ?></li>
-                        <li><strong><?php esc_html_e('Insert the shortcode.', 'kairoseth-reviews'); ?></strong> <?php esc_html_e('Add [resenas_wordpress] to the page and publish it.', 'kairoseth-reviews'); ?></li>
-                        <li><strong><?php esc_html_e('Configure your business.', 'kairoseth-reviews'); ?></strong> <?php esc_html_e('Add your logo, copy, Google review link, and optional locations.', 'kairoseth-reviews'); ?></li>
-                        <li><strong><?php esc_html_e('Send the page URL.', 'kairoseth-reviews'); ?></strong> <?php esc_html_e('Share a URL such as', 'kairoseth-reviews'); ?> <code>https://example.com/reviews/</code>. <?php esc_html_e('You can add', 'kairoseth-reviews'); ?> <code>?ref=ORDER-123</code> <?php esc_html_e('and, for multiple locations,', 'kairoseth-reviews'); ?> <code>?sede=downtown</code>.</li>
+                        <li><strong><?php esc_html_e('Create a page.', 'gestion-resenas'); ?></strong> <?php esc_html_e('For example, create a page called Reviews.', 'gestion-resenas'); ?></li>
+                        <li><strong><?php esc_html_e('Insert the shortcode.', 'gestion-resenas'); ?></strong> <?php esc_html_e('Add [resenas_wordpress] to the page and publish it.', 'gestion-resenas'); ?></li>
+                        <li><strong><?php esc_html_e('Configure your business.', 'gestion-resenas'); ?></strong> <?php esc_html_e('Add your logo, copy, Google review link, and optional locations.', 'gestion-resenas'); ?></li>
+                        <li><strong><?php esc_html_e('Send the page URL.', 'gestion-resenas'); ?></strong> <?php esc_html_e('Share a URL such as', 'gestion-resenas'); ?> <code>https://example.com/reviews/</code>. <?php esc_html_e('You can add', 'gestion-resenas'); ?> <code>?ref=ORDER-123</code> <?php esc_html_e('and, for multiple locations,', 'gestion-resenas'); ?> <code>?sede=downtown</code>.</li>
                     </ol>
                 </section>
 
                 <aside class="rw-admin-panel" aria-labelledby="rw-quick-title">
-                    <h2 id="rw-quick-title"><?php esc_html_e('Quick actions', 'kairoseth-reviews'); ?></h2>
-                    <p class="rw-admin-intro"><?php esc_html_e('Configure the plugin and review customer responses.', 'kairoseth-reviews'); ?></p>
+                    <h2 id="rw-quick-title"><?php esc_html_e('Quick actions', 'gestion-resenas'); ?></h2>
+                    <p class="rw-admin-intro"><?php esc_html_e('Configure the plugin and review customer responses.', 'gestion-resenas'); ?></p>
                     <div class="rw-quick-actions">
-                        <a class="button button-primary" href="<?php echo esc_url(admin_url('admin.php?page=rw-settings')); ?>"><?php esc_html_e('Appearance and settings', 'kairoseth-reviews'); ?></a>
-                        <a class="button" href="<?php echo esc_url(admin_url('admin.php?page=rw-locations')); ?>"><?php esc_html_e('Manage locations', 'kairoseth-reviews'); ?></a>
-                        <a class="button" href="<?php echo esc_url(admin_url('admin.php?page=rw-feedback')); ?>"><?php esc_html_e('View feedback', 'kairoseth-reviews'); ?></a>
+                        <a class="button button-primary" href="<?php echo esc_url(admin_url('admin.php?page=rw-settings')); ?>"><?php esc_html_e('Appearance and settings', 'gestion-resenas'); ?></a>
+                        <a class="button" href="<?php echo esc_url(admin_url('admin.php?page=rw-locations')); ?>"><?php esc_html_e('Manage locations', 'gestion-resenas'); ?></a>
+                        <a class="button" href="<?php echo esc_url(admin_url('admin.php?page=rw-feedback')); ?>"><?php esc_html_e('View feedback', 'gestion-resenas'); ?></a>
                     </div>
                 </aside>
             </div>
@@ -107,51 +107,51 @@ text = replace_function(text, "locations_page", "save_location", r'''    public 
         $deleted = !empty($_GET['deleted']);
         ?>
         <div class="wrap rw-admin">
-            <h1><?php esc_html_e('Kairoseth Reviews — Locations', 'kairoseth-reviews'); ?></h1>
-            <p class="rw-admin-intro"><?php esc_html_e('Each location can have its own Google review link and notification email. If you only have one location, you can use the global settings.', 'kairoseth-reviews'); ?></p>
+            <h1><?php esc_html_e('Reseñas WordPress — Locations', 'gestion-resenas'); ?></h1>
+            <p class="rw-admin-intro"><?php esc_html_e('Each location can have its own Google review link and notification email. If you only have one location, you can use the global settings.', 'gestion-resenas'); ?></p>
 
-            <?php if ($updated): ?><div class="notice notice-success is-dismissible"><p><?php esc_html_e('Location saved successfully.', 'kairoseth-reviews'); ?></p></div><?php endif; ?>
-            <?php if ($deleted): ?><div class="notice notice-success is-dismissible"><p><?php esc_html_e('Location deleted successfully.', 'kairoseth-reviews'); ?></p></div><?php endif; ?>
+            <?php if ($updated): ?><div class="notice notice-success is-dismissible"><p><?php esc_html_e('Location saved successfully.', 'gestion-resenas'); ?></p></div><?php endif; ?>
+            <?php if ($deleted): ?><div class="notice notice-success is-dismissible"><p><?php esc_html_e('Location deleted successfully.', 'gestion-resenas'); ?></p></div><?php endif; ?>
 
-            <h2><?php echo esc_html($editing ? __('Edit location', 'kairoseth-reviews') : __('Add location', 'kairoseth-reviews')); ?></h2>
+            <h2><?php echo esc_html($editing ? __('Edit location', 'gestion-resenas') : __('Add location', 'gestion-resenas')); ?></h2>
             <form class="rw-admin-form" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
                 <input type="hidden" name="action" value="rw_save_location">
                 <input type="hidden" name="old_slug" value="<?php echo esc_attr($editing_slug); ?>">
                 <?php wp_nonce_field('rw_save_location'); ?>
                 <table class="form-table" role="presentation">
-                    <tr><th scope="row"><?php esc_html_e('Name', 'kairoseth-reviews'); ?></th><td><input required type="text" class="regular-text" name="name" value="<?php echo esc_attr($editing['name'] ?? ''); ?>" placeholder="<?php esc_attr_e('Example: Downtown', 'kairoseth-reviews'); ?>"></td></tr>
-                    <tr><th scope="row"><?php esc_html_e('Identifier', 'kairoseth-reviews'); ?></th><td><input required type="text" class="regular-text" name="slug" value="<?php echo esc_attr($editing['slug'] ?? ''); ?>" placeholder="downtown"><p class="description"><?php esc_html_e('Used in the page URL, for example:', 'kairoseth-reviews'); ?> <code>?sede=downtown</code>.</p></td></tr>
-                    <tr><th scope="row"><?php esc_html_e('Google review URL', 'kairoseth-reviews'); ?></th><td><input required type="url" class="large-text" name="google_review_url" value="<?php echo esc_attr($editing['google_review_url'] ?? ''); ?>" placeholder="https://g.page/r/.../review"></td></tr>
-                    <tr><th scope="row"><?php esc_html_e('Notification email', 'kairoseth-reviews'); ?></th><td><input type="email" class="regular-text" name="notify_email" value="<?php echo esc_attr($editing['notify_email'] ?? ''); ?>"><p class="description"><?php esc_html_e('Optional. The global notification email is used when this is empty.', 'kairoseth-reviews'); ?></p></td></tr>
-                    <tr><th scope="row"><?php esc_html_e('Status', 'kairoseth-reviews'); ?></th><td><label><input type="checkbox" name="active" value="1" <?php checked($editing ? !empty($editing['active']) : true); ?>> <?php esc_html_e('Active', 'kairoseth-reviews'); ?></label></td></tr>
+                    <tr><th scope="row"><?php esc_html_e('Name', 'gestion-resenas'); ?></th><td><input required type="text" class="regular-text" name="name" value="<?php echo esc_attr($editing['name'] ?? ''); ?>" placeholder="<?php esc_attr_e('Example: Downtown', 'gestion-resenas'); ?>"></td></tr>
+                    <tr><th scope="row"><?php esc_html_e('Identifier', 'gestion-resenas'); ?></th><td><input required type="text" class="regular-text" name="slug" value="<?php echo esc_attr($editing['slug'] ?? ''); ?>" placeholder="downtown"><p class="description"><?php esc_html_e('Used in the page URL, for example:', 'gestion-resenas'); ?> <code>?sede=downtown</code>.</p></td></tr>
+                    <tr><th scope="row"><?php esc_html_e('Google review URL', 'gestion-resenas'); ?></th><td><input required type="url" class="large-text" name="google_review_url" value="<?php echo esc_attr($editing['google_review_url'] ?? ''); ?>" placeholder="https://g.page/r/.../review"></td></tr>
+                    <tr><th scope="row"><?php esc_html_e('Notification email', 'gestion-resenas'); ?></th><td><input type="email" class="regular-text" name="notify_email" value="<?php echo esc_attr($editing['notify_email'] ?? ''); ?>"><p class="description"><?php esc_html_e('Optional. The global notification email is used when this is empty.', 'gestion-resenas'); ?></p></td></tr>
+                    <tr><th scope="row"><?php esc_html_e('Status', 'gestion-resenas'); ?></th><td><label><input type="checkbox" name="active" value="1" <?php checked($editing ? !empty($editing['active']) : true); ?>> <?php esc_html_e('Active', 'gestion-resenas'); ?></label></td></tr>
                 </table>
-                <?php submit_button($editing ? __('Update location', 'kairoseth-reviews') : __('Add location', 'kairoseth-reviews')); ?>
-                <?php if ($editing): ?><a class="button" href="<?php echo esc_url(admin_url('admin.php?page=rw-locations')); ?>"><?php esc_html_e('Cancel', 'kairoseth-reviews'); ?></a><?php endif; ?>
+                <?php submit_button($editing ? __('Update location', 'gestion-resenas') : __('Add location', 'gestion-resenas')); ?>
+                <?php if ($editing): ?><a class="button" href="<?php echo esc_url(admin_url('admin.php?page=rw-locations')); ?>"><?php esc_html_e('Cancel', 'gestion-resenas'); ?></a><?php endif; ?>
             </form>
 
-            <h2><?php esc_html_e('Configured locations', 'kairoseth-reviews'); ?></h2>
+            <h2><?php esc_html_e('Configured locations', 'gestion-resenas'); ?></h2>
             <table class="widefat striped rw-admin-table">
-                <thead><tr><th><?php esc_html_e('Name', 'kairoseth-reviews'); ?></th><th><?php esc_html_e('Identifier', 'kairoseth-reviews'); ?></th><th><?php esc_html_e('Google Reviews', 'kairoseth-reviews'); ?></th><th><?php esc_html_e('Notification email', 'kairoseth-reviews'); ?></th><th><?php esc_html_e('Status', 'kairoseth-reviews'); ?></th><th><?php esc_html_e('Actions', 'kairoseth-reviews'); ?></th></tr></thead>
+                <thead><tr><th><?php esc_html_e('Name', 'gestion-resenas'); ?></th><th><?php esc_html_e('Identifier', 'gestion-resenas'); ?></th><th><?php esc_html_e('Google Reviews', 'gestion-resenas'); ?></th><th><?php esc_html_e('Notification email', 'gestion-resenas'); ?></th><th><?php esc_html_e('Status', 'gestion-resenas'); ?></th><th><?php esc_html_e('Actions', 'gestion-resenas'); ?></th></tr></thead>
                 <tbody>
                 <?php if ($locations): foreach ($locations as $slug => $location): ?>
                     <tr>
                         <td><strong><?php echo esc_html($location['name']); ?></strong></td>
                         <td><code><?php echo esc_html($slug); ?></code></td>
-                        <td><a href="<?php echo esc_url($location['google_review_url']); ?>" target="_blank" rel="noopener"><?php esc_html_e('Open listing', 'kairoseth-reviews'); ?></a></td>
-                        <td><?php echo esc_html($location['notify_email'] ?: __('Global email', 'kairoseth-reviews')); ?></td>
-                        <td><span class="rw-status-chip <?php echo !empty($location['active']) ? 'is-active' : 'is-inactive'; ?>"><?php echo esc_html(!empty($location['active']) ? __('Active', 'kairoseth-reviews') : __('Inactive', 'kairoseth-reviews')); ?></span></td>
+                        <td><a href="<?php echo esc_url($location['google_review_url']); ?>" target="_blank" rel="noopener"><?php esc_html_e('Open listing', 'gestion-resenas'); ?></a></td>
+                        <td><?php echo esc_html($location['notify_email'] ?: __('Global email', 'gestion-resenas')); ?></td>
+                        <td><span class="rw-status-chip <?php echo !empty($location['active']) ? 'is-active' : 'is-inactive'; ?>"><?php echo esc_html(!empty($location['active']) ? __('Active', 'gestion-resenas') : __('Inactive', 'gestion-resenas')); ?></span></td>
                         <td class="rw-actions">
-                            <a class="button button-small" href="<?php echo esc_url(admin_url('admin.php?page=rw-locations&edit=' . rawurlencode($slug))); ?>"><?php esc_html_e('Edit', 'kairoseth-reviews'); ?></a>
-                            <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" onsubmit="return confirm('<?php echo esc_js(__('Delete this location?', 'kairoseth-reviews')); ?>');">
+                            <a class="button button-small" href="<?php echo esc_url(admin_url('admin.php?page=rw-locations&edit=' . rawurlencode($slug))); ?>"><?php esc_html_e('Edit', 'gestion-resenas'); ?></a>
+                            <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" onsubmit="return confirm('<?php echo esc_js(__('Delete this location?', 'gestion-resenas')); ?>');">
                                 <input type="hidden" name="action" value="rw_delete_location">
                                 <input type="hidden" name="slug" value="<?php echo esc_attr($slug); ?>">
                                 <?php wp_nonce_field('rw_delete_location_' . $slug); ?>
-                                <button class="button button-small"><?php esc_html_e('Delete', 'kairoseth-reviews'); ?></button>
+                                <button class="button button-small"><?php esc_html_e('Delete', 'gestion-resenas'); ?></button>
                             </form>
                         </td>
                     </tr>
                 <?php endforeach; else: ?>
-                    <tr><td class="rw-empty" colspan="6"><?php esc_html_e('No locations have been configured yet. If your business has one location, you can continue using the global Google review URL in Settings.', 'kairoseth-reviews'); ?></td></tr>
+                    <tr><td class="rw-empty" colspan="6"><?php esc_html_e('No locations have been configured yet. If your business has one location, you can continue using the global Google review URL in Settings.', 'gestion-resenas'); ?></td></tr>
                 <?php endif; ?>
                 </tbody>
             </table>
@@ -163,9 +163,9 @@ text = replace_function(text, "locations_page", "save_location", r'''    public 
 start = text.index("    public function entries_page() {")
 status_helper = r'''    private function get_status_label($status) {
         $labels = [
-            'low_pending_feedback' => __('Waiting for feedback', 'kairoseth-reviews'),
-            'low_feedback_received' => __('Feedback received', 'kairoseth-reviews'),
-            'high_sent_to_google' => __('Google review option shown', 'kairoseth-reviews'),
+            'low_pending_feedback' => __('Waiting for feedback', 'gestion-resenas'),
+            'low_feedback_received' => __('Feedback received', 'gestion-resenas'),
+            'high_sent_to_google' => __('Google review option shown', 'gestion-resenas'),
         ];
         return $labels[$status] ?? $status;
     }
@@ -198,25 +198,25 @@ text = replace_function(text, "entries_page", "shortcode", r'''    public functi
         $locations = $this->get_locations();
         ?>
         <div class="wrap rw-admin">
-            <h1><?php esc_html_e('Kairoseth Reviews — Feedback', 'kairoseth-reviews'); ?></h1>
-            <p class="rw-admin-intro"><?php esc_html_e('Review received ratings and quickly find the cases that need follow-up.', 'kairoseth-reviews'); ?></p>
+            <h1><?php esc_html_e('Reseñas WordPress — Feedback', 'gestion-resenas'); ?></h1>
+            <p class="rw-admin-intro"><?php esc_html_e('Review received ratings and quickly find the cases that need follow-up.', 'gestion-resenas'); ?></p>
             <form class="rw-filter-bar" method="get">
                 <input type="hidden" name="page" value="rw-feedback">
                 <div class="rw-filter-field">
-                    <label for="rw-filter-location"><?php esc_html_e('Location', 'kairoseth-reviews'); ?></label>
+                    <label for="rw-filter-location"><?php esc_html_e('Location', 'gestion-resenas'); ?></label>
                     <select id="rw-filter-location" name="location">
-                        <option value=""><?php esc_html_e('All locations', 'kairoseth-reviews'); ?></option>
+                        <option value=""><?php esc_html_e('All locations', 'gestion-resenas'); ?></option>
                         <?php foreach ($locations as $slug => $location): ?>
                             <option value="<?php echo esc_attr($slug); ?>" <?php selected($selected_location, $slug); ?>><?php echo esc_html($location['name']); ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <button class="button button-primary"><?php esc_html_e('Filter', 'kairoseth-reviews'); ?></button>
-                <?php if ($selected_location): ?><a class="button" href="<?php echo esc_url(admin_url('admin.php?page=rw-feedback')); ?>"><?php esc_html_e('Clear filter', 'kairoseth-reviews'); ?></a><?php endif; ?>
+                <button class="button button-primary"><?php esc_html_e('Filter', 'gestion-resenas'); ?></button>
+                <?php if ($selected_location): ?><a class="button" href="<?php echo esc_url(admin_url('admin.php?page=rw-feedback')); ?>"><?php esc_html_e('Clear filter', 'gestion-resenas'); ?></a><?php endif; ?>
             </form>
-            <p><?php esc_html_e('Total records:', 'kairoseth-reviews'); ?> <strong><?php echo esc_html($total); ?></strong></p>
+            <p><?php esc_html_e('Total records:', 'gestion-resenas'); ?> <strong><?php echo esc_html($total); ?></strong></p>
             <table class="widefat striped rw-admin-table">
-                <thead><tr><th>ID</th><th><?php esc_html_e('Date', 'kairoseth-reviews'); ?></th><th><?php esc_html_e('Location', 'kairoseth-reviews'); ?></th><th><?php esc_html_e('Ref', 'kairoseth-reviews'); ?></th><th><?php esc_html_e('Rating', 'kairoseth-reviews'); ?></th><th><?php esc_html_e('Reason', 'kairoseth-reviews'); ?></th><th><?php esc_html_e('Comment', 'kairoseth-reviews'); ?></th><th><?php esc_html_e('Service', 'kairoseth-reviews'); ?></th><th><?php esc_html_e('Order', 'kairoseth-reviews'); ?></th><th><?php esc_html_e('Agent', 'kairoseth-reviews'); ?></th><th><?php esc_html_e('Source', 'kairoseth-reviews'); ?></th><th><?php esc_html_e('Status', 'kairoseth-reviews'); ?></th></tr></thead>
+                <thead><tr><th>ID</th><th><?php esc_html_e('Date', 'gestion-resenas'); ?></th><th><?php esc_html_e('Location', 'gestion-resenas'); ?></th><th><?php esc_html_e('Ref', 'gestion-resenas'); ?></th><th><?php esc_html_e('Rating', 'gestion-resenas'); ?></th><th><?php esc_html_e('Reason', 'gestion-resenas'); ?></th><th><?php esc_html_e('Comment', 'gestion-resenas'); ?></th><th><?php esc_html_e('Service', 'gestion-resenas'); ?></th><th><?php esc_html_e('Order', 'gestion-resenas'); ?></th><th><?php esc_html_e('Agent', 'gestion-resenas'); ?></th><th><?php esc_html_e('Source', 'gestion-resenas'); ?></th><th><?php esc_html_e('Status', 'gestion-resenas'); ?></th></tr></thead>
                 <tbody>
                 <?php if (!empty($rows)): foreach ($rows as $row): ?>
                     <tr>
@@ -234,7 +234,7 @@ text = replace_function(text, "entries_page", "shortcode", r'''    public functi
                         <td><span class="rw-status-chip"><?php echo esc_html($this->get_status_label($row->status)); ?></span></td>
                     </tr>
                 <?php endforeach; else: ?>
-                    <tr><td class="rw-empty" colspan="12"><?php esc_html_e('There are no responses to display yet.', 'kairoseth-reviews'); ?></td></tr>
+                    <tr><td class="rw-empty" colspan="12"><?php esc_html_e('There are no responses to display yet.', 'gestion-resenas'); ?></td></tr>
                 <?php endif; ?>
                 </tbody>
             </table>

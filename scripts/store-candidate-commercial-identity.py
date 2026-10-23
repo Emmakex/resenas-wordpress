@@ -1,9 +1,9 @@
 from pathlib import Path
 
 PRODUCT_NAME = "Reseñas WordPress"
-OLD_PRODUCT_NAME = "Kairoseth Reviews"
+OLD_PRODUCT_NAME = "Reseñas WordPress"
 STORE_SLUG = "gestion-resenas"
-OLD_STORE_SLUG = "kairoseth-reviews"
+OLD_STORE_SLUG = "gestion-resenas"
 
 ROOT = Path(".")
 SKIP_DIRS = {".git", ".github", "build", "dist", "node_modules"}
