@@ -46,7 +46,7 @@ jobs:
       - name: Install official Plugin Check
         run: wp-env run cli wp plugin install plugin-check --activate
 
-      - name: Activate Reseñas WordPress
+      - name: Activate Gestión de Reseñas
         run: wp-env run cli wp plugin activate gestion-resenas
 
       - name: Run strict Plugin Check
