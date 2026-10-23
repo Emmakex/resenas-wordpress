@@ -191,6 +191,15 @@ msgstr "Por ejemplo, crea una página llamada Reseñas."
 msgid "General"
 msgstr "General"
 
+msgid "Gestión de Reseñas"
+msgstr "Gestión de Reseñas"
+
+msgid "Gestión de Reseñas — Feedback"
+msgstr "Gestión de Reseñas — Feedback"
+
+msgid "Gestión de Reseñas — Locations"
+msgstr "Gestión de Reseñas — Sedes"
+
 msgid "Global Google review URL"
 msgstr "URL Google global"
 
@@ -346,15 +355,6 @@ msgstr "Ref"
 
 msgid "Reference: %s"
 msgstr "Referencia: %s"
-
-msgid "Gestión de Reseñas"
-msgstr "Gestión de Reseñas"
-
-msgid "Gestión de Reseñas — Feedback"
-msgstr "Gestión de Reseñas — Feedback"
-
-msgid "Gestión de Reseñas — Locations"
-msgstr "Gestión de Reseñas — Sedes"
 
 msgid "Review received ratings and quickly find the cases that need follow-up."
 msgstr "Revisa las valoraciones recibidas y localiza rápidamente los casos que necesitan seguimiento."

@@ -191,6 +191,15 @@ msgstr ""
 msgid "General"
 msgstr ""
 
+msgid "Gestión de Reseñas"
+msgstr ""
+
+msgid "Gestión de Reseñas — Feedback"
+msgstr ""
+
+msgid "Gestión de Reseñas — Locations"
+msgstr ""
+
 msgid "Global Google review URL"
 msgstr ""
 
@@ -345,15 +354,6 @@ msgid "Ref"
 msgstr ""
 
 msgid "Reference: %s"
-msgstr ""
-
-msgid "Gestión de Reseñas"
-msgstr ""
-
-msgid "Gestión de Reseñas — Feedback"
-msgstr ""
-
-msgid "Gestión de Reseñas — Locations"
 msgstr ""
 
 msgid "Review received ratings and quickly find the cases that need follow-up."

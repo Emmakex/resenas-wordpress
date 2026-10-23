@@ -878,14 +878,21 @@ class Gestion_Resenas {
 
         if (!$entry_id) wp_send_json_error(['message' => __('Invalid entry.', 'gestion-resenas')], 400);
 
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- Reads one workflow record from the plugin's own custom table.
-        $row = $wpdb->get_row(
-            $wpdb->prepare(
-                'SELECT id, ref_code, rating, location_slug, location_name FROM %i WHERE id = %d',
-                $table,
-                $entry_id
-            )
-        );
+        $cache_key = 'entry_context_' . $entry_id;
+        $row = wp_cache_get($cache_key, 'gestion_resenas');
+        if (false === $row) {
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- Reads one workflow record from the plugin's own custom table; result is cached below.
+            $row = $wpdb->get_row(
+                $wpdb->prepare(
+                    'SELECT id, ref_code, rating, location_slug, location_name FROM %i WHERE id = %d',
+                    $table,
+                    $entry_id
+                )
+            );
+            if ($row) {
+                wp_cache_set($cache_key, $row, 'gestion_resenas', HOUR_IN_SECONDS);
+            }
+        }
         if (!$row) wp_send_json_error(['message' => __('The rating could not be found.', 'gestion-resenas')], 404);
 
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- Updates one workflow record in the plugin's own custom table.
