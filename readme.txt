@@ -65,6 +65,14 @@ The plugin does not create a separate public review URL. The URL you share is th
 5. Create a page and insert `[resenas_wordpress]`.
 6. Publish the page and share its URL with customers.
 
+== Compatibility and migration ==
+
+Kairoseth Reviews preserves the option keys, locations data, database table, and shortcodes used by the validated legacy package. This allows existing installations to move to the WordPress.org Store identity without rebuilding their configuration or losing stored feedback.
+
+When the Store package is activated, an active legacy plugin whose main file is `resenas-wordpress.php` is deactivated to prevent duplicate hooks and endpoints. Existing data is not deleted.
+
+The source language is English. A validated Spanish catalog is bundled for manual ZIP installs, while WordPress.org language packs take priority when available.
+
 == Frequently Asked Questions ==
 
 = Is Kairoseth Reviews free? =
