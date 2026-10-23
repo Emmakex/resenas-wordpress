@@ -3,6 +3,9 @@ jQuery(function($){
     if (!wrap.length || typeof ladRfData === 'undefined') return;
 
     const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const message = function(key, fallback){
+        return ladRfData.messages && ladRfData.messages[key] ? ladRfData.messages[key] : fallback;
+    };
 
     function setStepAccessibility() {
         wrap.find('.lad-rf-step').each(function(){
@@ -19,7 +22,7 @@ jQuery(function($){
 
         wrap.find('.lad-rf-stars')
             .attr('role', 'radiogroup')
-            .attr('aria-label', 'Valora tu experiencia de 1 a 5 estrellas');
+            .attr('aria-label', message('ratingGroupLabel', 'Valora tu experiencia de 1 a 5 estrellas'));
 
         wrap.find('.lad-rf-star').each(function(index){
             $(this)
@@ -39,7 +42,7 @@ jQuery(function($){
                 $('<label/>', {
                     'class': 'lad-rf-field-label',
                     'for': id,
-                    text: 'Cuéntanos tu experiencia'
+                    text: message('feedbackLabel', 'Cuéntanos tu experiencia')
                 }).insertBefore(textarea);
             }
         }
@@ -94,22 +97,22 @@ jQuery(function($){
 
         $('<p/>', {
             'class': 'lad-rf-followup-copy',
-            text: 'Hemos registrado tu comentario para que el equipo pueda revisarlo y hacer seguimiento.'
+            text: message('followupSaved', 'Hemos registrado tu comentario para que el equipo pueda revisarlo y hacer seguimiento.')
         }).appendTo(thanks);
 
         if (googleSource.length) {
             const googleLink = googleSource.clone(false)
                 .removeClass('lad-rf-btn')
                 .addClass('lad-rf-secondary-link lad-rf-thanks-google')
-                .text('Compartir también mi experiencia en Google')
-                .attr('aria-label', 'Compartir también mi experiencia en Google. Se abre en una pestaña nueva.');
+                .text(message('shareGoogleSecondary', 'Compartir también mi experiencia en Google'))
+                .attr('aria-label', message('shareGoogleSecondaryAria', 'Compartir también mi experiencia en Google. Se abre en una pestaña nueva.'));
             actions.append(googleLink);
         }
 
         $('<button/>', {
             type: 'button',
             'class': 'lad-rf-reset-btn',
-            text: 'Finalizar'
+            text: message('finish', 'Finalizar')
         }).appendTo(actions);
 
         actions.appendTo(thanks);
@@ -141,7 +144,7 @@ jQuery(function($){
         setStarsDisabled(true);
 
         wrap.find('.lad-rf-status').removeClass('is-error').text('');
-        wrap.find('.lad-rf-step-rating .lad-rf-status').text('Guardando tu valoración…');
+        wrap.find('.lad-rf-step-rating .lad-rf-status').text(message('savingRating', 'Guardando tu valoración…'));
 
         $.ajax({
             url: ladRfData.ajaxUrl,
@@ -202,12 +205,12 @@ jQuery(function($){
         const statusBox = form.find('.lad-rf-status');
 
         if (!entryId) {
-            statusBox.text('Falta el identificador de la valoración.').addClass('is-error');
+            statusBox.text(message('missingEntry', 'Falta el identificador de la valoración.')).addClass('is-error');
             return;
         }
 
         submitBtn.prop('disabled', true).attr('aria-busy', 'true').text(ladRfData.messages.sending);
-        statusBox.removeClass('is-error').text('Enviando tu comentario…');
+        statusBox.removeClass('is-error').text(message('sendingFeedback', 'Enviando tu comentario…'));
 
         $.ajax({
             url: ladRfData.ajaxUrl,
