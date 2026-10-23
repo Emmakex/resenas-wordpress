@@ -14,7 +14,12 @@ cp "$ROOT/assets/front.js" "$PLUGIN_DIR/assets/front.js"
 cp "$ROOT/assets/admin.css" "$PLUGIN_DIR/assets/admin.css"
 cp "$ROOT/readme.txt" "$PLUGIN_DIR/readme.txt"
 cp "$ROOT/LICENSE" "$PLUGIN_DIR/LICENSE"
-cp "$ROOT/languages/kairoseth-reviews.pot" "$PLUGIN_DIR/languages/kairoseth-reviews.pot"
+
+for language_file in "$ROOT"/languages/kairoseth-reviews.*; do
+  if [[ -f "$language_file" ]]; then
+    cp "$language_file" "$PLUGIN_DIR/languages/"
+  fi
+done
 
 printf 'Prepared Store package at %s\n' "$PLUGIN_DIR"
-find "$PLUGIN_DIR" -type f -maxdepth 3 | sort
+find "$PLUGIN_DIR" -maxdepth 3 -type f | sort
