@@ -187,6 +187,7 @@ class Kairoseth_Reviews {
 
     private function resolve_location() {
         $active = $this->get_locations(true);
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public read-only URL routing parameter.
         $requested_slug = sanitize_title(wp_unslash($_GET['sede'] ?? ''));
 
         if ($requested_slug && isset($active[$requested_slug])) {
@@ -679,12 +680,14 @@ class Kairoseth_Reviews {
             true
         );
 
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended -- Public read-only URL context parameters; no state is changed here.
         $ref = sanitize_text_field(wp_unslash($_GET['ref'] ?? ''));
         $customer_id = sanitize_text_field(wp_unslash($_GET['customer_id'] ?? ''));
         $service_type = sanitize_text_field(wp_unslash($_GET['service'] ?? ''));
         $order_id = sanitize_text_field(wp_unslash($_GET['order_id'] ?? ''));
         $tech_name = sanitize_text_field(wp_unslash($_GET['agent'] ?? ''));
         $source = sanitize_text_field(wp_unslash($_GET['source'] ?? 'WhatsApp'));
+        // phpcs:enable WordPress.Security.NonceVerification.Recommended
         $reason_options = array_values(array_filter(array_map('trim', preg_split('/\r\n|\r|\n/', $s['reason_options']))));
 
         wp_localize_script('rw-front', 'ladRfData', [
@@ -736,7 +739,6 @@ class Kairoseth_Reviews {
                         <div class="lad-rf-stars" role="radiogroup" aria-labelledby="lad-rf-rating-title">
                             <?php for ($i = 1; $i <= 5; $i++): ?>
                                 <?php /* translators: %d is the selected star rating from 1 to 5. */ ?>
-                                <?php /* translators: %d is the selected star rating from 1 to 5. */ ?>
                                 <button type="button" class="lad-rf-star" data-rating="<?php echo esc_attr($i); ?>" role="radio" aria-checked="false" tabindex="<?php echo $i === 1 ? '0' : '-1'; ?>" aria-label="<?php echo esc_attr(sprintf(__('%d out of 5 stars', 'kairoseth-reviews'), $i)); ?>">★</button>
                             <?php endfor; ?>
                         </div>
@@ -771,7 +773,6 @@ class Kairoseth_Reviews {
                         <p><?php echo esc_html($s['high_text']); ?></p>
                         <?php if ($location_name): ?><div class="lad-rf-location"><?php echo esc_html($location_name); ?></div><?php endif; ?>
                         <?php if ($google_review_url): ?>
-                            <?php /* translators: %s is the configured Google review button label. */ ?>
                             <?php /* translators: %s is the configured Google review button label. */ ?>
                             <a class="lad-rf-btn lad-rf-google-btn" href="<?php echo esc_url($google_review_url); ?>" target="_blank" rel="noopener" aria-label="<?php echo esc_attr(sprintf(__('%s. Opens in a new tab.', 'kairoseth-reviews'), $s['high_button'])); ?>"><?php echo esc_html($s['high_button']); ?></a>
                         <?php else: ?>
@@ -834,6 +835,7 @@ class Kairoseth_Reviews {
             'status' => ($rating <= intval($s['low_rating_threshold'])) ? 'low_pending_feedback' : 'high_sent_to_google',
         ];
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- Writes a rating to the plugin's own custom table.
         $inserted = $wpdb->insert($table, $data);
         if (!$inserted) wp_send_json_error(['message' => __('The rating could not be saved.', 'kairoseth-reviews')], 500);
 
@@ -856,9 +858,17 @@ class Kairoseth_Reviews {
 
         if (!$entry_id) wp_send_json_error(['message' => __('Invalid entry.', 'kairoseth-reviews')], 400);
 
-        $row = $wpdb->get_row($wpdb->prepare("SELECT id, ref_code, rating, location_slug, location_name FROM $table WHERE id = %d", $entry_id));
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- Reads one workflow record from the plugin's own custom table.
+        $row = $wpdb->get_row(
+            $wpdb->prepare(
+                'SELECT id, ref_code, rating, location_slug, location_name FROM %i WHERE id = %d',
+                $table,
+                $entry_id
+            )
+        );
         if (!$row) wp_send_json_error(['message' => __('The rating could not be found.', 'kairoseth-reviews')], 404);
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- Updates one workflow record in the plugin's own custom table.
         $updated = $wpdb->update(
             $table,
             [
@@ -913,6 +923,7 @@ class Kairoseth_Reviews {
         /* translators: %d is the feedback entry ID. */
         /* translators: %d is the feedback entry ID. */
         /* translators: %d is the feedback entry ID. */
+        /* translators: %d is the feedback entry ID. */
         $message .= sprintf(__('ID: %d', 'kairoseth-reviews'), $entry_id) . "\n";
         /* translators: %s is the location name. */
         /* translators: %s is the location name. */
@@ -923,6 +934,7 @@ class Kairoseth_Reviews {
         /* translators: %d is the customer rating from 1 to 5. */
         /* translators: %d is the customer rating from 1 to 5. */
         $message .= sprintf(__('Rating: %d/5', 'kairoseth-reviews'), $rating) . "\n";
+        /* translators: %s is the customer feedback text. */
         /* translators: %s is the customer feedback text. */
         /* translators: %s is the customer feedback text. */
         /* translators: %s is the customer feedback text. */
