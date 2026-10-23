@@ -1,17 +1,23 @@
 <?php
 /**
  * Plugin Name: Reseñas WordPress
- * Description: Recoge valoraciones y feedback de clientes, gestiona múltiples sedes y dirige cada experiencia a la ficha de Google correspondiente.
- * Version: 1.1.3
+ * Plugin URI: https://kairoseth.com/products/resenas-wordpress
+ * Description: Recoge valoraciones y feedback de clientes, gestiona múltiples sedes y facilita el seguimiento de la experiencia desde WordPress.
+ * Version: 1.2.0-rc2
+ * Requires at least: 6.4
+ * Requires PHP: 7.4
  * Author: Kairoseth
  * Author URI: https://kairoseth.com
+ * License: GPL v2 or later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: resenas-wordpress
+ * Domain Path: /languages
  */
 
 if (!defined('ABSPATH')) exit;
 
 class Resenas_WordPress {
-    const VERSION = '1.1.3';
+    const VERSION = '1.2.0-rc2';
     const OPTION_KEY = 'lad_rf_settings'; // Se conserva para migrar sin perder la configuración 1.0.1.
     const LOCATIONS_KEY = 'rw_locations';
     const SCHEMA_KEY = 'rw_schema_version';
@@ -251,6 +257,8 @@ class Resenas_WordPress {
 
     public function enqueue_admin($hook) {
         if (strpos($hook, 'rw-') === false) return;
+
+        wp_enqueue_style('rw-admin', plugins_url('assets/admin.css', __FILE__), [], self::VERSION);
         wp_enqueue_style('wp-color-picker');
         wp_enqueue_media();
         wp_enqueue_script('wp-color-picker');
@@ -280,40 +288,63 @@ class Resenas_WordPress {
         $locations = $this->get_locations();
         ?>
         <div class="wrap rw-admin">
-            <h1>Reseñas WordPress</h1>
-            <p>Gestiona el feedback de tus clientes y las reseñas de todas tus sedes desde WordPress.</p>
-            <div style="display:flex;gap:16px;flex-wrap:wrap;margin:24px 0;">
+            <div class="rw-admin-hero">
+                <h1>Reseñas WordPress</h1>
+                <p>Recoge valoraciones, detecta clientes que necesitan seguimiento y facilita que compartan su experiencia pública desde una página de tu propio WordPress.</p>
+            </div>
+
+            <div class="rw-metric-grid" aria-label="Resumen de actividad">
                 <?php $cards = [
                     ['Feedback total', $total],
                     ['Valoración media', $total ? number_format_i18n($avg, 2) . ' / 5' : '—'],
-                    ['Valoraciones bajas', $low],
+                    ['Requieren seguimiento', $low],
                     ['Sedes configuradas', count($locations)],
                 ]; foreach ($cards as $card): ?>
-                    <div style="background:#fff;border:1px solid #dcdcde;border-radius:8px;padding:18px 22px;min-width:180px;">
-                        <div style="font-size:13px;color:#646970;"><?php echo esc_html($card[0]); ?></div>
-                        <div style="font-size:28px;font-weight:700;margin-top:6px;"><?php echo esc_html($card[1]); ?></div>
+                    <div class="rw-metric-card">
+                        <span class="rw-metric-label"><?php echo esc_html($card[0]); ?></span>
+                        <strong class="rw-metric-value"><?php echo esc_html($card[1]); ?></strong>
                     </div>
                 <?php endforeach; ?>
             </div>
-            <h2>Cómo usarlo</h2>
-            <p>Inserta <code>[resenas_wordpress]</code> en la página que quieras utilizar para recoger opiniones.</p>
-            <p>Para negocios multisede, envía enlaces como <code>https://tuweb.com/resenas/?sede=sede-centro&ref=ABC123</code>.</p>
+
+            <div class="rw-admin-grid">
+                <section class="rw-admin-panel" aria-labelledby="rw-howto-title">
+                    <h2 id="rw-howto-title">Cómo funciona</h2>
+                    <p class="rw-admin-intro">El enlace que envías al cliente es la URL de la página de WordPress donde hayas insertado el shortcode.</p>
+                    <ol class="rw-howto">
+                        <li><strong>Crea una página.</strong> Por ejemplo, una página llamada <em>Reseñas</em>.</li>
+                        <li><strong>Inserta el shortcode.</strong> Añade <code>[resenas_wordpress]</code> dentro de esa página y publícala.</li>
+                        <li><strong>Configura tu negocio.</strong> Añade logo, textos, enlace de Google y, si lo necesitas, una o varias sedes.</li>
+                        <li><strong>Envía la URL.</strong> Comparte por WhatsApp una dirección como <code>https://tuweb.com/resenas/</code>. Puedes añadir <code>?ref=ABC123</code> y, en multisede, <code>?sede=sede-centro</code>.</li>
+                    </ol>
+                </section>
+
+                <aside class="rw-admin-panel" aria-labelledby="rw-quick-title">
+                    <h2 id="rw-quick-title">Acciones rápidas</h2>
+                    <p class="rw-admin-intro">Configura el producto y revisa las respuestas desde aquí.</p>
+                    <div class="rw-quick-actions">
+                        <a class="button button-primary" href="<?php echo esc_url(admin_url('admin.php?page=rw-settings')); ?>">Apariencia y ajustes</a>
+                        <a class="button" href="<?php echo esc_url(admin_url('admin.php?page=rw-locations')); ?>">Gestionar sedes</a>
+                        <a class="button" href="<?php echo esc_url(admin_url('admin.php?page=rw-feedback')); ?>">Ver feedback</a>
+                    </div>
+                </aside>
+            </div>
         </div>
         <?php
     }
 
     public function settings_page() {
         $s = $this->get_settings(); ?>
-        <div class="wrap">
-            <h1>Reseñas WordPress - Apariencia y ajustes</h1>
-            <p>Configuración global. Si no creas sedes, la URL de Google global se seguirá utilizando como en la versión anterior.</p>
-            <form method="post" action="options.php">
+        <div class="wrap rw-admin">
+            <h1>Reseñas WordPress — Apariencia y ajustes</h1>
+            <p class="rw-admin-intro">Configura la experiencia que verá el cliente. Si no utilizas sedes, la URL global de Google seguirá siendo la referencia principal.</p>
+            <form class="rw-admin-panel" method="post" action="options.php">
                 <?php settings_fields('rw_settings_group'); ?>
                 <table class="form-table" role="presentation">
                     <tr><th scope="row">Nombre de la empresa</th><td><input type="text" class="regular-text" name="<?php echo esc_attr(self::OPTION_KEY); ?>[company_name]" value="<?php echo esc_attr($s['company_name']); ?>"></td></tr>
                     <tr><th scope="row">Logo</th><td><input type="url" class="regular-text" id="rw_logo_url" name="<?php echo esc_attr(self::OPTION_KEY); ?>[logo_url]" value="<?php echo esc_attr($s['logo_url']); ?>"> <button class="button rw-upload-logo">Subir / elegir</button></td></tr>
                     <tr><th scope="row">URL Google global</th><td><input type="url" class="regular-text" name="<?php echo esc_attr(self::OPTION_KEY); ?>[google_review_url]" value="<?php echo esc_attr($s['google_review_url']); ?>"><p class="description">Se usa cuando no hay sedes configuradas. En multisede, cada sede tiene su propia URL.</p></td></tr>
-                    <tr><th scope="row">Umbral valoración baja</th><td><input type="number" min="1" max="5" name="<?php echo esc_attr(self::OPTION_KEY); ?>[low_rating_threshold]" value="<?php echo esc_attr($s['low_rating_threshold']); ?>"></td></tr>
+                    <tr><th scope="row">Umbral de seguimiento</th><td><input type="number" min="1" max="5" name="<?php echo esc_attr(self::OPTION_KEY); ?>[low_rating_threshold]" value="<?php echo esc_attr($s['low_rating_threshold']); ?>"><p class="description">Las valoraciones iguales o inferiores a este valor pedirán feedback interno para facilitar el seguimiento.</p></td></tr>
                     <tr><th scope="row">Color principal</th><td><input type="text" class="lad-rf-color" name="<?php echo esc_attr(self::OPTION_KEY); ?>[primary_color]" value="<?php echo esc_attr($s['primary_color']); ?>"></td></tr>
                     <tr><th scope="row">Color acento / estrellas</th><td><input type="text" class="lad-rf-color" name="<?php echo esc_attr(self::OPTION_KEY); ?>[accent_color]" value="<?php echo esc_attr($s['accent_color']); ?>"></td></tr>
                     <tr><th scope="row">Color fondo</th><td><input type="text" class="lad-rf-color" name="<?php echo esc_attr(self::OPTION_KEY); ?>[background_color]" value="<?php echo esc_attr($s['background_color']); ?>"></td></tr>
@@ -324,7 +355,7 @@ class Resenas_WordPress {
                     <?php
                     $text_fields = [
                         'headline' => 'Título principal', 'subheadline' => 'Subtítulo',
-                        'low_title' => 'Título valoración baja', 'low_text' => 'Texto valoración baja',
+                        'low_title' => 'Título para seguimiento', 'low_text' => 'Texto para seguimiento',
                         'high_title' => 'Título valoración alta', 'high_text' => 'Texto valoración alta',
                         'thanks_title' => 'Título gracias', 'thanks_text' => 'Texto gracias',
                         'low_button' => 'Texto botón comentario', 'high_button' => 'Texto botón Google',
@@ -335,7 +366,7 @@ class Resenas_WordPress {
                     <tr><th scope="row">Mostrar motivos rápidos</th><td><label><input type="checkbox" name="<?php echo esc_attr(self::OPTION_KEY); ?>[show_reason_buttons]" value="1" <?php checked($s['show_reason_buttons'], 1); ?>> Sí</label></td></tr>
                     <tr><th scope="row">Motivos rápidos</th><td><textarea class="large-text" rows="6" name="<?php echo esc_attr(self::OPTION_KEY); ?>[reason_options]"><?php echo esc_textarea($s['reason_options']); ?></textarea><p class="description">Uno por línea.</p></td></tr>
                     <tr><th scope="row">Email global de aviso</th><td><input type="email" class="regular-text" name="<?php echo esc_attr(self::OPTION_KEY); ?>[notify_email]" value="<?php echo esc_attr($s['notify_email']); ?>"><p class="description">Cada sede puede tener su propio email. Si no lo tiene, se usa este.</p></td></tr>
-                    <tr><th scope="row">Enviar aviso en valoración baja</th><td><label><input type="checkbox" name="<?php echo esc_attr(self::OPTION_KEY); ?>[send_low_rating_email]" value="1" <?php checked($s['send_low_rating_email'], 1); ?>> Sí</label></td></tr>
+                    <tr><th scope="row">Enviar aviso cuando requiere seguimiento</th><td><label><input type="checkbox" name="<?php echo esc_attr(self::OPTION_KEY); ?>[send_low_rating_email]" value="1" <?php checked($s['send_low_rating_email'], 1); ?>> Sí</label></td></tr>
                     <tr><th scope="row">CSS personalizado</th><td><textarea class="large-text code" rows="8" name="<?php echo esc_attr(self::OPTION_KEY); ?>[custom_css]"><?php echo esc_textarea($s['custom_css']); ?></textarea></td></tr>
                 </table>
                 <?php submit_button('Guardar ajustes'); ?>
@@ -349,15 +380,15 @@ class Resenas_WordPress {
         $editing_slug = sanitize_title(wp_unslash($_GET['edit'] ?? ''));
         $editing = $editing_slug && isset($locations[$editing_slug]) ? $locations[$editing_slug] : null;
         ?>
-        <div class="wrap">
-            <h1>Reseñas WordPress - Sedes</h1>
-            <p>Cada sede puede tener su propia ficha de Google y su propio email de avisos.</p>
+        <div class="wrap rw-admin">
+            <h1>Reseñas WordPress — Sedes</h1>
+            <p class="rw-admin-intro">Cada sede puede tener su propia ficha de Google y su propio email de avisos. Si solo tienes una ubicación, puedes trabajar con la configuración global.</p>
 
             <?php if (!empty($_GET['updated'])): ?><div class="notice notice-success is-dismissible"><p>Sede guardada correctamente.</p></div><?php endif; ?>
             <?php if (!empty($_GET['deleted'])): ?><div class="notice notice-success is-dismissible"><p>Sede eliminada correctamente.</p></div><?php endif; ?>
 
             <h2><?php echo $editing ? 'Editar sede' : 'Añadir sede'; ?></h2>
-            <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" style="max-width:820px;background:#fff;border:1px solid #dcdcde;padding:20px;margin-bottom:28px;">
+            <form class="rw-admin-form" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
                 <input type="hidden" name="action" value="rw_save_location">
                 <input type="hidden" name="old_slug" value="<?php echo esc_attr($editing_slug); ?>">
                 <?php wp_nonce_field('rw_save_location'); ?>
@@ -373,7 +404,7 @@ class Resenas_WordPress {
             </form>
 
             <h2>Sedes configuradas</h2>
-            <table class="widefat striped" style="max-width:1100px;">
+            <table class="widefat striped rw-admin-table">
                 <thead><tr><th>Nombre</th><th>Identificador</th><th>Google Reviews</th><th>Email avisos</th><th>Estado</th><th>Acciones</th></tr></thead>
                 <tbody>
                 <?php if ($locations): foreach ($locations as $slug => $location): ?>
@@ -382,8 +413,8 @@ class Resenas_WordPress {
                         <td><code><?php echo esc_html($slug); ?></code></td>
                         <td><a href="<?php echo esc_url($location['google_review_url']); ?>" target="_blank" rel="noopener">Abrir ficha</a></td>
                         <td><?php echo esc_html($location['notify_email'] ?: 'Email global'); ?></td>
-                        <td><?php echo !empty($location['active']) ? 'Activa' : 'Inactiva'; ?></td>
-                        <td style="display:flex;gap:8px;align-items:center;">
+                        <td><span class="rw-status-chip <?php echo !empty($location['active']) ? 'is-active' : 'is-inactive'; ?>"><?php echo !empty($location['active']) ? 'Activa' : 'Inactiva'; ?></span></td>
+                        <td class="rw-actions">
                             <a class="button button-small" href="<?php echo esc_url(admin_url('admin.php?page=rw-locations&edit=' . rawurlencode($slug))); ?>">Editar</a>
                             <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" onsubmit="return confirm('¿Eliminar esta sede?');">
                                 <input type="hidden" name="action" value="rw_delete_location">
@@ -394,7 +425,7 @@ class Resenas_WordPress {
                         </td>
                     </tr>
                 <?php endforeach; else: ?>
-                    <tr><td colspan="6">Todavía no hay sedes. Si tu negocio tiene una sola ubicación, puedes seguir utilizando la URL Google global de Ajustes.</td></tr>
+                    <tr><td class="rw-empty" colspan="6">Todavía no hay sedes. Si tu negocio tiene una sola ubicación, puedes seguir utilizando la URL Google global de Ajustes.</td></tr>
                 <?php endif; ?>
                 </tbody>
             </table>
@@ -464,20 +495,25 @@ class Resenas_WordPress {
         }
         $locations = $this->get_locations();
         ?>
-        <div class="wrap">
-            <h1>Reseñas WordPress - Feedback</h1>
-            <form method="get" style="margin:16px 0;">
+        <div class="wrap rw-admin">
+            <h1>Reseñas WordPress — Feedback</h1>
+            <p class="rw-admin-intro">Revisa las valoraciones recibidas y localiza rápidamente los casos que requieren seguimiento.</p>
+            <form class="rw-filter-bar" method="get">
                 <input type="hidden" name="page" value="rw-feedback">
-                <select name="location">
-                    <option value="">Todas las sedes</option>
-                    <?php foreach ($locations as $slug => $location): ?>
-                        <option value="<?php echo esc_attr($slug); ?>" <?php selected($selected_location, $slug); ?>><?php echo esc_html($location['name']); ?></option>
-                    <?php endforeach; ?>
-                </select>
-                <button class="button">Filtrar</button>
+                <div class="rw-filter-field">
+                    <label for="rw-filter-location">Sede</label>
+                    <select id="rw-filter-location" name="location">
+                        <option value="">Todas las sedes</option>
+                        <?php foreach ($locations as $slug => $location): ?>
+                            <option value="<?php echo esc_attr($slug); ?>" <?php selected($selected_location, $slug); ?>><?php echo esc_html($location['name']); ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <button class="button button-primary">Filtrar</button>
+                <?php if ($selected_location): ?><a class="button" href="<?php echo esc_url(admin_url('admin.php?page=rw-feedback')); ?>">Limpiar filtro</a><?php endif; ?>
             </form>
             <p>Total registros: <strong><?php echo esc_html($total); ?></strong></p>
-            <table class="widefat striped">
+            <table class="widefat striped rw-admin-table">
                 <thead><tr><th>ID</th><th>Fecha</th><th>Sede</th><th>Ref</th><th>Rating</th><th>Motivo</th><th>Comentario</th><th>Servicio</th><th>Pedido</th><th>Técnico / Comercial</th><th>Origen</th><th>Estado</th></tr></thead>
                 <tbody>
                 <?php if (!empty($rows)): foreach ($rows as $row): ?>
@@ -486,17 +522,17 @@ class Resenas_WordPress {
                         <td><?php echo esc_html($row->created_at); ?></td>
                         <td><?php echo esc_html($row->location_name ?: $row->location_slug); ?></td>
                         <td><?php echo esc_html($row->ref_code); ?></td>
-                        <td><?php echo esc_html($row->rating); ?></td>
+                        <td><strong><?php echo esc_html($row->rating); ?>/5</strong></td>
                         <td><?php echo esc_html($row->feedback_reason); ?></td>
                         <td><?php echo esc_html(wp_trim_words($row->feedback_text, 18)); ?></td>
                         <td><?php echo esc_html($row->service_type); ?></td>
                         <td><?php echo esc_html($row->order_id); ?></td>
                         <td><?php echo esc_html($row->tech_name); ?></td>
                         <td><?php echo esc_html($row->source); ?></td>
-                        <td><?php echo esc_html($row->status); ?></td>
+                        <td><span class="rw-status-chip"><?php echo esc_html($row->status); ?></span></td>
                     </tr>
                 <?php endforeach; else: ?>
-                    <tr><td colspan="12">Aún no hay respuestas.</td></tr>
+                    <tr><td class="rw-empty" colspan="12">Aún no hay respuestas para mostrar.</td></tr>
                 <?php endif; ?>
                 </tbody>
             </table>
@@ -570,32 +606,32 @@ class Resenas_WordPress {
                 <?php if (!empty($s['logo_url'])): ?><div class="lad-rf-logo"><img src="<?php echo esc_url($s['logo_url']); ?>" alt="<?php echo esc_attr($s['company_name']); ?>"></div><?php endif; ?>
 
                 <?php if ($resolved['error']): ?>
-                    <div class="lad-rf-step is-active">
+                    <div class="lad-rf-step is-active" role="alert">
                         <h2>No podemos identificar la sede</h2>
                         <p><?php echo esc_html($resolved['error']); ?></p>
                     </div>
                 <?php else: ?>
-                    <div class="lad-rf-step lad-rf-step-rating is-active">
-                        <h2><?php echo esc_html($s['headline']); ?></h2>
+                    <div class="lad-rf-step lad-rf-step-rating is-active" aria-hidden="false">
+                        <h2 id="lad-rf-rating-title"><?php echo esc_html($s['headline']); ?></h2>
                         <p><?php echo esc_html($s['subheadline']); ?></p>
                         <?php if ($location_name): ?><div class="lad-rf-location"><?php echo esc_html($location_name); ?></div><?php endif; ?>
-                        <div class="lad-rf-stars">
+                        <div class="lad-rf-stars" role="radiogroup" aria-labelledby="lad-rf-rating-title">
                             <?php for ($i = 1; $i <= 5; $i++): ?>
-                                <button type="button" class="lad-rf-star" data-rating="<?php echo esc_attr($i); ?>" aria-label="<?php echo esc_attr($i); ?> estrellas">★</button>
+                                <button type="button" class="lad-rf-star" data-rating="<?php echo esc_attr($i); ?>" role="radio" aria-checked="false" tabindex="<?php echo $i === 1 ? '0' : '-1'; ?>" aria-label="<?php echo esc_attr($i . ' de 5 estrellas'); ?>">★</button>
                             <?php endfor; ?>
                         </div>
-                        <div class="lad-rf-status" aria-live="polite"></div>
+                        <div class="lad-rf-status" role="status" aria-live="polite" aria-atomic="true"></div>
                     </div>
 
-                    <div class="lad-rf-step lad-rf-step-low">
+                    <div class="lad-rf-step lad-rf-step-low" aria-hidden="true">
                         <h2><?php echo esc_html($s['low_title']); ?></h2>
                         <p><?php echo esc_html($s['low_text']); ?></p>
                         <?php if ($location_name): ?><div class="lad-rf-location"><?php echo esc_html($location_name); ?></div><?php endif; ?>
 
                         <?php if (!empty($s['show_reason_buttons']) && !empty($reason_options)): ?>
-                            <div class="lad-rf-reasons">
+                            <div class="lad-rf-reasons" aria-label="Motivo principal">
                                 <?php foreach ($reason_options as $reason): ?>
-                                    <button type="button" class="lad-rf-reason-btn" data-reason="<?php echo esc_attr($reason); ?>"><?php echo esc_html($reason); ?></button>
+                                    <button type="button" class="lad-rf-reason-btn" data-reason="<?php echo esc_attr($reason); ?>" aria-pressed="false"><?php echo esc_html($reason); ?></button>
                                 <?php endforeach; ?>
                             </div>
                         <?php endif; ?>
@@ -603,24 +639,25 @@ class Resenas_WordPress {
                         <form class="lad-rf-feedback-form">
                             <input type="hidden" name="entry_id" value="">
                             <input type="hidden" name="feedback_reason" value="">
-                            <textarea name="feedback_text" rows="5" placeholder="Cuéntanos tu experiencia"></textarea>
-                            <div class="lad-rf-status" aria-live="polite"></div>
+                            <label class="lad-rf-field-label" for="lad-rf-feedback-text">Cuéntanos tu experiencia</label>
+                            <textarea id="lad-rf-feedback-text" name="feedback_text" rows="5" placeholder="Describe brevemente qué ha ocurrido"></textarea>
+                            <div class="lad-rf-status" role="status" aria-live="polite" aria-atomic="true"></div>
                             <button type="submit" class="lad-rf-btn lad-rf-submit-btn"><?php echo esc_html($s['low_button']); ?></button>
                         </form>
                     </div>
 
-                    <div class="lad-rf-step lad-rf-step-high">
+                    <div class="lad-rf-step lad-rf-step-high" aria-hidden="true">
                         <h2><?php echo esc_html($s['high_title']); ?></h2>
                         <p><?php echo esc_html($s['high_text']); ?></p>
                         <?php if ($location_name): ?><div class="lad-rf-location"><?php echo esc_html($location_name); ?></div><?php endif; ?>
                         <?php if ($google_review_url): ?>
-                            <a class="lad-rf-btn lad-rf-google-btn" href="<?php echo esc_url($google_review_url); ?>" target="_blank" rel="noopener"><?php echo esc_html($s['high_button']); ?></a>
+                            <a class="lad-rf-btn lad-rf-google-btn" href="<?php echo esc_url($google_review_url); ?>" target="_blank" rel="noopener" aria-label="<?php echo esc_attr($s['high_button'] . '. Se abre en una pestaña nueva.'); ?>"><?php echo esc_html($s['high_button']); ?></a>
                         <?php else: ?>
-                            <div class="lad-rf-status is-error">No hay una URL de Google configurada para esta sede.</div>
+                            <div class="lad-rf-status is-error" role="alert">No hay una URL de Google configurada para esta sede.</div>
                         <?php endif; ?>
                     </div>
 
-                    <div class="lad-rf-step lad-rf-step-thanks">
+                    <div class="lad-rf-step lad-rf-step-thanks" aria-hidden="true">
                         <h2><?php echo esc_html($s['thanks_title']); ?></h2>
                         <p><?php echo esc_html($s['thanks_text']); ?></p>
                     </div>
