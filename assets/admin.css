@@ -44,5 +44,27 @@
 .rw-admin select:focus-visible,
 .rw-admin a:focus-visible{outline:2px solid #2271b1;outline-offset:2px;box-shadow:none}
 .rw-admin .rw-help{margin-top:5px;color:#646970;font-size:12px;line-height:1.5}
+
+/* Grouped settings */
+.rw-settings-page{max-width:1080px}
+.rw-settings-page form{margin:0}
+.rw-settings-nav{position:sticky;top:32px;z-index:4;display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px;padding:10px;border:1px solid #dcdcde;border-radius:12px;background:rgba(240,240,241,.96);backdrop-filter:blur(8px)}
+.rw-settings-nav a{display:inline-flex;align-items:center;min-height:38px;padding:8px 12px;border-radius:8px;color:#1d2327;font-weight:600;text-decoration:none}
+.rw-settings-nav a:hover{background:#fff;color:#135e96}
+.rw-settings-section{scroll-margin-top:92px;margin:0 0 18px;padding:0 22px 8px;border:1px solid #dcdcde;border-radius:14px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.03)}
+.rw-settings-section-head{display:flex;gap:14px;align-items:flex-start;margin:0 -22px 6px;padding:18px 22px;border-bottom:1px solid #e2e4e7;background:linear-gradient(180deg,#fff 0%,#fbfbfc 100%);border-radius:14px 14px 0 0}
+.rw-settings-section-head>.dashicons{display:grid;place-items:center;width:38px;height:38px;margin-top:1px;border-radius:10px;background:#f0f6fc;color:#135e96;font-size:20px}
+.rw-settings-section-head h2{margin:0 0 4px;font-size:18px;line-height:1.3}
+.rw-settings-section-head p{margin:0;color:#646970;line-height:1.5}
+.rw-settings-section .form-table{margin-top:0}
+.rw-settings-section .form-table th{width:220px;padding-top:20px}
+.rw-settings-section .form-table td{padding-top:15px;padding-bottom:15px}
+.rw-settings-section .description{max-width:720px}
+.rw-settings-section .large-text{max-width:720px}
+.rw-inline-field{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.rw-settings-save{position:sticky;bottom:0;z-index:3;display:flex;justify-content:flex-end;margin:22px 0 0;padding:14px 0;background:linear-gradient(180deg,rgba(240,240,241,0) 0%,#f0f0f1 32%)}
+.rw-settings-save .button-primary{min-height:42px;padding:0 18px;font-weight:600}
+
 @media(max-width:1100px){.rw-admin .rw-metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.rw-admin .rw-admin-grid{grid-template-columns:1fr}}
-@media(max-width:600px){.rw-admin .rw-metric-grid{grid-template-columns:1fr}.rw-admin .rw-admin-hero,.rw-admin .rw-admin-panel,.rw-admin .rw-admin-form{padding:16px}.rw-admin .rw-filter-bar{align-items:stretch}.rw-admin .rw-filter-field{width:100%}.rw-admin .rw-filter-field select{width:100%}}
+@media(max-width:782px){.rw-settings-nav{top:46px}.rw-settings-section{padding:0 16px 8px}.rw-settings-section-head{margin:0 -16px 6px;padding:16px}.rw-settings-section .form-table th{width:auto;padding-bottom:4px}.rw-settings-section .form-table td{padding-top:4px}.rw-inline-field{align-items:stretch}.rw-inline-field input{width:100%}}
+@media(max-width:600px){.rw-admin .rw-metric-grid{grid-template-columns:1fr}.rw-admin .rw-admin-hero,.rw-admin .rw-admin-panel,.rw-admin .rw-admin-form{padding:16px}.rw-admin .rw-filter-bar{align-items:stretch}.rw-admin .rw-filter-field{width:100%}.rw-admin .rw-filter-field select{width:100%}.rw-settings-nav{position:static}.rw-settings-nav a{flex:1 1 calc(50% - 8px);justify-content:center}.rw-settings-save{position:static}.rw-settings-save .button-primary{width:100%}}
