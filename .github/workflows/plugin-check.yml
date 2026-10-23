@@ -1,0 +1,51 @@
+name: WordPress Plugin Check
+
+on:
+  push:
+    branches:
+      - feat/v1.2.0-store-candidate
+    paths:
+      - resenas-wordpress.php
+      - assets/**
+      - readme.txt
+      - .wp-env.json
+      - .github/workflows/plugin-check.yml
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  plugin-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout Store Candidate
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install wp-env
+        run: npm install --global @wordpress/env@latest
+
+      - name: Start WordPress
+        run: wp-env start
+
+      - name: Install official Plugin Check
+        run: wp-env run cli wp plugin install plugin-check --activate
+
+      - name: Activate Reseñas WordPress
+        run: wp-env run cli wp plugin activate resenas-wordpress
+
+      - name: Run Plugin Check
+        run: wp-env run cli wp plugin check resenas-wordpress
+
+      - name: Stop WordPress
+        if: always()
+        run: wp-env stop
