@@ -138,7 +138,7 @@ class Resenas_WordPress {
             'low_button' => __('Enviar comentario', 'resenas-wordpress'),
             'high_button' => __('Dejar reseña en Google', 'resenas-wordpress'),
             'show_reason_buttons' => 1,
-            'reason_options' => "Atención\nTiempo de espera\nPrecio\nResultado del servicio\nOtro",
+            'reason_options' => implode("\n", [__('Atención', 'resenas-wordpress'), __('Tiempo de espera', 'resenas-wordpress'), __('Precio', 'resenas-wordpress'), __('Resultado del servicio', 'resenas-wordpress'), __('Otro', 'resenas-wordpress')]),
             'custom_css' => '',
             'notify_email' => get_option('admin_email'),
             'send_low_rating_email' => 1,
@@ -210,8 +210,8 @@ class Resenas_WordPress {
     }
 
     public function plugin_links($links) {
-        $links[] = '<a href="' . esc_url(admin_url('admin.php?page=rw-dashboard')) . '">Dashboard</a>';
-        $links[] = '<a href="' . esc_url(admin_url('admin.php?page=rw-settings')) . '">Ajustes</a>';
+        $links[] = '<a href="' . esc_url(admin_url('admin.php?page=rw-dashboard')) . '">' . esc_html__('Dashboard', 'resenas-wordpress') . '</a>';
+        $links[] = '<a href="' . esc_url(admin_url('admin.php?page=rw-settings')) . '">' . esc_html__('Ajustes', 'resenas-wordpress') . '</a>';
         return $links;
     }
 
@@ -649,6 +649,15 @@ class Resenas_WordPress {
                 'sending' => __('Enviando...', 'resenas-wordpress'),
                 'send' => $s['low_button'],
                 'error' => __('No se pudo enviar. Inténtalo de nuevo.', 'resenas-wordpress'),
+                'ratingGroupLabel' => __('Valora tu experiencia de 1 a 5 estrellas', 'resenas-wordpress'),
+                'feedbackLabel' => __('Cuéntanos tu experiencia', 'resenas-wordpress'),
+                'followupSaved' => __('Hemos registrado tu comentario para que el equipo pueda revisarlo y hacer seguimiento.', 'resenas-wordpress'),
+                'shareGoogleSecondary' => __('Compartir también mi experiencia en Google', 'resenas-wordpress'),
+                'shareGoogleSecondaryAria' => __('Compartir también mi experiencia en Google. Se abre en una pestaña nueva.', 'resenas-wordpress'),
+                'finish' => __('Finalizar', 'resenas-wordpress'),
+                'savingRating' => __('Guardando tu valoración…', 'resenas-wordpress'),
+                'missingEntry' => __('Falta el identificador de la valoración.', 'resenas-wordpress'),
+                'sendingFeedback' => __('Enviando tu comentario…', 'resenas-wordpress'),
             ],
             'context' => [
                 'ref' => $ref,
@@ -669,7 +678,7 @@ class Resenas_WordPress {
 
                 <?php if ($resolved['error']): ?>
                     <div class="lad-rf-step is-active" role="alert">
-                        <h2>No podemos identificar la sede</h2>
+                        <h2><?php esc_html_e('No podemos identificar la sede', 'resenas-wordpress'); ?></h2>
                         <p><?php echo esc_html($resolved['error']); ?></p>
                     </div>
                 <?php else: ?>
@@ -679,7 +688,7 @@ class Resenas_WordPress {
                         <?php if ($location_name): ?><div class="lad-rf-location"><?php echo esc_html($location_name); ?></div><?php endif; ?>
                         <div class="lad-rf-stars" role="radiogroup" aria-labelledby="lad-rf-rating-title">
                             <?php for ($i = 1; $i <= 5; $i++): ?>
-                                <button type="button" class="lad-rf-star" data-rating="<?php echo esc_attr($i); ?>" role="radio" aria-checked="false" tabindex="<?php echo $i === 1 ? '0' : '-1'; ?>" aria-label="<?php echo esc_attr($i . ' de 5 estrellas'); ?>">★</button>
+                                <button type="button" class="lad-rf-star" data-rating="<?php echo esc_attr($i); ?>" role="radio" aria-checked="false" tabindex="<?php echo $i === 1 ? '0' : '-1'; ?>" aria-label="<?php echo esc_attr(sprintf(__('%d de 5 estrellas', 'resenas-wordpress'), $i)); ?>">★</button>
                             <?php endfor; ?>
                         </div>
                         <div class="lad-rf-status" role="status" aria-live="polite" aria-atomic="true"></div>
@@ -691,7 +700,7 @@ class Resenas_WordPress {
                         <?php if ($location_name): ?><div class="lad-rf-location"><?php echo esc_html($location_name); ?></div><?php endif; ?>
 
                         <?php if (!empty($s['show_reason_buttons']) && !empty($reason_options)): ?>
-                            <div class="lad-rf-reasons" aria-label="Motivo principal">
+                            <div class="lad-rf-reasons" aria-label="<?php esc_attr_e('Motivo principal', 'resenas-wordpress'); ?>">
                                 <?php foreach ($reason_options as $reason): ?>
                                     <button type="button" class="lad-rf-reason-btn" data-reason="<?php echo esc_attr($reason); ?>" aria-pressed="false"><?php echo esc_html($reason); ?></button>
                                 <?php endforeach; ?>
@@ -701,8 +710,8 @@ class Resenas_WordPress {
                         <form class="lad-rf-feedback-form">
                             <input type="hidden" name="entry_id" value="">
                             <input type="hidden" name="feedback_reason" value="">
-                            <label class="lad-rf-field-label" for="lad-rf-feedback-text">Cuéntanos tu experiencia</label>
-                            <textarea id="lad-rf-feedback-text" name="feedback_text" rows="5" placeholder="Describe brevemente qué ha ocurrido"></textarea>
+                            <label class="lad-rf-field-label" for="lad-rf-feedback-text"><?php esc_html_e('Cuéntanos tu experiencia', 'resenas-wordpress'); ?></label>
+                            <textarea id="lad-rf-feedback-text" name="feedback_text" rows="5" placeholder="<?php esc_attr_e('Describe brevemente qué ha ocurrido', 'resenas-wordpress'); ?>"></textarea>
                             <div class="lad-rf-status" role="status" aria-live="polite" aria-atomic="true"></div>
                             <button type="submit" class="lad-rf-btn lad-rf-submit-btn"><?php echo esc_html($s['low_button']); ?></button>
                         </form>
@@ -713,9 +722,9 @@ class Resenas_WordPress {
                         <p><?php echo esc_html($s['high_text']); ?></p>
                         <?php if ($location_name): ?><div class="lad-rf-location"><?php echo esc_html($location_name); ?></div><?php endif; ?>
                         <?php if ($google_review_url): ?>
-                            <a class="lad-rf-btn lad-rf-google-btn" href="<?php echo esc_url($google_review_url); ?>" target="_blank" rel="noopener" aria-label="<?php echo esc_attr($s['high_button'] . '. Se abre en una pestaña nueva.'); ?>"><?php echo esc_html($s['high_button']); ?></a>
+                            <a class="lad-rf-btn lad-rf-google-btn" href="<?php echo esc_url($google_review_url); ?>" target="_blank" rel="noopener" aria-label="<?php echo esc_attr(sprintf(__('%s. Se abre en una pestaña nueva.', 'resenas-wordpress'), $s['high_button'])); ?>"><?php echo esc_html($s['high_button']); ?></a>
                         <?php else: ?>
-                            <div class="lad-rf-status is-error" role="alert">No hay una URL de Google configurada para esta sede.</div>
+                            <div class="lad-rf-status is-error" role="alert"><?php esc_html_e('No hay una URL de Google configurada para esta sede.', 'resenas-wordpress'); ?></div>
                         <?php endif; ?>
                     </div>
 
@@ -768,9 +777,9 @@ class Resenas_WordPress {
             'order_id' => sanitize_text_field(wp_unslash($_POST['order_id'] ?? '')),
             'tech_name' => sanitize_text_field(wp_unslash($_POST['tech_name'] ?? '')),
             'source' => sanitize_text_field(wp_unslash($_POST['source'] ?? 'WhatsApp')),
-            'user_ip' => $this->get_user_ip(),
-            'user_agent' => sanitize_text_field(wp_unslash($_SERVER['HTTP_USER_AGENT'] ?? '')),
-            'page_url' => esc_url_raw(wp_unslash($_POST['page_url'] ?? '')),
+            'user_ip' => '',
+            'user_agent' => '',
+            'page_url' => '',
             'status' => ($rating <= intval($s['low_rating_threshold'])) ? 'low_pending_feedback' : 'high_sent_to_google',
         ];
 
@@ -845,13 +854,13 @@ class Resenas_WordPress {
 
     public function send_low_rating_email_async($email, $company_name, $entry_id, $location_name, $ref_code, $rating, $feedback) {
         if (empty($email)) return;
-        $subject = sprintf('[%s] Nueva valoración recibida', $company_name);
-        $message = "Se ha recibido una valoración que requiere seguimiento.\n\n";
-        $message .= "ID: " . $entry_id . "\n";
-        $message .= "Sede: " . ($location_name ?: 'Sin sede') . "\n";
-        $message .= "Referencia: " . $ref_code . "\n";
-        $message .= "Valoración: " . $rating . "/5\n";
-        $message .= "Feedback: " . $feedback . "\n";
+        $subject = sprintf(__('[%s] Nueva valoración recibida', 'resenas-wordpress'), $company_name);
+        $message = __('Se ha recibido una valoración que requiere seguimiento.', 'resenas-wordpress') . "\n\n";
+        $message .= sprintf(__('ID: %d', 'resenas-wordpress'), $entry_id) . "\n";
+        $message .= sprintf(__('Sede: %s', 'resenas-wordpress'), ($location_name ?: __('Sin sede', 'resenas-wordpress'))) . "\n";
+        $message .= sprintf(__('Referencia: %s', 'resenas-wordpress'), $ref_code) . "\n";
+        $message .= sprintf(__('Valoración: %d/5', 'resenas-wordpress'), $rating) . "\n";
+        $message .= sprintf(__('Feedback: %s', 'resenas-wordpress'), $feedback) . "\n";
         wp_mail($email, $subject, $message);
     }
 
