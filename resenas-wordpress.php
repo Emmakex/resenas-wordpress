@@ -1,23 +1,23 @@
 <?php
 /**
- * Plugin Name: Reseñas WordPress
+ * Plugin Name: Kairoseth Reviews
  * Plugin URI: https://kairoseth.com/products/resenas-wordpress
- * Description: Recoge valoraciones y feedback de clientes, gestiona múltiples sedes y facilita el seguimiento de la experiencia desde WordPress.
- * Version: 1.2.0-rc2
+ * Description: Collect customer ratings and feedback, manage one or multiple locations, and support service recovery workflows.
+ * Version: 1.2.0-rc3
  * Requires at least: 6.4
  * Requires PHP: 7.4
  * Author: Kairoseth
  * Author URI: https://kairoseth.com
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: resenas-wordpress
+ * Text Domain: kairoseth-reviews
  * Domain Path: /languages
  */
 
 if (!defined('ABSPATH')) exit;
 
 class Resenas_WordPress {
-    const VERSION = '1.2.0-rc2';
+    const VERSION = '1.2.0-rc3';
     const OPTION_KEY = 'lad_rf_settings'; // Se conserva para migrar sin perder la configuración 1.0.1.
     const LOCATIONS_KEY = 'rw_locations';
     const SCHEMA_KEY = 'rw_schema_version';
@@ -26,7 +26,6 @@ class Resenas_WordPress {
     public function __construct() {
         register_activation_hook(__FILE__, [$this, 'activate']);
         add_action('plugins_loaded', [$this, 'maybe_upgrade']);
-        add_action('init', [$this, 'load_textdomain']);
 
         add_action('admin_menu', [$this, 'admin_menu']);
         add_action('admin_init', [$this, 'register_settings']);
@@ -52,10 +51,6 @@ class Resenas_WordPress {
 
         add_action('rw_send_low_rating_email', [$this, 'send_low_rating_email_async'], 10, 7);
         add_filter('plugin_action_links_' . plugin_basename(__FILE__), [$this, 'plugin_links']);
-    }
-
-    public function load_textdomain() {
-        load_plugin_textdomain('resenas-wordpress', false, dirname(plugin_basename(__FILE__)) . '/languages');
     }
 
     public function activate() {
@@ -127,18 +122,18 @@ class Resenas_WordPress {
             'button_text_color' => '#ffffff',
             'google_review_url' => '',
             'low_rating_threshold' => 3,
-            'headline' => __('¿Qué te ha parecido nuestro servicio?', 'resenas-wordpress'),
-            'subheadline' => __('Tu opinión nos ayuda a mejorar.', 'resenas-wordpress'),
-            'low_title' => __('Sentimos que tu experiencia no haya sido la mejor', 'resenas-wordpress'),
-            'low_text' => __('Cuéntanos qué ha pasado para poder ayudarte y seguir mejorando.', 'resenas-wordpress'),
-            'high_title' => __('Muchas gracias por tu valoración', 'resenas-wordpress'),
-            'high_text' => __('¿Nos ayudas dejando tu reseña en Google?', 'resenas-wordpress'),
-            'thanks_title' => __('Gracias por tu opinión', 'resenas-wordpress'),
-            'thanks_text' => __('Hemos recibido tu respuesta correctamente.', 'resenas-wordpress'),
-            'low_button' => __('Enviar comentario', 'resenas-wordpress'),
-            'high_button' => __('Dejar reseña en Google', 'resenas-wordpress'),
+            'headline' => __('¿Qué te ha parecido nuestro servicio?', 'kairoseth-reviews'),
+            'subheadline' => __('Tu opinión nos ayuda a mejorar.', 'kairoseth-reviews'),
+            'low_title' => __('Sentimos que tu experiencia no haya sido la mejor', 'kairoseth-reviews'),
+            'low_text' => __('Cuéntanos qué ha pasado para poder ayudarte y seguir mejorando.', 'kairoseth-reviews'),
+            'high_title' => __('Muchas gracias por tu valoración', 'kairoseth-reviews'),
+            'high_text' => __('¿Nos ayudas dejando tu reseña en Google?', 'kairoseth-reviews'),
+            'thanks_title' => __('Gracias por tu opinión', 'kairoseth-reviews'),
+            'thanks_text' => __('Hemos recibido tu respuesta correctamente.', 'kairoseth-reviews'),
+            'low_button' => __('Enviar comentario', 'kairoseth-reviews'),
+            'high_button' => __('Dejar reseña en Google', 'kairoseth-reviews'),
             'show_reason_buttons' => 1,
-            'reason_options' => implode("\n", [__('Atención', 'resenas-wordpress'), __('Tiempo de espera', 'resenas-wordpress'), __('Precio', 'resenas-wordpress'), __('Resultado del servicio', 'resenas-wordpress'), __('Otro', 'resenas-wordpress')]),
+            'reason_options' => implode("\n", [__('Atención', 'kairoseth-reviews'), __('Tiempo de espera', 'kairoseth-reviews'), __('Precio', 'kairoseth-reviews'), __('Resultado del servicio', 'kairoseth-reviews'), __('Otro', 'kairoseth-reviews')]),
             'custom_css' => '',
             'notify_email' => get_option('admin_email'),
             'send_low_rating_email' => 1,
@@ -182,7 +177,7 @@ class Resenas_WordPress {
             return [
                 'location' => null,
                 'requested_slug' => $requested_slug,
-                'error' => __('La sede indicada no está disponible.', 'resenas-wordpress'),
+                'error' => __('La sede indicada no está disponible.', 'kairoseth-reviews'),
             ];
         }
 
@@ -198,7 +193,7 @@ class Resenas_WordPress {
             return [
                 'location' => null,
                 'requested_slug' => '',
-                'error' => __('Este negocio tiene varias sedes. El enlace debe indicar la sede.', 'resenas-wordpress'),
+                'error' => __('Este negocio tiene varias sedes. El enlace debe indicar la sede.', 'kairoseth-reviews'),
             ];
         }
 
@@ -210,25 +205,25 @@ class Resenas_WordPress {
     }
 
     public function plugin_links($links) {
-        $links[] = '<a href="' . esc_url(admin_url('admin.php?page=rw-dashboard')) . '">' . esc_html__('Dashboard', 'resenas-wordpress') . '</a>';
-        $links[] = '<a href="' . esc_url(admin_url('admin.php?page=rw-settings')) . '">' . esc_html__('Ajustes', 'resenas-wordpress') . '</a>';
+        $links[] = '<a href="' . esc_url(admin_url('admin.php?page=rw-dashboard')) . '">' . esc_html__('Dashboard', 'kairoseth-reviews') . '</a>';
+        $links[] = '<a href="' . esc_url(admin_url('admin.php?page=rw-settings')) . '">' . esc_html__('Ajustes', 'kairoseth-reviews') . '</a>';
         return $links;
     }
 
     public function admin_menu() {
         add_menu_page(
-            __('Reseñas WordPress', 'resenas-wordpress'),
-            __('Reseñas WordPress', 'resenas-wordpress'),
+            __('Reseñas WordPress', 'kairoseth-reviews'),
+            __('Reseñas WordPress', 'kairoseth-reviews'),
             'manage_options',
             'rw-dashboard',
             [$this, 'dashboard_page'],
             'dashicons-star-filled',
             58
         );
-        add_submenu_page('rw-dashboard', __('Dashboard', 'resenas-wordpress'), __('Dashboard', 'resenas-wordpress'), 'manage_options', 'rw-dashboard', [$this, 'dashboard_page']);
-        add_submenu_page('rw-dashboard', __('Feedback', 'resenas-wordpress'), __('Feedback', 'resenas-wordpress'), 'manage_options', 'rw-feedback', [$this, 'entries_page']);
-        add_submenu_page('rw-dashboard', __('Sedes', 'resenas-wordpress'), __('Sedes', 'resenas-wordpress'), 'manage_options', 'rw-locations', [$this, 'locations_page']);
-        add_submenu_page('rw-dashboard', __('Apariencia y ajustes', 'resenas-wordpress'), __('Apariencia y ajustes', 'resenas-wordpress'), 'manage_options', 'rw-settings', [$this, 'settings_page']);
+        add_submenu_page('rw-dashboard', __('Dashboard', 'kairoseth-reviews'), __('Dashboard', 'kairoseth-reviews'), 'manage_options', 'rw-dashboard', [$this, 'dashboard_page']);
+        add_submenu_page('rw-dashboard', __('Feedback', 'kairoseth-reviews'), __('Feedback', 'kairoseth-reviews'), 'manage_options', 'rw-feedback', [$this, 'entries_page']);
+        add_submenu_page('rw-dashboard', __('Sedes', 'kairoseth-reviews'), __('Sedes', 'kairoseth-reviews'), 'manage_options', 'rw-locations', [$this, 'locations_page']);
+        add_submenu_page('rw-dashboard', __('Apariencia y ajustes', 'kairoseth-reviews'), __('Apariencia y ajustes', 'kairoseth-reviews'), 'manage_options', 'rw-settings', [$this, 'settings_page']);
     }
 
     public function register_settings() {
@@ -275,43 +270,51 @@ class Resenas_WordPress {
         wp_enqueue_style('wp-color-picker');
         wp_enqueue_media();
         wp_enqueue_script('wp-color-picker');
-        wp_add_inline_script('wp-color-picker', "
-            jQuery(function($){
+
+        $media_title = wp_json_encode(__('Select a logo', 'kairoseth-reviews'));
+        $media_button = wp_json_encode(__('Use logo', 'kairoseth-reviews'));
+        wp_add_inline_script(
+            'wp-color-picker',
+            "jQuery(function($){
                 $('.lad-rf-color').wpColorPicker();
                 $(document).on('click', '.rw-upload-logo', function(e){
                     e.preventDefault();
                     const target = $('#rw_logo_url');
-                    const frame = wp.media({title:'Selecciona un logo',button:{text:'Usar logo'},multiple:false});
+                    const frame = wp.media({title:{$media_title},button:{text:{$media_button}},multiple:false});
                     frame.on('select', function(){
                         const attachment = frame.state().get('selection').first().toJSON();
                         target.val(attachment.url);
                     });
                     frame.open();
                 });
-            });
-        ");
+            });"
+        );
     }
 
     public function dashboard_page() {
         global $wpdb;
         $table = $wpdb->prefix . self::TABLE;
-        $total = (int) $wpdb->get_var("SELECT COUNT(*) FROM $table");
-        $avg = (float) $wpdb->get_var("SELECT AVG(rating) FROM $table WHERE rating IS NOT NULL");
-        $low = (int) $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $table WHERE rating <= %d", (int) $this->get_settings()['low_rating_threshold']));
+
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- Live metrics from the plugin's own table.
+        $total = (int) $wpdb->get_var($wpdb->prepare('SELECT COUNT(*) FROM %i', $table));
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- Live metrics from the plugin's own table.
+        $avg = (float) $wpdb->get_var($wpdb->prepare('SELECT AVG(rating) FROM %i WHERE rating IS NOT NULL', $table));
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- Live metrics from the plugin's own table.
+        $low = (int) $wpdb->get_var($wpdb->prepare('SELECT COUNT(*) FROM %i WHERE rating <= %d', $table, (int) $this->get_settings()['low_rating_threshold']));
         $locations = $this->get_locations();
         ?>
         <div class="wrap rw-admin">
             <div class="rw-admin-hero">
-                <h1>Reseñas WordPress</h1>
-                <p>Recoge valoraciones, detecta clientes que necesitan seguimiento y facilita que compartan su experiencia pública desde una página de tu propio WordPress.</p>
+                <h1><?php esc_html_e('Kairoseth Reviews', 'kairoseth-reviews'); ?></h1>
+                <p><?php esc_html_e('Collect ratings, detect customers who need follow-up, and help them share their public experience from a page on your own WordPress site.', 'kairoseth-reviews'); ?></p>
             </div>
 
-            <div class="rw-metric-grid" aria-label="Resumen de actividad">
+            <div class="rw-metric-grid" aria-label="<?php esc_attr_e('Activity overview', 'kairoseth-reviews'); ?>">
                 <?php $cards = [
-                    ['Feedback total', $total],
-                    ['Valoración media', $total ? number_format_i18n($avg, 2) . ' / 5' : '—'],
-                    ['Requieren seguimiento', $low],
-                    ['Sedes configuradas', count($locations)],
+                    [__('Total feedback', 'kairoseth-reviews'), $total],
+                    [__('Average rating', 'kairoseth-reviews'), $total ? number_format_i18n($avg, 2) . ' / 5' : '—'],
+                    [__('Need follow-up', 'kairoseth-reviews'), $low],
+                    [__('Configured locations', 'kairoseth-reviews'), count($locations)],
                 ]; foreach ($cards as $card): ?>
                     <div class="rw-metric-card">
                         <span class="rw-metric-label"><?php echo esc_html($card[0]); ?></span>
@@ -322,23 +325,23 @@ class Resenas_WordPress {
 
             <div class="rw-admin-grid">
                 <section class="rw-admin-panel" aria-labelledby="rw-howto-title">
-                    <h2 id="rw-howto-title">Cómo funciona</h2>
-                    <p class="rw-admin-intro">El enlace que envías al cliente es la URL de la página de WordPress donde hayas insertado el shortcode.</p>
+                    <h2 id="rw-howto-title"><?php esc_html_e('How it works', 'kairoseth-reviews'); ?></h2>
+                    <p class="rw-admin-intro"><?php esc_html_e('The link you send to the customer is the URL of the WordPress page where you placed the shortcode.', 'kairoseth-reviews'); ?></p>
                     <ol class="rw-howto">
-                        <li><strong>Crea una página.</strong> Por ejemplo, una página llamada <em>Reseñas</em>.</li>
-                        <li><strong>Inserta el shortcode.</strong> Añade <code>[resenas_wordpress]</code> dentro de esa página y publícala.</li>
-                        <li><strong>Configura tu negocio.</strong> Añade logo, textos, enlace de Google y, si lo necesitas, una o varias sedes.</li>
-                        <li><strong>Envía la URL.</strong> Comparte por WhatsApp una dirección como <code>https://tuweb.com/resenas/</code>. Puedes añadir <code>?ref=ABC123</code> y, en multisede, <code>?sede=sede-centro</code>.</li>
+                        <li><strong><?php esc_html_e('Create a page.', 'kairoseth-reviews'); ?></strong> <?php esc_html_e('For example, create a page called Reviews.', 'kairoseth-reviews'); ?></li>
+                        <li><strong><?php esc_html_e('Insert the shortcode.', 'kairoseth-reviews'); ?></strong> <?php esc_html_e('Add [resenas_wordpress] to the page and publish it.', 'kairoseth-reviews'); ?></li>
+                        <li><strong><?php esc_html_e('Configure your business.', 'kairoseth-reviews'); ?></strong> <?php esc_html_e('Add your logo, copy, Google review link, and optional locations.', 'kairoseth-reviews'); ?></li>
+                        <li><strong><?php esc_html_e('Send the page URL.', 'kairoseth-reviews'); ?></strong> <?php esc_html_e('Share a URL such as', 'kairoseth-reviews'); ?> <code>https://example.com/reviews/</code>. <?php esc_html_e('You can add', 'kairoseth-reviews'); ?> <code>?ref=ORDER-123</code> <?php esc_html_e('and, for multiple locations,', 'kairoseth-reviews'); ?> <code>?sede=downtown</code>.</li>
                     </ol>
                 </section>
 
                 <aside class="rw-admin-panel" aria-labelledby="rw-quick-title">
-                    <h2 id="rw-quick-title">Acciones rápidas</h2>
-                    <p class="rw-admin-intro">Configura el producto y revisa las respuestas desde aquí.</p>
+                    <h2 id="rw-quick-title"><?php esc_html_e('Quick actions', 'kairoseth-reviews'); ?></h2>
+                    <p class="rw-admin-intro"><?php esc_html_e('Configure the plugin and review customer responses.', 'kairoseth-reviews'); ?></p>
                     <div class="rw-quick-actions">
-                        <a class="button button-primary" href="<?php echo esc_url(admin_url('admin.php?page=rw-settings')); ?>">Apariencia y ajustes</a>
-                        <a class="button" href="<?php echo esc_url(admin_url('admin.php?page=rw-locations')); ?>">Gestionar sedes</a>
-                        <a class="button" href="<?php echo esc_url(admin_url('admin.php?page=rw-feedback')); ?>">Ver feedback</a>
+                        <a class="button button-primary" href="<?php echo esc_url(admin_url('admin.php?page=rw-settings')); ?>"><?php esc_html_e('Appearance and settings', 'kairoseth-reviews'); ?></a>
+                        <a class="button" href="<?php echo esc_url(admin_url('admin.php?page=rw-locations')); ?>"><?php esc_html_e('Manage locations', 'kairoseth-reviews'); ?></a>
+                        <a class="button" href="<?php echo esc_url(admin_url('admin.php?page=rw-feedback')); ?>"><?php esc_html_e('View feedback', 'kairoseth-reviews'); ?></a>
                     </div>
                 </aside>
             </div>
@@ -350,88 +353,88 @@ class Resenas_WordPress {
         $s = $this->get_settings(); ?>
         <div class="wrap rw-admin rw-settings-page">
             <div class="rw-admin-hero">
-                <h1><?php esc_html_e('Apariencia y ajustes', 'resenas-wordpress'); ?></h1>
-                <p><?php esc_html_e('Configura la experiencia del cliente, la identidad visual y los avisos de seguimiento sin salir de WordPress.', 'resenas-wordpress'); ?></p>
+                <h1><?php esc_html_e('Apariencia y ajustes', 'kairoseth-reviews'); ?></h1>
+                <p><?php esc_html_e('Configura la experiencia del cliente, la identidad visual y los avisos de seguimiento sin salir de WordPress.', 'kairoseth-reviews'); ?></p>
             </div>
 
             <form method="post" action="options.php">
                 <?php settings_fields('rw_settings_group'); ?>
 
-                <nav class="rw-settings-nav" aria-label="<?php esc_attr_e('Secciones de ajustes', 'resenas-wordpress'); ?>">
-                    <a href="#rw-settings-general"><?php esc_html_e('General', 'resenas-wordpress'); ?></a>
-                    <a href="#rw-settings-appearance"><?php esc_html_e('Apariencia', 'resenas-wordpress'); ?></a>
-                    <a href="#rw-settings-copy"><?php esc_html_e('Textos', 'resenas-wordpress'); ?></a>
-                    <a href="#rw-settings-notifications"><?php esc_html_e('Notificaciones', 'resenas-wordpress'); ?></a>
+                <nav class="rw-settings-nav" aria-label="<?php esc_attr_e('Secciones de ajustes', 'kairoseth-reviews'); ?>">
+                    <a href="#rw-settings-general"><?php esc_html_e('General', 'kairoseth-reviews'); ?></a>
+                    <a href="#rw-settings-appearance"><?php esc_html_e('Apariencia', 'kairoseth-reviews'); ?></a>
+                    <a href="#rw-settings-copy"><?php esc_html_e('Textos', 'kairoseth-reviews'); ?></a>
+                    <a href="#rw-settings-notifications"><?php esc_html_e('Notificaciones', 'kairoseth-reviews'); ?></a>
                 </nav>
 
                 <section id="rw-settings-general" class="rw-settings-section" aria-labelledby="rw-settings-general-title">
                     <div class="rw-settings-section-head">
                         <span class="dashicons dashicons-admin-settings" aria-hidden="true"></span>
-                        <div><h2 id="rw-settings-general-title"><?php esc_html_e('General', 'resenas-wordpress'); ?></h2><p><?php esc_html_e('Identidad del negocio, Google y comportamiento del seguimiento.', 'resenas-wordpress'); ?></p></div>
+                        <div><h2 id="rw-settings-general-title"><?php esc_html_e('General', 'kairoseth-reviews'); ?></h2><p><?php esc_html_e('Identidad del negocio, Google y comportamiento del seguimiento.', 'kairoseth-reviews'); ?></p></div>
                     </div>
                     <table class="form-table" role="presentation">
-                        <tr><th scope="row"><?php esc_html_e('Nombre de la empresa', 'resenas-wordpress'); ?></th><td><input type="text" class="regular-text" name="<?php echo esc_attr(self::OPTION_KEY); ?>[company_name]" value="<?php echo esc_attr($s['company_name']); ?>"></td></tr>
-                        <tr><th scope="row"><?php esc_html_e('Logo', 'resenas-wordpress'); ?></th><td><div class="rw-inline-field"><input type="url" class="regular-text" id="rw_logo_url" name="<?php echo esc_attr(self::OPTION_KEY); ?>[logo_url]" value="<?php echo esc_attr($s['logo_url']); ?>"><button type="button" class="button rw-upload-logo"><?php esc_html_e('Subir / elegir', 'resenas-wordpress'); ?></button></div></td></tr>
-                        <tr><th scope="row"><?php esc_html_e('URL Google global', 'resenas-wordpress'); ?></th><td><input type="url" class="large-text" name="<?php echo esc_attr(self::OPTION_KEY); ?>[google_review_url]" value="<?php echo esc_attr($s['google_review_url']); ?>"><p class="description"><?php esc_html_e('Se utiliza cuando no hay sedes configuradas. En multisede, cada sede puede tener su propia URL.', 'resenas-wordpress'); ?></p></td></tr>
-                        <tr><th scope="row"><?php esc_html_e('Umbral de seguimiento', 'resenas-wordpress'); ?></th><td><input type="number" min="1" max="5" name="<?php echo esc_attr(self::OPTION_KEY); ?>[low_rating_threshold]" value="<?php echo esc_attr($s['low_rating_threshold']); ?>"><p class="description"><?php esc_html_e('Las valoraciones iguales o inferiores a este valor pedirán feedback interno para facilitar la recuperación del servicio.', 'resenas-wordpress'); ?></p></td></tr>
+                        <tr><th scope="row"><?php esc_html_e('Nombre de la empresa', 'kairoseth-reviews'); ?></th><td><input type="text" class="regular-text" name="<?php echo esc_attr(self::OPTION_KEY); ?>[company_name]" value="<?php echo esc_attr($s['company_name']); ?>"></td></tr>
+                        <tr><th scope="row"><?php esc_html_e('Logo', 'kairoseth-reviews'); ?></th><td><div class="rw-inline-field"><input type="url" class="regular-text" id="rw_logo_url" name="<?php echo esc_attr(self::OPTION_KEY); ?>[logo_url]" value="<?php echo esc_attr($s['logo_url']); ?>"><button type="button" class="button rw-upload-logo"><?php esc_html_e('Subir / elegir', 'kairoseth-reviews'); ?></button></div></td></tr>
+                        <tr><th scope="row"><?php esc_html_e('URL Google global', 'kairoseth-reviews'); ?></th><td><input type="url" class="large-text" name="<?php echo esc_attr(self::OPTION_KEY); ?>[google_review_url]" value="<?php echo esc_attr($s['google_review_url']); ?>"><p class="description"><?php esc_html_e('Se utiliza cuando no hay sedes configuradas. En multisede, cada sede puede tener su propia URL.', 'kairoseth-reviews'); ?></p></td></tr>
+                        <tr><th scope="row"><?php esc_html_e('Umbral de seguimiento', 'kairoseth-reviews'); ?></th><td><input type="number" min="1" max="5" name="<?php echo esc_attr(self::OPTION_KEY); ?>[low_rating_threshold]" value="<?php echo esc_attr($s['low_rating_threshold']); ?>"><p class="description"><?php esc_html_e('Las valoraciones iguales o inferiores a este valor pedirán feedback interno para facilitar la recuperación del servicio.', 'kairoseth-reviews'); ?></p></td></tr>
                     </table>
                 </section>
 
                 <section id="rw-settings-appearance" class="rw-settings-section" aria-labelledby="rw-settings-appearance-title">
                     <div class="rw-settings-section-head">
                         <span class="dashicons dashicons-art" aria-hidden="true"></span>
-                        <div><h2 id="rw-settings-appearance-title"><?php esc_html_e('Apariencia', 'resenas-wordpress'); ?></h2><p><?php esc_html_e('Colores y ajustes visuales del formulario público.', 'resenas-wordpress'); ?></p></div>
+                        <div><h2 id="rw-settings-appearance-title"><?php esc_html_e('Apariencia', 'kairoseth-reviews'); ?></h2><p><?php esc_html_e('Colores y ajustes visuales del formulario público.', 'kairoseth-reviews'); ?></p></div>
                     </div>
                     <table class="form-table" role="presentation">
-                        <tr><th scope="row"><?php esc_html_e('Color principal', 'resenas-wordpress'); ?></th><td><input type="text" class="lad-rf-color" name="<?php echo esc_attr(self::OPTION_KEY); ?>[primary_color]" value="<?php echo esc_attr($s['primary_color']); ?>"></td></tr>
-                        <tr><th scope="row"><?php esc_html_e('Color acento / estrellas', 'resenas-wordpress'); ?></th><td><input type="text" class="lad-rf-color" name="<?php echo esc_attr(self::OPTION_KEY); ?>[accent_color]" value="<?php echo esc_attr($s['accent_color']); ?>"></td></tr>
-                        <tr><th scope="row"><?php esc_html_e('Color de fondo', 'resenas-wordpress'); ?></th><td><input type="text" class="lad-rf-color" name="<?php echo esc_attr(self::OPTION_KEY); ?>[background_color]" value="<?php echo esc_attr($s['background_color']); ?>"></td></tr>
-                        <tr><th scope="row"><?php esc_html_e('Color de tarjeta', 'resenas-wordpress'); ?></th><td><input type="text" class="lad-rf-color" name="<?php echo esc_attr(self::OPTION_KEY); ?>[card_color]" value="<?php echo esc_attr($s['card_color']); ?>"></td></tr>
-                        <tr><th scope="row"><?php esc_html_e('Color de texto', 'resenas-wordpress'); ?></th><td><input type="text" class="lad-rf-color" name="<?php echo esc_attr(self::OPTION_KEY); ?>[text_color]" value="<?php echo esc_attr($s['text_color']); ?>"></td></tr>
-                        <tr><th scope="row"><?php esc_html_e('Color del texto de botones', 'resenas-wordpress'); ?></th><td><input type="text" class="lad-rf-color" name="<?php echo esc_attr(self::OPTION_KEY); ?>[button_text_color]" value="<?php echo esc_attr($s['button_text_color']); ?>"></td></tr>
-                        <tr><th scope="row"><?php esc_html_e('CSS personalizado', 'resenas-wordpress'); ?></th><td><textarea class="large-text code" rows="8" name="<?php echo esc_attr(self::OPTION_KEY); ?>[custom_css]"><?php echo esc_textarea($s['custom_css']); ?></textarea><p class="description"><?php esc_html_e('Solo para ajustes avanzados. El diseño base ya está optimizado para móvil y accesibilidad.', 'resenas-wordpress'); ?></p></td></tr>
+                        <tr><th scope="row"><?php esc_html_e('Color principal', 'kairoseth-reviews'); ?></th><td><input type="text" class="lad-rf-color" name="<?php echo esc_attr(self::OPTION_KEY); ?>[primary_color]" value="<?php echo esc_attr($s['primary_color']); ?>"></td></tr>
+                        <tr><th scope="row"><?php esc_html_e('Color acento / estrellas', 'kairoseth-reviews'); ?></th><td><input type="text" class="lad-rf-color" name="<?php echo esc_attr(self::OPTION_KEY); ?>[accent_color]" value="<?php echo esc_attr($s['accent_color']); ?>"></td></tr>
+                        <tr><th scope="row"><?php esc_html_e('Color de fondo', 'kairoseth-reviews'); ?></th><td><input type="text" class="lad-rf-color" name="<?php echo esc_attr(self::OPTION_KEY); ?>[background_color]" value="<?php echo esc_attr($s['background_color']); ?>"></td></tr>
+                        <tr><th scope="row"><?php esc_html_e('Color de tarjeta', 'kairoseth-reviews'); ?></th><td><input type="text" class="lad-rf-color" name="<?php echo esc_attr(self::OPTION_KEY); ?>[card_color]" value="<?php echo esc_attr($s['card_color']); ?>"></td></tr>
+                        <tr><th scope="row"><?php esc_html_e('Color de texto', 'kairoseth-reviews'); ?></th><td><input type="text" class="lad-rf-color" name="<?php echo esc_attr(self::OPTION_KEY); ?>[text_color]" value="<?php echo esc_attr($s['text_color']); ?>"></td></tr>
+                        <tr><th scope="row"><?php esc_html_e('Color del texto de botones', 'kairoseth-reviews'); ?></th><td><input type="text" class="lad-rf-color" name="<?php echo esc_attr(self::OPTION_KEY); ?>[button_text_color]" value="<?php echo esc_attr($s['button_text_color']); ?>"></td></tr>
+                        <tr><th scope="row"><?php esc_html_e('CSS personalizado', 'kairoseth-reviews'); ?></th><td><textarea class="large-text code" rows="8" name="<?php echo esc_attr(self::OPTION_KEY); ?>[custom_css]"><?php echo esc_textarea($s['custom_css']); ?></textarea><p class="description"><?php esc_html_e('Solo para ajustes avanzados. El diseño base ya está optimizado para móvil y accesibilidad.', 'kairoseth-reviews'); ?></p></td></tr>
                     </table>
                 </section>
 
                 <section id="rw-settings-copy" class="rw-settings-section" aria-labelledby="rw-settings-copy-title">
                     <div class="rw-settings-section-head">
                         <span class="dashicons dashicons-edit-page" aria-hidden="true"></span>
-                        <div><h2 id="rw-settings-copy-title"><?php esc_html_e('Textos', 'resenas-wordpress'); ?></h2><p><?php esc_html_e('Personaliza los mensajes que verá el cliente durante la valoración.', 'resenas-wordpress'); ?></p></div>
+                        <div><h2 id="rw-settings-copy-title"><?php esc_html_e('Textos', 'kairoseth-reviews'); ?></h2><p><?php esc_html_e('Personaliza los mensajes que verá el cliente durante la valoración.', 'kairoseth-reviews'); ?></p></div>
                     </div>
                     <table class="form-table" role="presentation">
                     <?php
                     $text_fields = [
-                        'headline' => __('Título principal', 'resenas-wordpress'),
-                        'subheadline' => __('Subtítulo', 'resenas-wordpress'),
-                        'low_title' => __('Título para seguimiento', 'resenas-wordpress'),
-                        'low_text' => __('Texto para seguimiento', 'resenas-wordpress'),
-                        'high_title' => __('Título valoración alta', 'resenas-wordpress'),
-                        'high_text' => __('Texto valoración alta', 'resenas-wordpress'),
-                        'thanks_title' => __('Título de agradecimiento', 'resenas-wordpress'),
-                        'thanks_text' => __('Texto de agradecimiento', 'resenas-wordpress'),
-                        'low_button' => __('Texto botón comentario', 'resenas-wordpress'),
-                        'high_button' => __('Texto botón Google', 'resenas-wordpress'),
+                        'headline' => __('Título principal', 'kairoseth-reviews'),
+                        'subheadline' => __('Subtítulo', 'kairoseth-reviews'),
+                        'low_title' => __('Título para seguimiento', 'kairoseth-reviews'),
+                        'low_text' => __('Texto para seguimiento', 'kairoseth-reviews'),
+                        'high_title' => __('Título valoración alta', 'kairoseth-reviews'),
+                        'high_text' => __('Texto valoración alta', 'kairoseth-reviews'),
+                        'thanks_title' => __('Título de agradecimiento', 'kairoseth-reviews'),
+                        'thanks_text' => __('Texto de agradecimiento', 'kairoseth-reviews'),
+                        'low_button' => __('Texto botón comentario', 'kairoseth-reviews'),
+                        'high_button' => __('Texto botón Google', 'kairoseth-reviews'),
                     ];
                     foreach ($text_fields as $key => $label): ?>
                         <tr><th scope="row"><?php echo esc_html($label); ?></th><td><input type="text" class="large-text" name="<?php echo esc_attr(self::OPTION_KEY); ?>[<?php echo esc_attr($key); ?>]" value="<?php echo esc_attr($s[$key]); ?>"></td></tr>
                     <?php endforeach; ?>
-                        <tr><th scope="row"><?php esc_html_e('Mostrar motivos rápidos', 'resenas-wordpress'); ?></th><td><label><input type="checkbox" name="<?php echo esc_attr(self::OPTION_KEY); ?>[show_reason_buttons]" value="1" <?php checked($s['show_reason_buttons'], 1); ?>> <?php esc_html_e('Sí', 'resenas-wordpress'); ?></label></td></tr>
-                        <tr><th scope="row"><?php esc_html_e('Motivos rápidos', 'resenas-wordpress'); ?></th><td><textarea class="large-text" rows="6" name="<?php echo esc_attr(self::OPTION_KEY); ?>[reason_options]"><?php echo esc_textarea($s['reason_options']); ?></textarea><p class="description"><?php esc_html_e('Uno por línea.', 'resenas-wordpress'); ?></p></td></tr>
+                        <tr><th scope="row"><?php esc_html_e('Mostrar motivos rápidos', 'kairoseth-reviews'); ?></th><td><label><input type="checkbox" name="<?php echo esc_attr(self::OPTION_KEY); ?>[show_reason_buttons]" value="1" <?php checked($s['show_reason_buttons'], 1); ?>> <?php esc_html_e('Sí', 'kairoseth-reviews'); ?></label></td></tr>
+                        <tr><th scope="row"><?php esc_html_e('Motivos rápidos', 'kairoseth-reviews'); ?></th><td><textarea class="large-text" rows="6" name="<?php echo esc_attr(self::OPTION_KEY); ?>[reason_options]"><?php echo esc_textarea($s['reason_options']); ?></textarea><p class="description"><?php esc_html_e('Uno por línea.', 'kairoseth-reviews'); ?></p></td></tr>
                     </table>
                 </section>
 
                 <section id="rw-settings-notifications" class="rw-settings-section" aria-labelledby="rw-settings-notifications-title">
                     <div class="rw-settings-section-head">
                         <span class="dashicons dashicons-email-alt" aria-hidden="true"></span>
-                        <div><h2 id="rw-settings-notifications-title"><?php esc_html_e('Notificaciones', 'resenas-wordpress'); ?></h2><p><?php esc_html_e('Define dónde recibir los avisos cuando una valoración requiere seguimiento.', 'resenas-wordpress'); ?></p></div>
+                        <div><h2 id="rw-settings-notifications-title"><?php esc_html_e('Notificaciones', 'kairoseth-reviews'); ?></h2><p><?php esc_html_e('Define dónde recibir los avisos cuando una valoración requiere seguimiento.', 'kairoseth-reviews'); ?></p></div>
                     </div>
                     <table class="form-table" role="presentation">
-                        <tr><th scope="row"><?php esc_html_e('Email global de aviso', 'resenas-wordpress'); ?></th><td><input type="email" class="regular-text" name="<?php echo esc_attr(self::OPTION_KEY); ?>[notify_email]" value="<?php echo esc_attr($s['notify_email']); ?>"><p class="description"><?php esc_html_e('Cada sede puede tener su propio email. Si está vacío, se utiliza este.', 'resenas-wordpress'); ?></p></td></tr>
-                        <tr><th scope="row"><?php esc_html_e('Avisar cuando requiere seguimiento', 'resenas-wordpress'); ?></th><td><label><input type="checkbox" name="<?php echo esc_attr(self::OPTION_KEY); ?>[send_low_rating_email]" value="1" <?php checked($s['send_low_rating_email'], 1); ?>> <?php esc_html_e('Enviar email automático', 'resenas-wordpress'); ?></label></td></tr>
+                        <tr><th scope="row"><?php esc_html_e('Email global de aviso', 'kairoseth-reviews'); ?></th><td><input type="email" class="regular-text" name="<?php echo esc_attr(self::OPTION_KEY); ?>[notify_email]" value="<?php echo esc_attr($s['notify_email']); ?>"><p class="description"><?php esc_html_e('Cada sede puede tener su propio email. Si está vacío, se utiliza este.', 'kairoseth-reviews'); ?></p></td></tr>
+                        <tr><th scope="row"><?php esc_html_e('Avisar cuando requiere seguimiento', 'kairoseth-reviews'); ?></th><td><label><input type="checkbox" name="<?php echo esc_attr(self::OPTION_KEY); ?>[send_low_rating_email]" value="1" <?php checked($s['send_low_rating_email'], 1); ?>> <?php esc_html_e('Enviar email automático', 'kairoseth-reviews'); ?></label></td></tr>
                     </table>
                 </section>
 
-                <div class="rw-settings-save"><?php submit_button(__('Guardar ajustes', 'resenas-wordpress'), 'primary', 'submit', false); ?></div>
+                <div class="rw-settings-save"><?php submit_button(__('Guardar ajustes', 'kairoseth-reviews'), 'primary', 'submit', false); ?></div>
             </form>
         </div>
         <?php
@@ -439,55 +442,60 @@ class Resenas_WordPress {
 
     public function locations_page() {
         $locations = $this->get_locations();
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only admin navigation parameter.
         $editing_slug = sanitize_title(wp_unslash($_GET['edit'] ?? ''));
         $editing = $editing_slug && isset($locations[$editing_slug]) ? $locations[$editing_slug] : null;
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only success notice flag after a nonce-protected POST redirect.
+        $updated = !empty($_GET['updated']);
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only success notice flag after a nonce-protected POST redirect.
+        $deleted = !empty($_GET['deleted']);
         ?>
         <div class="wrap rw-admin">
-            <h1>Reseñas WordPress — Sedes</h1>
-            <p class="rw-admin-intro">Cada sede puede tener su propia ficha de Google y su propio email de avisos. Si solo tienes una ubicación, puedes trabajar con la configuración global.</p>
+            <h1><?php esc_html_e('Kairoseth Reviews — Locations', 'kairoseth-reviews'); ?></h1>
+            <p class="rw-admin-intro"><?php esc_html_e('Each location can have its own Google review link and notification email. If you only have one location, you can use the global settings.', 'kairoseth-reviews'); ?></p>
 
-            <?php if (!empty($_GET['updated'])): ?><div class="notice notice-success is-dismissible"><p>Sede guardada correctamente.</p></div><?php endif; ?>
-            <?php if (!empty($_GET['deleted'])): ?><div class="notice notice-success is-dismissible"><p>Sede eliminada correctamente.</p></div><?php endif; ?>
+            <?php if ($updated): ?><div class="notice notice-success is-dismissible"><p><?php esc_html_e('Location saved successfully.', 'kairoseth-reviews'); ?></p></div><?php endif; ?>
+            <?php if ($deleted): ?><div class="notice notice-success is-dismissible"><p><?php esc_html_e('Location deleted successfully.', 'kairoseth-reviews'); ?></p></div><?php endif; ?>
 
-            <h2><?php echo $editing ? 'Editar sede' : 'Añadir sede'; ?></h2>
+            <h2><?php echo esc_html($editing ? __('Edit location', 'kairoseth-reviews') : __('Add location', 'kairoseth-reviews')); ?></h2>
             <form class="rw-admin-form" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
                 <input type="hidden" name="action" value="rw_save_location">
                 <input type="hidden" name="old_slug" value="<?php echo esc_attr($editing_slug); ?>">
                 <?php wp_nonce_field('rw_save_location'); ?>
                 <table class="form-table" role="presentation">
-                    <tr><th scope="row">Nombre</th><td><input required type="text" class="regular-text" name="name" value="<?php echo esc_attr($editing['name'] ?? ''); ?>" placeholder="Ej. Sede Centro"></td></tr>
-                    <tr><th scope="row">Identificador</th><td><input required type="text" class="regular-text" name="slug" value="<?php echo esc_attr($editing['slug'] ?? ''); ?>" placeholder="sede-centro"><p class="description">Se utiliza en la URL: <code>?sede=sede-centro</code>.</p></td></tr>
-                    <tr><th scope="row">URL de reseña Google</th><td><input required type="url" class="large-text" name="google_review_url" value="<?php echo esc_attr($editing['google_review_url'] ?? ''); ?>" placeholder="https://g.page/r/.../review"></td></tr>
-                    <tr><th scope="row">Email de avisos</th><td><input type="email" class="regular-text" name="notify_email" value="<?php echo esc_attr($editing['notify_email'] ?? ''); ?>"><p class="description">Opcional. Si está vacío se usa el email global.</p></td></tr>
-                    <tr><th scope="row">Estado</th><td><label><input type="checkbox" name="active" value="1" <?php checked($editing ? !empty($editing['active']) : true); ?>> Activa</label></td></tr>
+                    <tr><th scope="row"><?php esc_html_e('Name', 'kairoseth-reviews'); ?></th><td><input required type="text" class="regular-text" name="name" value="<?php echo esc_attr($editing['name'] ?? ''); ?>" placeholder="<?php esc_attr_e('Example: Downtown', 'kairoseth-reviews'); ?>"></td></tr>
+                    <tr><th scope="row"><?php esc_html_e('Identifier', 'kairoseth-reviews'); ?></th><td><input required type="text" class="regular-text" name="slug" value="<?php echo esc_attr($editing['slug'] ?? ''); ?>" placeholder="downtown"><p class="description"><?php esc_html_e('Used in the page URL, for example:', 'kairoseth-reviews'); ?> <code>?sede=downtown</code>.</p></td></tr>
+                    <tr><th scope="row"><?php esc_html_e('Google review URL', 'kairoseth-reviews'); ?></th><td><input required type="url" class="large-text" name="google_review_url" value="<?php echo esc_attr($editing['google_review_url'] ?? ''); ?>" placeholder="https://g.page/r/.../review"></td></tr>
+                    <tr><th scope="row"><?php esc_html_e('Notification email', 'kairoseth-reviews'); ?></th><td><input type="email" class="regular-text" name="notify_email" value="<?php echo esc_attr($editing['notify_email'] ?? ''); ?>"><p class="description"><?php esc_html_e('Optional. The global notification email is used when this is empty.', 'kairoseth-reviews'); ?></p></td></tr>
+                    <tr><th scope="row"><?php esc_html_e('Status', 'kairoseth-reviews'); ?></th><td><label><input type="checkbox" name="active" value="1" <?php checked($editing ? !empty($editing['active']) : true); ?>> <?php esc_html_e('Active', 'kairoseth-reviews'); ?></label></td></tr>
                 </table>
-                <?php submit_button($editing ? 'Actualizar sede' : 'Añadir sede'); ?>
-                <?php if ($editing): ?><a class="button" href="<?php echo esc_url(admin_url('admin.php?page=rw-locations')); ?>">Cancelar</a><?php endif; ?>
+                <?php submit_button($editing ? __('Update location', 'kairoseth-reviews') : __('Add location', 'kairoseth-reviews')); ?>
+                <?php if ($editing): ?><a class="button" href="<?php echo esc_url(admin_url('admin.php?page=rw-locations')); ?>"><?php esc_html_e('Cancel', 'kairoseth-reviews'); ?></a><?php endif; ?>
             </form>
 
-            <h2>Sedes configuradas</h2>
+            <h2><?php esc_html_e('Configured locations', 'kairoseth-reviews'); ?></h2>
             <table class="widefat striped rw-admin-table">
-                <thead><tr><th>Nombre</th><th>Identificador</th><th>Google Reviews</th><th>Email avisos</th><th>Estado</th><th>Acciones</th></tr></thead>
+                <thead><tr><th><?php esc_html_e('Name', 'kairoseth-reviews'); ?></th><th><?php esc_html_e('Identifier', 'kairoseth-reviews'); ?></th><th><?php esc_html_e('Google Reviews', 'kairoseth-reviews'); ?></th><th><?php esc_html_e('Notification email', 'kairoseth-reviews'); ?></th><th><?php esc_html_e('Status', 'kairoseth-reviews'); ?></th><th><?php esc_html_e('Actions', 'kairoseth-reviews'); ?></th></tr></thead>
                 <tbody>
                 <?php if ($locations): foreach ($locations as $slug => $location): ?>
                     <tr>
                         <td><strong><?php echo esc_html($location['name']); ?></strong></td>
                         <td><code><?php echo esc_html($slug); ?></code></td>
-                        <td><a href="<?php echo esc_url($location['google_review_url']); ?>" target="_blank" rel="noopener">Abrir ficha</a></td>
-                        <td><?php echo esc_html($location['notify_email'] ?: 'Email global'); ?></td>
-                        <td><span class="rw-status-chip <?php echo !empty($location['active']) ? 'is-active' : 'is-inactive'; ?>"><?php echo !empty($location['active']) ? 'Activa' : 'Inactiva'; ?></span></td>
+                        <td><a href="<?php echo esc_url($location['google_review_url']); ?>" target="_blank" rel="noopener"><?php esc_html_e('Open listing', 'kairoseth-reviews'); ?></a></td>
+                        <td><?php echo esc_html($location['notify_email'] ?: __('Global email', 'kairoseth-reviews')); ?></td>
+                        <td><span class="rw-status-chip <?php echo !empty($location['active']) ? 'is-active' : 'is-inactive'; ?>"><?php echo esc_html(!empty($location['active']) ? __('Active', 'kairoseth-reviews') : __('Inactive', 'kairoseth-reviews')); ?></span></td>
                         <td class="rw-actions">
-                            <a class="button button-small" href="<?php echo esc_url(admin_url('admin.php?page=rw-locations&edit=' . rawurlencode($slug))); ?>">Editar</a>
-                            <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" onsubmit="return confirm('¿Eliminar esta sede?');">
+                            <a class="button button-small" href="<?php echo esc_url(admin_url('admin.php?page=rw-locations&edit=' . rawurlencode($slug))); ?>"><?php esc_html_e('Edit', 'kairoseth-reviews'); ?></a>
+                            <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" onsubmit="return confirm('<?php echo esc_js(__('Delete this location?', 'kairoseth-reviews')); ?>');">
                                 <input type="hidden" name="action" value="rw_delete_location">
                                 <input type="hidden" name="slug" value="<?php echo esc_attr($slug); ?>">
                                 <?php wp_nonce_field('rw_delete_location_' . $slug); ?>
-                                <button class="button button-small">Eliminar</button>
+                                <button class="button button-small"><?php esc_html_e('Delete', 'kairoseth-reviews'); ?></button>
                             </form>
                         </td>
                     </tr>
                 <?php endforeach; else: ?>
-                    <tr><td class="rw-empty" colspan="6">Todavía no hay sedes. Si tu negocio tiene una sola ubicación, puedes seguir utilizando la URL Google global de Ajustes.</td></tr>
+                    <tr><td class="rw-empty" colspan="6"><?php esc_html_e('No locations have been configured yet. If your business has one location, you can continue using the global Google review URL in Settings.', 'kairoseth-reviews'); ?></td></tr>
                 <?php endif; ?>
                 </tbody>
             </table>
@@ -496,7 +504,7 @@ class Resenas_WordPress {
     }
 
     public function save_location() {
-        if (!current_user_can('manage_options')) wp_die(esc_html__('No autorizado.', 'resenas-wordpress'));
+        if (!current_user_can('manage_options')) wp_die(esc_html__('No autorizado.', 'kairoseth-reviews'));
         check_admin_referer('rw_save_location');
 
         $name = sanitize_text_field(wp_unslash($_POST['name'] ?? ''));
@@ -528,7 +536,7 @@ class Resenas_WordPress {
     }
 
     public function delete_location() {
-        if (!current_user_can('manage_options')) wp_die(esc_html__('No autorizado.', 'resenas-wordpress'));
+        if (!current_user_can('manage_options')) wp_die(esc_html__('No autorizado.', 'kairoseth-reviews'));
         $slug = sanitize_title(wp_unslash($_POST['slug'] ?? ''));
         check_admin_referer('rw_delete_location_' . $slug);
 
@@ -540,43 +548,58 @@ class Resenas_WordPress {
         exit;
     }
 
+    private function get_status_label($status) {
+        $labels = [
+            'low_pending_feedback' => __('Waiting for feedback', 'kairoseth-reviews'),
+            'low_feedback_received' => __('Feedback received', 'kairoseth-reviews'),
+            'high_sent_to_google' => __('Google review option shown', 'kairoseth-reviews'),
+        ];
+        return $labels[$status] ?? $status;
+    }
+
     public function entries_page() {
         global $wpdb;
         $table = $wpdb->prefix . self::TABLE;
         $per_page = 50;
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only pagination parameter.
         $paged = max(1, intval($_GET['paged'] ?? 1));
         $offset = ($paged - 1) * $per_page;
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only filter parameter.
         $selected_location = sanitize_title(wp_unslash($_GET['location'] ?? ''));
 
         if ($selected_location) {
-            $total = (int) $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $table WHERE location_slug = %s", $selected_location));
-            $rows = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table WHERE location_slug = %s ORDER BY created_at DESC LIMIT %d OFFSET %d", $selected_location, $per_page, $offset));
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- Read-only reporting from the plugin's own table.
+            $total = (int) $wpdb->get_var($wpdb->prepare('SELECT COUNT(*) FROM %i WHERE location_slug = %s', $table, $selected_location));
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- Read-only reporting from the plugin's own table.
+            $rows = $wpdb->get_results($wpdb->prepare('SELECT * FROM %i WHERE location_slug = %s ORDER BY created_at DESC LIMIT %d OFFSET %d', $table, $selected_location, $per_page, $offset));
         } else {
-            $total = (int) $wpdb->get_var("SELECT COUNT(*) FROM $table");
-            $rows = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table ORDER BY created_at DESC LIMIT %d OFFSET %d", $per_page, $offset));
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- Read-only reporting from the plugin's own table.
+            $total = (int) $wpdb->get_var($wpdb->prepare('SELECT COUNT(*) FROM %i', $table));
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- Read-only reporting from the plugin's own table.
+            $rows = $wpdb->get_results($wpdb->prepare('SELECT * FROM %i ORDER BY created_at DESC LIMIT %d OFFSET %d', $table, $per_page, $offset));
         }
         $locations = $this->get_locations();
         ?>
         <div class="wrap rw-admin">
-            <h1>Reseñas WordPress — Feedback</h1>
-            <p class="rw-admin-intro">Revisa las valoraciones recibidas y localiza rápidamente los casos que requieren seguimiento.</p>
+            <h1><?php esc_html_e('Kairoseth Reviews — Feedback', 'kairoseth-reviews'); ?></h1>
+            <p class="rw-admin-intro"><?php esc_html_e('Review received ratings and quickly find the cases that need follow-up.', 'kairoseth-reviews'); ?></p>
             <form class="rw-filter-bar" method="get">
                 <input type="hidden" name="page" value="rw-feedback">
                 <div class="rw-filter-field">
-                    <label for="rw-filter-location">Sede</label>
+                    <label for="rw-filter-location"><?php esc_html_e('Location', 'kairoseth-reviews'); ?></label>
                     <select id="rw-filter-location" name="location">
-                        <option value="">Todas las sedes</option>
+                        <option value=""><?php esc_html_e('All locations', 'kairoseth-reviews'); ?></option>
                         <?php foreach ($locations as $slug => $location): ?>
                             <option value="<?php echo esc_attr($slug); ?>" <?php selected($selected_location, $slug); ?>><?php echo esc_html($location['name']); ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <button class="button button-primary">Filtrar</button>
-                <?php if ($selected_location): ?><a class="button" href="<?php echo esc_url(admin_url('admin.php?page=rw-feedback')); ?>">Limpiar filtro</a><?php endif; ?>
+                <button class="button button-primary"><?php esc_html_e('Filter', 'kairoseth-reviews'); ?></button>
+                <?php if ($selected_location): ?><a class="button" href="<?php echo esc_url(admin_url('admin.php?page=rw-feedback')); ?>"><?php esc_html_e('Clear filter', 'kairoseth-reviews'); ?></a><?php endif; ?>
             </form>
-            <p>Total registros: <strong><?php echo esc_html($total); ?></strong></p>
+            <p><?php esc_html_e('Total records:', 'kairoseth-reviews'); ?> <strong><?php echo esc_html($total); ?></strong></p>
             <table class="widefat striped rw-admin-table">
-                <thead><tr><th>ID</th><th>Fecha</th><th>Sede</th><th>Ref</th><th>Rating</th><th>Motivo</th><th>Comentario</th><th>Servicio</th><th>Pedido</th><th>Técnico / Comercial</th><th>Origen</th><th>Estado</th></tr></thead>
+                <thead><tr><th>ID</th><th><?php esc_html_e('Date', 'kairoseth-reviews'); ?></th><th><?php esc_html_e('Location', 'kairoseth-reviews'); ?></th><th><?php esc_html_e('Ref', 'kairoseth-reviews'); ?></th><th><?php esc_html_e('Rating', 'kairoseth-reviews'); ?></th><th><?php esc_html_e('Reason', 'kairoseth-reviews'); ?></th><th><?php esc_html_e('Comment', 'kairoseth-reviews'); ?></th><th><?php esc_html_e('Service', 'kairoseth-reviews'); ?></th><th><?php esc_html_e('Order', 'kairoseth-reviews'); ?></th><th><?php esc_html_e('Agent', 'kairoseth-reviews'); ?></th><th><?php esc_html_e('Source', 'kairoseth-reviews'); ?></th><th><?php esc_html_e('Status', 'kairoseth-reviews'); ?></th></tr></thead>
                 <tbody>
                 <?php if (!empty($rows)): foreach ($rows as $row): ?>
                     <tr>
@@ -591,10 +614,10 @@ class Resenas_WordPress {
                         <td><?php echo esc_html($row->order_id); ?></td>
                         <td><?php echo esc_html($row->tech_name); ?></td>
                         <td><?php echo esc_html($row->source); ?></td>
-                        <td><span class="rw-status-chip"><?php echo esc_html($row->status); ?></span></td>
+                        <td><span class="rw-status-chip"><?php echo esc_html($this->get_status_label($row->status)); ?></span></td>
                     </tr>
                 <?php endforeach; else: ?>
-                    <tr><td class="rw-empty" colspan="12">Aún no hay respuestas para mostrar.</td></tr>
+                    <tr><td class="rw-empty" colspan="12"><?php esc_html_e('There are no responses to display yet.', 'kairoseth-reviews'); ?></td></tr>
                 <?php endif; ?>
                 </tbody>
             </table>
@@ -646,18 +669,18 @@ class Resenas_WordPress {
             'ratingAction' => 'rw_save_rating',
             'feedbackAction' => 'rw_save_feedback',
             'messages' => [
-                'sending' => __('Enviando...', 'resenas-wordpress'),
+                'sending' => __('Enviando...', 'kairoseth-reviews'),
                 'send' => $s['low_button'],
-                'error' => __('No se pudo enviar. Inténtalo de nuevo.', 'resenas-wordpress'),
-                'ratingGroupLabel' => __('Valora tu experiencia de 1 a 5 estrellas', 'resenas-wordpress'),
-                'feedbackLabel' => __('Cuéntanos tu experiencia', 'resenas-wordpress'),
-                'followupSaved' => __('Hemos registrado tu comentario para que el equipo pueda revisarlo y hacer seguimiento.', 'resenas-wordpress'),
-                'shareGoogleSecondary' => __('Compartir también mi experiencia en Google', 'resenas-wordpress'),
-                'shareGoogleSecondaryAria' => __('Compartir también mi experiencia en Google. Se abre en una pestaña nueva.', 'resenas-wordpress'),
-                'finish' => __('Finalizar', 'resenas-wordpress'),
-                'savingRating' => __('Guardando tu valoración…', 'resenas-wordpress'),
-                'missingEntry' => __('Falta el identificador de la valoración.', 'resenas-wordpress'),
-                'sendingFeedback' => __('Enviando tu comentario…', 'resenas-wordpress'),
+                'error' => __('No se pudo enviar. Inténtalo de nuevo.', 'kairoseth-reviews'),
+                'ratingGroupLabel' => __('Valora tu experiencia de 1 a 5 estrellas', 'kairoseth-reviews'),
+                'feedbackLabel' => __('Cuéntanos tu experiencia', 'kairoseth-reviews'),
+                'followupSaved' => __('Hemos registrado tu comentario para que el equipo pueda revisarlo y hacer seguimiento.', 'kairoseth-reviews'),
+                'shareGoogleSecondary' => __('Compartir también mi experiencia en Google', 'kairoseth-reviews'),
+                'shareGoogleSecondaryAria' => __('Compartir también mi experiencia en Google. Se abre en una pestaña nueva.', 'kairoseth-reviews'),
+                'finish' => __('Finalizar', 'kairoseth-reviews'),
+                'savingRating' => __('Guardando tu valoración…', 'kairoseth-reviews'),
+                'missingEntry' => __('Falta el identificador de la valoración.', 'kairoseth-reviews'),
+                'sendingFeedback' => __('Enviando tu comentario…', 'kairoseth-reviews'),
             ],
             'context' => [
                 'ref' => $ref,
@@ -678,7 +701,7 @@ class Resenas_WordPress {
 
                 <?php if ($resolved['error']): ?>
                     <div class="lad-rf-step is-active" role="alert">
-                        <h2><?php esc_html_e('No podemos identificar la sede', 'resenas-wordpress'); ?></h2>
+                        <h2><?php esc_html_e('No podemos identificar la sede', 'kairoseth-reviews'); ?></h2>
                         <p><?php echo esc_html($resolved['error']); ?></p>
                     </div>
                 <?php else: ?>
@@ -688,7 +711,8 @@ class Resenas_WordPress {
                         <?php if ($location_name): ?><div class="lad-rf-location"><?php echo esc_html($location_name); ?></div><?php endif; ?>
                         <div class="lad-rf-stars" role="radiogroup" aria-labelledby="lad-rf-rating-title">
                             <?php for ($i = 1; $i <= 5; $i++): ?>
-                                <button type="button" class="lad-rf-star" data-rating="<?php echo esc_attr($i); ?>" role="radio" aria-checked="false" tabindex="<?php echo $i === 1 ? '0' : '-1'; ?>" aria-label="<?php echo esc_attr(sprintf(__('%d de 5 estrellas', 'resenas-wordpress'), $i)); ?>">★</button>
+                                <?php /* translators: %d is the selected star rating from 1 to 5. */ ?>
+                                <button type="button" class="lad-rf-star" data-rating="<?php echo esc_attr($i); ?>" role="radio" aria-checked="false" tabindex="<?php echo $i === 1 ? '0' : '-1'; ?>" aria-label="<?php echo esc_attr(sprintf(__('%d de 5 estrellas', 'kairoseth-reviews'), $i)); ?>">★</button>
                             <?php endfor; ?>
                         </div>
                         <div class="lad-rf-status" role="status" aria-live="polite" aria-atomic="true"></div>
@@ -700,7 +724,7 @@ class Resenas_WordPress {
                         <?php if ($location_name): ?><div class="lad-rf-location"><?php echo esc_html($location_name); ?></div><?php endif; ?>
 
                         <?php if (!empty($s['show_reason_buttons']) && !empty($reason_options)): ?>
-                            <div class="lad-rf-reasons" aria-label="<?php esc_attr_e('Motivo principal', 'resenas-wordpress'); ?>">
+                            <div class="lad-rf-reasons" aria-label="<?php esc_attr_e('Motivo principal', 'kairoseth-reviews'); ?>">
                                 <?php foreach ($reason_options as $reason): ?>
                                     <button type="button" class="lad-rf-reason-btn" data-reason="<?php echo esc_attr($reason); ?>" aria-pressed="false"><?php echo esc_html($reason); ?></button>
                                 <?php endforeach; ?>
@@ -710,8 +734,8 @@ class Resenas_WordPress {
                         <form class="lad-rf-feedback-form">
                             <input type="hidden" name="entry_id" value="">
                             <input type="hidden" name="feedback_reason" value="">
-                            <label class="lad-rf-field-label" for="lad-rf-feedback-text"><?php esc_html_e('Cuéntanos tu experiencia', 'resenas-wordpress'); ?></label>
-                            <textarea id="lad-rf-feedback-text" name="feedback_text" rows="5" placeholder="<?php esc_attr_e('Describe brevemente qué ha ocurrido', 'resenas-wordpress'); ?>"></textarea>
+                            <label class="lad-rf-field-label" for="lad-rf-feedback-text"><?php esc_html_e('Cuéntanos tu experiencia', 'kairoseth-reviews'); ?></label>
+                            <textarea id="lad-rf-feedback-text" name="feedback_text" rows="5" placeholder="<?php esc_attr_e('Describe brevemente qué ha ocurrido', 'kairoseth-reviews'); ?>"></textarea>
                             <div class="lad-rf-status" role="status" aria-live="polite" aria-atomic="true"></div>
                             <button type="submit" class="lad-rf-btn lad-rf-submit-btn"><?php echo esc_html($s['low_button']); ?></button>
                         </form>
@@ -722,9 +746,10 @@ class Resenas_WordPress {
                         <p><?php echo esc_html($s['high_text']); ?></p>
                         <?php if ($location_name): ?><div class="lad-rf-location"><?php echo esc_html($location_name); ?></div><?php endif; ?>
                         <?php if ($google_review_url): ?>
-                            <a class="lad-rf-btn lad-rf-google-btn" href="<?php echo esc_url($google_review_url); ?>" target="_blank" rel="noopener" aria-label="<?php echo esc_attr(sprintf(__('%s. Se abre en una pestaña nueva.', 'resenas-wordpress'), $s['high_button'])); ?>"><?php echo esc_html($s['high_button']); ?></a>
+                            <?php /* translators: %s is the configured Google review button label. */ ?>
+                            <a class="lad-rf-btn lad-rf-google-btn" href="<?php echo esc_url($google_review_url); ?>" target="_blank" rel="noopener" aria-label="<?php echo esc_attr(sprintf(__('%s. Se abre en una pestaña nueva.', 'kairoseth-reviews'), $s['high_button'])); ?>"><?php echo esc_html($s['high_button']); ?></a>
                         <?php else: ?>
-                            <div class="lad-rf-status is-error" role="alert"><?php esc_html_e('No hay una URL de Google configurada para esta sede.', 'resenas-wordpress'); ?></div>
+                            <div class="lad-rf-status is-error" role="alert"><?php esc_html_e('No hay una URL de Google configurada para esta sede.', 'kairoseth-reviews'); ?></div>
                         <?php endif; ?>
                     </div>
 
@@ -749,7 +774,7 @@ class Resenas_WordPress {
         $s = $this->get_settings();
 
         $rating = max(1, min(5, intval($_POST['rating'] ?? 0)));
-        if (!$rating) wp_send_json_error(['message' => __('Valoración inválida.', 'resenas-wordpress')], 400);
+        if (!$rating) wp_send_json_error(['message' => __('Valoración inválida.', 'kairoseth-reviews')], 400);
 
         $location_slug = sanitize_title(wp_unslash($_POST['location_slug'] ?? ''));
         $location_name = sanitize_text_field(wp_unslash($_POST['location_name'] ?? ''));
@@ -757,7 +782,7 @@ class Resenas_WordPress {
         if ($location_slug) {
             $locations = $this->get_locations(true);
             if (!isset($locations[$location_slug])) {
-                wp_send_json_error(['message' => __('La sede indicada no es válida.', 'resenas-wordpress')], 400);
+                wp_send_json_error(['message' => __('La sede indicada no es válida.', 'kairoseth-reviews')], 400);
             }
             $location_name = $locations[$location_slug]['name'];
         } else {
@@ -784,7 +809,7 @@ class Resenas_WordPress {
         ];
 
         $inserted = $wpdb->insert($table, $data);
-        if (!$inserted) wp_send_json_error(['message' => __('No se pudo guardar la valoración.', 'resenas-wordpress')], 500);
+        if (!$inserted) wp_send_json_error(['message' => __('No se pudo guardar la valoración.', 'kairoseth-reviews')], 500);
 
         wp_send_json_success([
             'entry_id' => $wpdb->insert_id,
@@ -803,10 +828,10 @@ class Resenas_WordPress {
         $feedback_reason = sanitize_text_field(wp_unslash($_POST['feedback_reason'] ?? ''));
         $feedback_text = sanitize_textarea_field(wp_unslash($_POST['feedback_text'] ?? ''));
 
-        if (!$entry_id) wp_send_json_error(['message' => __('Entrada inválida.', 'resenas-wordpress')], 400);
+        if (!$entry_id) wp_send_json_error(['message' => __('Entrada inválida.', 'kairoseth-reviews')], 400);
 
         $row = $wpdb->get_row($wpdb->prepare("SELECT id, ref_code, rating, location_slug, location_name FROM $table WHERE id = %d", $entry_id));
-        if (!$row) wp_send_json_error(['message' => __('No se encontró la valoración.', 'resenas-wordpress')], 404);
+        if (!$row) wp_send_json_error(['message' => __('No se encontró la valoración.', 'kairoseth-reviews')], 404);
 
         $updated = $wpdb->update(
             $table,
@@ -821,7 +846,7 @@ class Resenas_WordPress {
             ['%d']
         );
 
-        if ($updated === false) wp_send_json_error(['message' => __('No se pudo guardar el comentario.', 'resenas-wordpress')], 500);
+        if ($updated === false) wp_send_json_error(['message' => __('No se pudo guardar el comentario.', 'kairoseth-reviews')], 500);
 
         if (!empty($s['send_low_rating_email'])) {
             $notify_email = sanitize_email($s['notify_email']);
@@ -849,31 +874,28 @@ class Resenas_WordPress {
             }
         }
 
-        wp_send_json_success(['message' => __('Comentario guardado correctamente.', 'resenas-wordpress'), 'entry_id' => $entry_id]);
+        wp_send_json_success(['message' => __('Comentario guardado correctamente.', 'kairoseth-reviews'), 'entry_id' => $entry_id]);
     }
 
     public function send_low_rating_email_async($email, $company_name, $entry_id, $location_name, $ref_code, $rating, $feedback) {
         if (empty($email)) return;
-        $subject = sprintf(__('[%s] Nueva valoración recibida', 'resenas-wordpress'), $company_name);
-        $message = __('Se ha recibido una valoración que requiere seguimiento.', 'resenas-wordpress') . "\n\n";
-        $message .= sprintf(__('ID: %d', 'resenas-wordpress'), $entry_id) . "\n";
-        $message .= sprintf(__('Sede: %s', 'resenas-wordpress'), ($location_name ?: __('Sin sede', 'resenas-wordpress'))) . "\n";
-        $message .= sprintf(__('Referencia: %s', 'resenas-wordpress'), $ref_code) . "\n";
-        $message .= sprintf(__('Valoración: %d/5', 'resenas-wordpress'), $rating) . "\n";
-        $message .= sprintf(__('Feedback: %s', 'resenas-wordpress'), $feedback) . "\n";
+        /* translators: %s is the configured company name. */
+        $subject = sprintf(__('[%s] Nueva valoración recibida', 'kairoseth-reviews'), $company_name);
+        $message = __('Se ha recibido una valoración que requiere seguimiento.', 'kairoseth-reviews') . "\n\n";
+        /* translators: %d is the feedback entry ID. */
+        $message .= sprintf(__('ID: %d', 'kairoseth-reviews'), $entry_id) . "\n";
+        /* translators: %s is the location name. */
+        $message .= sprintf(__('Sede: %s', 'kairoseth-reviews'), ($location_name ?: __('Sin sede', 'kairoseth-reviews'))) . "\n";
+        /* translators: %s is an optional external reference code. */
+        $message .= sprintf(__('Referencia: %s', 'kairoseth-reviews'), $ref_code) . "\n";
+        /* translators: %d is the customer rating from 1 to 5. */
+        $message .= sprintf(__('Valoración: %d/5', 'kairoseth-reviews'), $rating) . "\n";
+        /* translators: %s is the customer feedback text. */
+        $message .= sprintf(__('Feedback: %s', 'kairoseth-reviews'), $feedback) . "\n";
         wp_mail($email, $subject, $message);
     }
 
-    private function get_user_ip() {
-        $keys = ['HTTP_CF_CONNECTING_IP', 'HTTP_X_FORWARDED_FOR', 'REMOTE_ADDR'];
-        foreach ($keys as $key) {
-            if (!empty($_SERVER[$key])) {
-                $value = explode(',', $_SERVER[$key])[0];
-                return sanitize_text_field(trim($value));
-            }
-        }
-        return '';
-    }
+
 }
 
 new Resenas_WordPress();
