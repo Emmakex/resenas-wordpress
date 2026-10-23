@@ -1,0 +1,519 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Kairoseth Reviews 1.2.0\n"
+"Language: es_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: kairoseth-reviews\n"
+
+msgid "%d out of 5 stars"
+msgstr "%d de 5 estrellas"
+
+msgid "%s. Opens in a new tab."
+msgstr "%s. Se abre en una pestaña nueva."
+
+msgid "A rating that requires follow-up has been received."
+msgstr "Se ha recibido una valoración que requiere seguimiento."
+
+msgid "Accent / star color"
+msgstr "Color acento / estrellas"
+
+msgid "Actions"
+msgstr "Acciones"
+
+msgid "Active"
+msgstr "Activa"
+
+msgid "Activity overview"
+msgstr "Resumen de actividad"
+
+msgid "Add [resenas_wordpress] to the page and publish it."
+msgstr "Añade [resenas_wordpress] a la página y publícala."
+
+msgid "Add location"
+msgstr "Añadir sede"
+
+msgid "Add your logo, copy, Google review link, and optional locations."
+msgstr "Añade tu logo, textos, enlace de Google y, si lo necesitas, una o varias sedes."
+
+msgid "Agent"
+msgstr "Técnico / Comercial"
+
+msgid "All locations"
+msgstr "Todas las sedes"
+
+msgid "Also share my experience on Google"
+msgstr "Compartir también mi experiencia en Google"
+
+msgid "Also share my experience on Google. Opens in a new tab."
+msgstr "Compartir también mi experiencia en Google. Se abre en una pestaña nueva."
+
+msgid "Appearance"
+msgstr "Apariencia"
+
+msgid "Appearance and settings"
+msgstr "Apariencia y ajustes"
+
+msgid "Average rating"
+msgstr "Valoración media"
+
+msgid "Background color"
+msgstr "Color de fondo"
+
+msgid "Briefly describe what happened"
+msgstr "Describe brevemente qué ha ocurrido"
+
+msgid "Business identity, Google settings, and follow-up behavior."
+msgstr "Identidad del negocio, Google y comportamiento del seguimiento."
+
+msgid "Business name"
+msgstr "Nombre de la empresa"
+
+msgid "Button text color"
+msgstr "Color del texto de botones"
+
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgid "Card color"
+msgstr "Color de tarjeta"
+
+msgid "Choose where to receive notifications when a rating needs follow-up."
+msgstr "Define dónde recibir los avisos cuando una valoración requiere seguimiento."
+
+msgid "Clear filter"
+msgstr "Limpiar filtro"
+
+msgid "Collect ratings, detect customers who need follow-up, and help them share their public experience from a page on your own WordPress site."
+msgstr "Recoge valoraciones, detecta clientes que necesitan seguimiento y facilita que compartan su experiencia pública desde una página de tu propio WordPress."
+
+msgid "Colors and visual settings for the public form."
+msgstr "Colores y ajustes visuales del formulario público."
+
+msgid "Comment"
+msgstr "Comentario"
+
+msgid "Configure the customer experience, visual identity, and follow-up notifications without leaving WordPress."
+msgstr "Configura la experiencia del cliente, la identidad visual y los avisos de seguimiento sin salir de WordPress."
+
+msgid "Configure the plugin and review customer responses."
+msgstr "Configura el plugin y revisa las respuestas de tus clientes."
+
+msgid "Configure your business."
+msgstr "Configura tu negocio."
+
+msgid "Configured locations"
+msgstr "Sedes configuradas"
+
+msgid "Copy"
+msgstr "Textos"
+
+msgid "Could not submit. Please try again."
+msgstr "No se pudo enviar. Inténtalo de nuevo."
+
+msgid "Create a page."
+msgstr "Crea una página."
+
+msgid "Custom CSS"
+msgstr "CSS personalizado"
+
+msgid "Customer service"
+msgstr "Atención"
+
+msgid "Customize the messages customers see during the rating flow."
+msgstr "Personaliza los mensajes que verá el cliente durante la valoración."
+
+msgid "Dashboard"
+msgstr "Panel"
+
+msgid "Date"
+msgstr "Fecha"
+
+msgid "Delete"
+msgstr "Eliminar"
+
+msgid "Delete this location?"
+msgstr "¿Eliminar esta sede?"
+
+msgid "Each location can have its own Google review link and notification email. If you only have one location, you can use the global settings."
+msgstr "Cada sede puede tener su propia ficha de Google y su propio email de avisos. Si solo tienes una ubicación, puedes usar los ajustes globales."
+
+msgid "Each location can have its own email. This address is used when the location email is empty."
+msgstr "Cada sede puede tener su propio email. Si está vacío, se utiliza este."
+
+msgid "Edit"
+msgstr "Editar"
+
+msgid "Edit location"
+msgstr "Editar sede"
+
+msgid "Example: Downtown"
+msgstr "Ej. Sede Centro"
+
+msgid "Feedback"
+msgstr "Feedback"
+
+msgid "Feedback button text"
+msgstr "Texto botón comentario"
+
+msgid "Feedback received"
+msgstr "Feedback recibido"
+
+msgid "Feedback saved successfully."
+msgstr "Comentario guardado correctamente."
+
+msgid "Feedback: %s"
+msgstr "Feedback: %s"
+
+msgid "Filter"
+msgstr "Filtrar"
+
+msgid "Finish"
+msgstr "Finalizar"
+
+msgid "Follow-up text"
+msgstr "Texto para seguimiento"
+
+msgid "Follow-up threshold"
+msgstr "Umbral de seguimiento"
+
+msgid "Follow-up title"
+msgstr "Título para seguimiento"
+
+msgid "For advanced adjustments only. The base design is already optimized for mobile and accessibility."
+msgstr "Solo para ajustes avanzados. El diseño base ya está optimizado para móvil y accesibilidad."
+
+msgid "For example, create a page called Reviews."
+msgstr "Por ejemplo, crea una página llamada Reseñas."
+
+msgid "General"
+msgstr "General"
+
+msgid "Global Google review URL"
+msgstr "URL Google global"
+
+msgid "Global email"
+msgstr "Email global"
+
+msgid "Global notification email"
+msgstr "Email global de aviso"
+
+msgid "Google Reviews"
+msgstr "Google Reviews"
+
+msgid "Google button text"
+msgstr "Texto botón Google"
+
+msgid "Google review URL"
+msgstr "URL de reseña Google"
+
+msgid "Google review option shown"
+msgstr "Opción de Google mostrada"
+
+msgid "High-rating text"
+msgstr "Texto valoración alta"
+
+msgid "High-rating title"
+msgstr "Título valoración alta"
+
+msgid "How it works"
+msgstr "Cómo funciona"
+
+msgid "How was your experience with our service?"
+msgstr "¿Qué te ha parecido nuestro servicio?"
+
+msgid "ID: %d"
+msgstr "ID: %d"
+
+msgid "Identifier"
+msgstr "Identificador"
+
+msgid "Inactive"
+msgstr "Inactiva"
+
+msgid "Insert the shortcode."
+msgstr "Inserta el shortcode."
+
+msgid "Invalid entry."
+msgstr "Entrada inválida."
+
+msgid "Invalid rating."
+msgstr "Valoración inválida."
+
+msgid "Kairoseth Reviews"
+msgstr "Kairoseth Reviews"
+
+msgid "Kairoseth Reviews — Feedback"
+msgstr "Kairoseth Reviews — Feedback"
+
+msgid "Kairoseth Reviews — Locations"
+msgstr "Kairoseth Reviews — Sedes"
+
+msgid "Leave a review on Google"
+msgstr "Dejar reseña en Google"
+
+msgid "Location"
+msgstr "Sede"
+
+msgid "Location deleted successfully."
+msgstr "Sede eliminada correctamente."
+
+msgid "Location saved successfully."
+msgstr "Sede guardada correctamente."
+
+msgid "Location: %s"
+msgstr "Sede: %s"
+
+msgid "Locations"
+msgstr "Sedes"
+
+msgid "Logo"
+msgstr "Logo"
+
+msgid "Main reason"
+msgstr "Motivo principal"
+
+msgid "Main title"
+msgstr "Título principal"
+
+msgid "Manage locations"
+msgstr "Gestionar sedes"
+
+msgid "Name"
+msgstr "Nombre"
+
+msgid "Need follow-up"
+msgstr "Requieren seguimiento"
+
+msgid "No Google review URL is configured for this location."
+msgstr "No hay una URL de Google configurada para esta sede."
+
+msgid "No location"
+msgstr "Sin sede"
+
+msgid "No locations have been configured yet. If your business has one location, you can continue using the global Google review URL in Settings."
+msgstr "Todavía no hay sedes configuradas. Si tu negocio tiene una sola ubicación, puedes seguir utilizando la URL global de Google en Ajustes."
+
+msgid "Not authorized."
+msgstr "No autorizado."
+
+msgid "Notification email"
+msgstr "Email de avisos"
+
+msgid "Notifications"
+msgstr "Notificaciones"
+
+msgid "Notify when follow-up is required"
+msgstr "Avisar cuando requiere seguimiento"
+
+msgid "One per line."
+msgstr "Uno por línea."
+
+msgid "Open listing"
+msgstr "Abrir ficha"
+
+msgid "Optional. The global notification email is used when this is empty."
+msgstr "Opcional. Si está vacío se usa el email global."
+
+msgid "Order"
+msgstr "Pedido"
+
+msgid "Other"
+msgstr "Otro"
+
+msgid "Price"
+msgstr "Precio"
+
+msgid "Primary color"
+msgstr "Color principal"
+
+msgid "Quick actions"
+msgstr "Acciones rápidas"
+
+msgid "Quick reasons"
+msgstr "Motivos rápidos"
+
+msgid "Rate your experience from 1 to 5 stars"
+msgstr "Valora tu experiencia de 1 a 5 estrellas"
+
+msgid "Rating"
+msgstr "Valoración"
+
+msgid "Rating: %d/5"
+msgstr "Valoración: %d/5"
+
+msgid "Ratings at or below this value request internal feedback to support service recovery."
+msgstr "Las valoraciones iguales o inferiores a este valor pedirán feedback interno para facilitar la recuperación del servicio."
+
+msgid "Reason"
+msgstr "Motivo"
+
+msgid "Ref"
+msgstr "Ref"
+
+msgid "Reference: %s"
+msgstr "Referencia: %s"
+
+msgid "Review received ratings and quickly find the cases that need follow-up."
+msgstr "Revisa las valoraciones recibidas y localiza rápidamente los casos que necesitan seguimiento."
+
+msgid "Save settings"
+msgstr "Guardar ajustes"
+
+msgid "Saving your rating…"
+msgstr "Guardando tu valoración…"
+
+msgid "Select a logo"
+msgstr "Selecciona un logo"
+
+msgid "Send an automatic email"
+msgstr "Enviar email automático"
+
+msgid "Send feedback"
+msgstr "Enviar comentario"
+
+msgid "Send the page URL."
+msgstr "Envía la URL de la página."
+
+msgid "Sending your feedback…"
+msgstr "Enviando tu comentario…"
+
+msgid "Sending..."
+msgstr "Enviando..."
+
+msgid "Service"
+msgstr "Servicio"
+
+msgid "Service outcome"
+msgstr "Resultado del servicio"
+
+msgid "Settings"
+msgstr "Ajustes"
+
+msgid "Settings sections"
+msgstr "Secciones de ajustes"
+
+msgid "Share a URL such as"
+msgstr "Comparte una URL como"
+
+msgid "Show quick reasons"
+msgstr "Mostrar motivos rápidos"
+
+msgid "Source"
+msgstr "Origen"
+
+msgid "Status"
+msgstr "Estado"
+
+msgid "Subtitle"
+msgstr "Subtítulo"
+
+msgid "Tell us about your experience"
+msgstr "Cuéntanos tu experiencia"
+
+msgid "Tell us what happened so we can help and keep improving."
+msgstr "Cuéntanos qué ha pasado para poder ayudarte y seguir mejorando."
+
+msgid "Text color"
+msgstr "Color de texto"
+
+msgid "Thank you for your feedback"
+msgstr "Gracias por tu opinión"
+
+msgid "Thank you for your rating"
+msgstr "Muchas gracias por tu valoración"
+
+msgid "Thank-you text"
+msgstr "Texto de agradecimiento"
+
+msgid "Thank-you title"
+msgstr "Título de agradecimiento"
+
+msgid "The feedback could not be saved."
+msgstr "No se pudo guardar el comentario."
+
+msgid "The link you send to the customer is the URL of the WordPress page where you placed the shortcode."
+msgstr "El enlace que envías al cliente es la URL de la página de WordPress donde hayas insertado el shortcode."
+
+msgid "The rating could not be found."
+msgstr "No se encontró la valoración."
+
+msgid "The rating could not be saved."
+msgstr "No se pudo guardar la valoración."
+
+msgid "The rating identifier is missing."
+msgstr "Falta el identificador de la valoración."
+
+msgid "The selected location is invalid."
+msgstr "La sede indicada no es válida."
+
+msgid "The selected location is not available."
+msgstr "La sede indicada no está disponible."
+
+msgid "There are no responses to display yet."
+msgstr "Aún no hay respuestas."
+
+msgid "This business has multiple locations. The link must specify a location."
+msgstr "Este negocio tiene varias sedes. El enlace debe indicar la sede."
+
+msgid "Total feedback"
+msgstr "Feedback total"
+
+msgid "Total records:"
+msgstr "Total registros:"
+
+msgid "Update location"
+msgstr "Actualizar sede"
+
+msgid "Upload / choose"
+msgstr "Subir / elegir"
+
+msgid "Use logo"
+msgstr "Usar logo"
+
+msgid "Used in the page URL, for example:"
+msgstr "Se utiliza en la URL, por ejemplo:"
+
+msgid "Used when no locations are configured. With multiple locations, each location can have its own URL."
+msgstr "Se utiliza cuando no hay sedes configuradas. En multisede, cada sede puede tener su propia URL."
+
+msgid "View feedback"
+msgstr "Ver feedback"
+
+msgid "Wait time"
+msgstr "Tiempo de espera"
+
+msgid "Waiting for feedback"
+msgstr "Pendiente de feedback"
+
+msgid "We are sorry your experience was not the best"
+msgstr "Sentimos que tu experiencia no haya sido la mejor"
+
+msgid "We cannot identify the location"
+msgstr "No podemos identificar la sede"
+
+msgid "We received your response successfully."
+msgstr "Hemos recibido tu respuesta correctamente."
+
+msgid "We recorded your feedback so the team can review it and follow up."
+msgstr "Hemos registrado tu comentario para que el equipo pueda revisarlo y hacer seguimiento."
+
+msgid "Would you share your experience on Google?"
+msgstr "¿Nos ayudas dejando tu reseña en Google?"
+
+msgid "Yes"
+msgstr "Sí"
+
+msgid "You can add"
+msgstr "Puedes añadir"
+
+msgid "Your feedback helps us improve."
+msgstr "Tu opinión nos ayuda a mejorar."
+
+msgid "[%s] New rating received"
+msgstr "[%s] Nueva valoración recibida"
+
+msgid "and, for multiple locations,"
+msgstr "y, para varias sedes,"

@@ -887,6 +887,7 @@ class Resenas_WordPress {
         $message = __('A rating that requires follow-up has been received.', 'kairoseth-reviews') . "\n\n";
         /* translators: %d is the feedback entry ID. */
         /* translators: %d is the feedback entry ID. */
+        /* translators: %d is the feedback entry ID. */
         $message .= sprintf(__('ID: %d', 'kairoseth-reviews'), $entry_id) . "\n";
         /* translators: %s is the location name. */
         /* translators: %s is the location name. */
@@ -897,6 +898,7 @@ class Resenas_WordPress {
         /* translators: %d is the customer rating from 1 to 5. */
         /* translators: %d is the customer rating from 1 to 5. */
         $message .= sprintf(__('Rating: %d/5', 'kairoseth-reviews'), $rating) . "\n";
+        /* translators: %s is the customer feedback text. */
         /* translators: %s is the customer feedback text. */
         /* translators: %s is the customer feedback text. */
         $message .= sprintf(__('Feedback: %s', 'kairoseth-reviews'), $feedback) . "\n";
