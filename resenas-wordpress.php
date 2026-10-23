@@ -16,7 +16,7 @@
 
 if (!defined('ABSPATH')) exit;
 
-class Resenas_WordPress {
+class Kairoseth_Reviews {
     const VERSION = '1.2.0-rc3';
     const OPTION_KEY = 'lad_rf_settings'; // Se conserva para migrar sin perder la configuración 1.0.1.
     const LOCATIONS_KEY = 'rw_locations';
@@ -54,6 +54,7 @@ class Resenas_WordPress {
     }
 
     public function activate() {
+        $this->deactivate_legacy_plugin();
         $this->install_schema();
         if (!get_option(self::OPTION_KEY)) {
             update_option(self::OPTION_KEY, $this->default_settings());
@@ -62,6 +63,29 @@ class Resenas_WordPress {
             add_option(self::LOCATIONS_KEY, []);
         }
         update_option(self::SCHEMA_KEY, self::VERSION);
+    }
+
+    private function deactivate_legacy_plugin() {
+        $current_plugin = plugin_basename(__FILE__);
+        $active_plugins = (array) get_option('active_plugins', []);
+        $legacy_plugins = [];
+
+        foreach ($active_plugins as $plugin) {
+            if ($plugin === $current_plugin) continue;
+            if (basename($plugin) === 'resenas-wordpress.php') {
+                $legacy_plugins[] = $plugin;
+            }
+        }
+
+        if (!$legacy_plugins) return;
+
+        if (!function_exists('deactivate_plugins')) {
+            require_once ABSPATH . 'wp-admin/includes/plugin.php';
+        }
+
+        // Preserve all legacy options, locations and feedback data; only the
+        // old plugin code is deactivated to avoid duplicate hooks/endpoints.
+        deactivate_plugins($legacy_plugins, true);
     }
 
     public function maybe_upgrade() {
@@ -888,6 +912,7 @@ class Resenas_WordPress {
         /* translators: %d is the feedback entry ID. */
         /* translators: %d is the feedback entry ID. */
         /* translators: %d is the feedback entry ID. */
+        /* translators: %d is the feedback entry ID. */
         $message .= sprintf(__('ID: %d', 'kairoseth-reviews'), $entry_id) . "\n";
         /* translators: %s is the location name. */
         /* translators: %s is the location name. */
@@ -901,6 +926,7 @@ class Resenas_WordPress {
         /* translators: %s is the customer feedback text. */
         /* translators: %s is the customer feedback text. */
         /* translators: %s is the customer feedback text. */
+        /* translators: %s is the customer feedback text. */
         $message .= sprintf(__('Feedback: %s', 'kairoseth-reviews'), $feedback) . "\n";
         wp_mail($email, $subject, $message);
     }
@@ -908,4 +934,4 @@ class Resenas_WordPress {
 
 }
 
-new Resenas_WordPress();
+new Kairoseth_Reviews();
