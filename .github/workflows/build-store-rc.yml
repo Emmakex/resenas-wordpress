@@ -29,24 +29,24 @@ jobs:
 
       - name: Validate package sources
         run: |
-          php -l build/kairoseth-reviews/kairoseth-reviews.php
-          node --check build/kairoseth-reviews/assets/front.js
-          test -f build/kairoseth-reviews/languages/kairoseth-reviews-es_ES.mo
-          test -f build/kairoseth-reviews/languages/kairoseth-reviews-es_ES.po
-          test -f build/kairoseth-reviews/languages/kairoseth-reviews.pot
+          php -l build/gestion-resenas/gestion-resenas.php
+          node --check build/gestion-resenas/assets/front.js
+          test -f build/gestion-resenas/languages/gestion-resenas-es_ES.mo
+          test -f build/gestion-resenas/languages/gestion-resenas-es_ES.po
+          test -f build/gestion-resenas/languages/gestion-resenas.pot
 
       - name: Create RC ZIP and checksum
         working-directory: build
         run: |
-          zip -r kairoseth-reviews-1.2.0-rc3.zip kairoseth-reviews
-          sha256sum kairoseth-reviews-1.2.0-rc3.zip > kairoseth-reviews-1.2.0-rc3.zip.sha256
-          unzip -t kairoseth-reviews-1.2.0-rc3.zip
+          zip -r gestion-resenas-1.2.0-rc3.zip gestion-resenas
+          sha256sum gestion-resenas-1.2.0-rc3.zip > gestion-resenas-1.2.0-rc3.zip.sha256
+          unzip -t gestion-resenas-1.2.0-rc3.zip
 
       - name: Upload RC artifact
         uses: actions/upload-artifact@v4
         with:
-          name: kairoseth-reviews-1.2.0-rc3
+          name: gestion-resenas-1.2.0-rc3
           path: |
-            build/kairoseth-reviews-1.2.0-rc3.zip
-            build/kairoseth-reviews-1.2.0-rc3.zip.sha256
+            build/gestion-resenas-1.2.0-rc3.zip
+            build/gestion-resenas-1.2.0-rc3.zip.sha256
           if-no-files-found: error
