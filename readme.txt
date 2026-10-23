@@ -8,11 +8,11 @@ Stable tag: 1.2.0-rc3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Collect customer ratings and feedback, manage service recovery, and support one or multiple business locations directly in WordPress.
+Collect customer ratings and feedback, recover dissatisfied customers, and manage one or multiple business locations directly in WordPress.
 
 == Description ==
 
-Reseñas WordPress adds a simple post-service feedback flow to your WordPress site.
+Reseñas WordPress adds a simple post-service feedback and service-recovery flow to your WordPress site.
 
 Create a page, insert the `[resenas_wordpress]` shortcode, publish it, and share that page URL with customers. A common workflow is to send the link through WhatsApp after a purchase, service, booking, appointment, or intervention. The same page can also be shared by email, SMS, QR code, your website, or another channel.
 
@@ -81,17 +81,17 @@ Yes. The core plugin runs locally in WordPress and does not require a Kairoseth 
 
 = Do I need WhatsApp? =
 
-No. WhatsApp is a recommended workflow, but the same page URL can be shared through email, SMS, QR codes, your website, or another channel.
+No. WhatsApp is a common and recommended channel, but the published WordPress page URL can be shared through email, SMS, QR codes, your website, or another channel.
 
-= Does it support multiple locations? =
+= Does the plugin publish a review automatically? =
 
-Yes. Each location can have its own identifier, Google review URL, and notification email.
+No. The plugin records the customer rating and feedback inside WordPress. A Google review page is opened only when the customer chooses to use the configured Google action.
 
-= Which URL do I send to customers? =
+= What URL should I send to customers? =
 
-Send the URL of the WordPress page where you placed `[resenas_wordpress]`, for example `https://example.com/reviews/`.
+Send the URL of the WordPress page where `[resenas_wordpress]` is inserted. For example: `https://example.com/reviews/`.
 
-= Can I keep my existing shortcode from an earlier version? =
+= Does the existing shortcode still work? =
 
 Yes. `[resenas_wordpress]` remains the primary shortcode and the legacy shortcode is retained for compatibility.
 
@@ -109,37 +109,26 @@ New records in the Store Candidate do not store the visitor IP address, user-age
 
 The plugin does not send customer feedback to Kairoseth. A configured Google review URL is opened only when the customer chooses that action.
 
-Site owners are responsible for informing users about their own data-processing practices and for applying any retention requirements that apply to their business.
-
 == Screenshots ==
 
-1. Premium mobile-friendly customer rating screen with accessible 1-to-5 star controls.
-2. Service recovery screen for collecting the reason and customer comment after a low rating.
-3. WordPress dashboard with feedback metrics and the page → shortcode → URL → WhatsApp workflow.
-4. Multi-location management with separate Google review links and notification emails.
-5. Grouped settings for General, Appearance, Copy, and Notifications.
+1. Public rating screen optimized for mobile.
+2. Service-recovery feedback screen for low ratings.
+3. Dashboard with activity metrics and How it works guidance.
+4. Location management for businesses with one or multiple locations.
+5. Appearance, copy, and notification settings.
 
 == Changelog ==
 
 = 1.2.0 =
-* Premium responsive customer experience.
-* Improved keyboard and screen-reader accessibility.
-* Service recovery workflow for ratings that require follow-up.
-* Secondary Google sharing option after low-rating feedback.
-* Redesigned WordPress-native administration screens.
-* Grouped settings: General, Appearance, Copy, and Notifications.
-* English source language with a validated Spanish translation catalog.
-* Reduced collection of unnecessary technical visitor data.
-* Safe migration path from manually installed legacy packages.
-* WordPress.org Store Candidate hardening.
+* Premium responsive frontend and improved accessibility.
+* Accessible 1-to-5 rating control with keyboard support.
+* Service-recovery flow for ratings that require follow-up.
+* Secondary Google review action remains available after internal feedback.
+* Premium WordPress-native admin experience.
+* Settings grouped into General, Appearance, Copy, and Notifications.
+* English source strings and bundled Spanish translation for manual installs.
+* Data minimization for new records: IP address, user-agent, and full page URL are no longer stored.
+* Store package migration preserves legacy settings, locations, feedback, and shortcodes.
 
 = 1.1.3 =
-* Validated functional core.
-* Single-location and multi-location support.
-* Complete rating and feedback cycle.
-* Support for references and source context.
-
-== Upgrade Notice ==
-
-= 1.2.0 =
-Adds the premium accessible interface and service recovery workflow while preserving the existing database table, options, locations, shortcodes, and customer feedback data. An active legacy `resenas-wordpress.php` package is deactivated automatically when the Store package is activated.
+* Validated production baseline with complete low-rating feedback cycle.
