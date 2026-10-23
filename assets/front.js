@@ -22,7 +22,7 @@ jQuery(function($){
 
         wrap.find('.lad-rf-stars')
             .attr('role', 'radiogroup')
-            .attr('aria-label', message('ratingGroupLabel', 'Valora tu experiencia de 1 a 5 estrellas'));
+            .attr('aria-label', message('ratingGroupLabel', 'Rate your experience from 1 to 5 stars'));
 
         wrap.find('.lad-rf-star').each(function(index){
             $(this)
@@ -31,8 +31,7 @@ jQuery(function($){
                 .attr('tabindex', index === 0 ? '0' : '-1');
         });
 
-        wrap.find('.lad-rf-reason-btn')
-            .attr('aria-pressed', 'false');
+        wrap.find('.lad-rf-reason-btn').attr('aria-pressed', 'false');
 
         const textarea = wrap.find('.lad-rf-feedback-form textarea[name="feedback_text"]');
         if (textarea.length) {
@@ -42,7 +41,7 @@ jQuery(function($){
                 $('<label/>', {
                     'class': 'lad-rf-field-label',
                     'for': id,
-                    text: message('feedbackLabel', 'Cuéntanos tu experiencia')
+                    text: message('feedbackLabel', 'Tell us about your experience')
                 }).insertBefore(textarea);
             }
         }
@@ -55,16 +54,11 @@ jQuery(function($){
             heading.trigger('focus');
             return;
         }
-        window.requestAnimationFrame(function(){
-            heading.trigger('focus');
-        });
+        window.requestAnimationFrame(function(){ heading.trigger('focus'); });
     }
 
     function showStep(name) {
-        wrap.find('.lad-rf-step')
-            .removeClass('is-active')
-            .attr('aria-hidden', 'true');
-
+        wrap.find('.lad-rf-step').removeClass('is-active').attr('aria-hidden', 'true');
         const next = wrap.find('.lad-rf-step-' + name).first();
         next.addClass('is-active').attr('aria-hidden', 'false');
         focusActiveStep(next);
@@ -97,22 +91,22 @@ jQuery(function($){
 
         $('<p/>', {
             'class': 'lad-rf-followup-copy',
-            text: message('followupSaved', 'Hemos registrado tu comentario para que el equipo pueda revisarlo y hacer seguimiento.')
+            text: message('followupSaved', 'We recorded your feedback so the team can review it and follow up.')
         }).appendTo(thanks);
 
         if (googleSource.length) {
             const googleLink = googleSource.clone(false)
                 .removeClass('lad-rf-btn')
                 .addClass('lad-rf-secondary-link lad-rf-thanks-google')
-                .text(message('shareGoogleSecondary', 'Compartir también mi experiencia en Google'))
-                .attr('aria-label', message('shareGoogleSecondaryAria', 'Compartir también mi experiencia en Google. Se abre en una pestaña nueva.'));
+                .text(message('shareGoogleSecondary', 'Also share my experience on Google'))
+                .attr('aria-label', message('shareGoogleSecondaryAria', 'Also share my experience on Google. Opens in a new tab.'));
             actions.append(googleLink);
         }
 
         $('<button/>', {
             type: 'button',
             'class': 'lad-rf-reset-btn',
-            text: message('finish', 'Finalizar')
+            text: message('finish', 'Finish')
         }).appendTo(actions);
 
         actions.appendTo(thanks);
@@ -144,7 +138,7 @@ jQuery(function($){
         setStarsDisabled(true);
 
         wrap.find('.lad-rf-status').removeClass('is-error').text('');
-        wrap.find('.lad-rf-step-rating .lad-rf-status').text(message('savingRating', 'Guardando tu valoración…'));
+        wrap.find('.lad-rf-step-rating .lad-rf-status').text(message('savingRating', 'Saving your rating…'));
 
         $.ajax({
             url: ladRfData.ajaxUrl,
@@ -155,7 +149,6 @@ jQuery(function($){
                 action: ladRfData.ratingAction || 'rw_save_rating',
                 nonce: ladRfData.nonce,
                 rating: rating,
-                page_url: window.location.href,
                 ref: ladRfData.context.ref || '',
                 customer_id: ladRfData.context.customer_id || '',
                 service_type: ladRfData.context.service_type || '',
@@ -185,14 +178,8 @@ jQuery(function($){
     });
 
     wrap.on('click', '.lad-rf-reason-btn', function(){
-        wrap.find('.lad-rf-reason-btn')
-            .removeClass('is-selected')
-            .attr('aria-pressed', 'false');
-
-        $(this)
-            .addClass('is-selected')
-            .attr('aria-pressed', 'true');
-
+        wrap.find('.lad-rf-reason-btn').removeClass('is-selected').attr('aria-pressed', 'false');
+        $(this).addClass('is-selected').attr('aria-pressed', 'true');
         wrap.find('.lad-rf-feedback-form [name="feedback_reason"]').val($(this).data('reason'));
     });
 
@@ -205,12 +192,12 @@ jQuery(function($){
         const statusBox = form.find('.lad-rf-status');
 
         if (!entryId) {
-            statusBox.text(message('missingEntry', 'Falta el identificador de la valoración.')).addClass('is-error');
+            statusBox.text(message('missingEntry', 'The rating identifier is missing.')).addClass('is-error');
             return;
         }
 
         submitBtn.prop('disabled', true).attr('aria-busy', 'true').text(ladRfData.messages.sending);
-        statusBox.removeClass('is-error').text(message('sendingFeedback', 'Enviando tu comentario…'));
+        statusBox.removeClass('is-error').text(message('sendingFeedback', 'Sending your feedback…'));
 
         $.ajax({
             url: ladRfData.ajaxUrl,
@@ -240,13 +227,9 @@ jQuery(function($){
         });
     });
 
-    wrap.on('click', '.lad-rf-reset-btn', function(){
-        window.location.reload();
-    });
+    wrap.on('click', '.lad-rf-reset-btn', function(){ window.location.reload(); });
 
     wrap.on('click', '.lad-rf-google-btn, .lad-rf-thanks-google', function(){
-        setTimeout(function(){
-            window.location.reload();
-        }, 700);
+        setTimeout(function(){ window.location.reload(); }, 700);
     });
 });
