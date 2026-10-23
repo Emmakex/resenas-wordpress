@@ -35,8 +35,10 @@ if "Writes a rating to the plugin's own custom table" not in text:
         1,
     )
 
-old_select = '        $row = $wpdb->get_row($wpdb->prepare("SELECT id, ref_code, rating, location_slug, location_name FROM $table WHERE id = %d", $entry_id));'
-new_select = """        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- Reads one workflow record from the plugin's own custom table.
+# Cache the immutable entry context used when feedback is submitted. This keeps
+# the custom-table read efficient and satisfies the WordPress object-cache check.
+legacy_select = '        $row = $wpdb->get_row($wpdb->prepare("SELECT id, ref_code, rating, location_slug, location_name FROM $table WHERE id = %d", $entry_id));'
+prepared_select = """        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- Reads one workflow record from the plugin's own custom table.
         $row = $wpdb->get_row(
             $wpdb->prepare(
                 'SELECT id, ref_code, rating, location_slug, location_name FROM %i WHERE id = %d',
@@ -44,7 +46,23 @@ new_select = """        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQ
                 $entry_id
             )
         );"""
-text = text.replace(old_select, new_select, 1)
+cached_select = """        $cache_key = 'entry_context_' . $entry_id;
+        $row = wp_cache_get($cache_key, 'gestion_resenas');
+        if (false === $row) {
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- Reads one workflow record from the plugin's own custom table; result is cached below.
+            $row = $wpdb->get_row(
+                $wpdb->prepare(
+                    'SELECT id, ref_code, rating, location_slug, location_name FROM %i WHERE id = %d',
+                    $table,
+                    $entry_id
+                )
+            );
+            if ($row) {
+                wp_cache_set($cache_key, $row, 'gestion_resenas', HOUR_IN_SECONDS);
+            }
+        }"""
+text = text.replace(legacy_select, cached_select, 1)
+text = text.replace(prepared_select, cached_select, 1)
 
 update_line = "        $updated = $wpdb->update("
 if "Updates one workflow record in the plugin's own custom table" not in text:
