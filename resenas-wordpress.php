@@ -936,34 +936,16 @@ class Gestion_Resenas {
     public function send_low_rating_email_async($email, $company_name, $entry_id, $location_name, $ref_code, $rating, $feedback) {
         if (empty($email)) return;
         /* translators: %s is the configured company name. */
-        /* translators: %s is the configured company name. */
         $subject = sprintf(__('[%s] New rating received', 'gestion-resenas'), $company_name);
         $message = __('A rating that requires follow-up has been received.', 'gestion-resenas') . "\n\n";
         /* translators: %d is the feedback entry ID. */
-        /* translators: %d is the feedback entry ID. */
-        /* translators: %d is the feedback entry ID. */
-        /* translators: %d is the feedback entry ID. */
-        /* translators: %d is the feedback entry ID. */
-        /* translators: %d is the feedback entry ID. */
-        /* translators: %d is the feedback entry ID. */
-        /* translators: %d is the feedback entry ID. */
         $message .= sprintf(__('ID: %d', 'gestion-resenas'), $entry_id) . "\n";
-        /* translators: %s is the location name. */
         /* translators: %s is the location name. */
         $message .= sprintf(__('Location: %s', 'gestion-resenas'), ($location_name ?: __('No location', 'gestion-resenas'))) . "\n";
         /* translators: %s is an optional external reference code. */
-        /* translators: %s is an optional external reference code. */
         $message .= sprintf(__('Reference: %s', 'gestion-resenas'), $ref_code) . "\n";
         /* translators: %d is the customer rating from 1 to 5. */
-        /* translators: %d is the customer rating from 1 to 5. */
         $message .= sprintf(__('Rating: %d/5', 'gestion-resenas'), $rating) . "\n";
-        /* translators: %s is the customer feedback text. */
-        /* translators: %s is the customer feedback text. */
-        /* translators: %s is the customer feedback text. */
-        /* translators: %s is the customer feedback text. */
-        /* translators: %s is the customer feedback text. */
-        /* translators: %s is the customer feedback text. */
-        /* translators: %s is the customer feedback text. */
         /* translators: %s is the customer feedback text. */
         $message .= sprintf(__('Feedback: %s', 'gestion-resenas'), $feedback) . "\n";
         wp_mail($email, $subject, $message);
