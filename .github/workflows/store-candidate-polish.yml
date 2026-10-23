@@ -8,6 +8,7 @@ on:
       - scripts/store-candidate-polish.py
       - scripts/store-candidate-i18n-privacy.py
       - scripts/store-candidate-wordpress-org.py
+      - scripts/store-candidate-admin-i18n.py
       - .github/workflows/store-candidate-polish.yml
   workflow_dispatch:
 
@@ -28,6 +29,7 @@ jobs:
           python3 scripts/store-candidate-polish.py
           python3 scripts/store-candidate-i18n-privacy.py
           python3 scripts/store-candidate-wordpress-org.py
+          python3 scripts/store-candidate-admin-i18n.py
 
       - name: Validate PHP and JavaScript
         run: |
@@ -43,5 +45,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add resenas-wordpress.php
-          git commit -m "Apply WordPress.org identity hardening"
+          git commit -m "Apply Store Candidate admin and WordPress.org hardening"
           git push origin HEAD:feat/v1.2.0-store-candidate
