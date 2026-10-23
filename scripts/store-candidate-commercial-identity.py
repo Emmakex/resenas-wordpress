@@ -1,7 +1,7 @@
 from pathlib import Path
 
-PRODUCT_NAME = "Reseñas WordPress"
-OLD_PRODUCT_NAME = "Kairoseth Reviews"
+PRODUCT_NAME = "Gestión de Reseñas"
+OLD_PRODUCT_NAMES = ("Kairoseth Reviews", "Reseñas WordPress")
 STORE_SLUG = "gestion-resenas"
 OLD_STORE_SLUG = "kairoseth-reviews"
 STORE_CLASS = "Gestion_Resenas"
@@ -31,7 +31,9 @@ for path in ROOT.rglob("*"):
     except UnicodeDecodeError:
         continue
 
-    updated = text.replace(OLD_PRODUCT_NAME, PRODUCT_NAME)
+    updated = text
+    for old_product_name in OLD_PRODUCT_NAMES:
+        updated = updated.replace(old_product_name, PRODUCT_NAME)
     updated = updated.replace(OLD_STORE_SLUG, STORE_SLUG)
     updated = updated.replace(OLD_STORE_CLASS, STORE_CLASS)
 
