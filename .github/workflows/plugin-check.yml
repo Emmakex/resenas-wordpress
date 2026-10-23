@@ -7,7 +7,10 @@ on:
     paths:
       - resenas-wordpress.php
       - assets/**
+      - languages/**
       - readme.txt
+      - LICENSE
+      - scripts/build-store-package.sh
       - .wp-env.json
       - .github/workflows/plugin-check.yml
   pull_request:
@@ -26,10 +29,13 @@ jobs:
       - name: Checkout Store Candidate
         uses: actions/checkout@v4
 
+      - name: Prepare clean WordPress.org package
+        run: bash scripts/build-store-package.sh
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
 
       - name: Install wp-env
         run: npm install --global @wordpress/env@latest
@@ -40,11 +46,11 @@ jobs:
       - name: Install official Plugin Check
         run: wp-env run cli wp plugin install plugin-check --activate
 
-      - name: Activate Reseñas WordPress
-        run: wp-env run cli wp plugin activate resenas-wordpress
+      - name: Activate Kairoseth Reviews
+        run: wp-env run cli wp plugin activate kairoseth-reviews
 
-      - name: Run Plugin Check
-        run: wp-env run cli wp plugin check resenas-wordpress
+      - name: Run strict Plugin Check
+        run: wp-env run cli wp plugin check kairoseth-reviews --format=strict-table
 
       - name: Stop WordPress
         if: always()
