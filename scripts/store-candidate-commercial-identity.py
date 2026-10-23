@@ -1,11 +1,14 @@
 from pathlib import Path
 
 PRODUCT_NAME = "Reseñas WordPress"
-OLD_PRODUCT_NAME = "Reseñas WordPress"
+OLD_PRODUCT_NAME = "Kairoseth Reviews"
 STORE_SLUG = "gestion-resenas"
-OLD_STORE_SLUG = "gestion-resenas"
+OLD_STORE_SLUG = "kairoseth-reviews"
+STORE_CLASS = "Gestion_Resenas"
+OLD_STORE_CLASS = "Kairoseth_Reviews"
 
 ROOT = Path(".")
+SELF = Path(__file__).resolve()
 SKIP_DIRS = {".git", ".github", "build", "dist", "node_modules"}
 TEXT_SUFFIXES = {
     ".php", ".py", ".sh", ".yml", ".yaml", ".json", ".txt", ".md",
@@ -15,6 +18,8 @@ TEXT_SUFFIXES = {
 changed = []
 for path in ROOT.rglob("*"):
     if not path.is_file():
+        continue
+    if path.resolve() == SELF:
         continue
     if any(part in SKIP_DIRS for part in path.parts):
         continue
@@ -28,6 +33,7 @@ for path in ROOT.rglob("*"):
 
     updated = text.replace(OLD_PRODUCT_NAME, PRODUCT_NAME)
     updated = updated.replace(OLD_STORE_SLUG, STORE_SLUG)
+    updated = updated.replace(OLD_STORE_CLASS, STORE_CLASS)
 
     if updated != text:
         path.write_text(updated, encoding="utf-8")
@@ -43,6 +49,6 @@ if lang_dir.exists():
         old_path.rename(new_path)
         changed.append(f"{old_path} -> {new_path}")
 
-print(f"Commercial identity enforced: {PRODUCT_NAME} / {STORE_SLUG}")
+print(f"Commercial identity enforced: {PRODUCT_NAME} / {STORE_SLUG} / {STORE_CLASS}")
 for item in changed:
     print(f" - {item}")
