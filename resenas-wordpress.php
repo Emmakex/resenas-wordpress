@@ -16,7 +16,7 @@
 
 if (!defined('ABSPATH')) exit;
 
-class Kairoseth_Reviews {
+class Gestion_Resenas {
     const VERSION = '1.2.0-rc3';
     const OPTION_KEY = 'lad_rf_settings'; // Se conserva para migrar sin perder la configuración 1.0.1.
     const LOCATIONS_KEY = 'rw_locations';
@@ -946,6 +946,7 @@ class Kairoseth_Reviews {
         /* translators: %d is the feedback entry ID. */
         /* translators: %d is the feedback entry ID. */
         /* translators: %d is the feedback entry ID. */
+        /* translators: %d is the feedback entry ID. */
         $message .= sprintf(__('ID: %d', 'gestion-resenas'), $entry_id) . "\n";
         /* translators: %s is the location name. */
         /* translators: %s is the location name. */
@@ -963,6 +964,7 @@ class Kairoseth_Reviews {
         /* translators: %s is the customer feedback text. */
         /* translators: %s is the customer feedback text. */
         /* translators: %s is the customer feedback text. */
+        /* translators: %s is the customer feedback text. */
         $message .= sprintf(__('Feedback: %s', 'gestion-resenas'), $feedback) . "\n";
         wp_mail($email, $subject, $message);
     }
@@ -970,4 +972,4 @@ class Kairoseth_Reviews {
 
 }
 
-new Kairoseth_Reviews();
+new Gestion_Resenas();

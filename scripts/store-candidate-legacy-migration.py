@@ -8,9 +8,9 @@ text = PLUGIN.read_text(encoding="utf-8")
 # still loaded during the activation request. Keep the Store class neutral:
 # the commercial product is Reseñas WordPress; Kairoseth is only the author.
 text = text.replace("class Resenas_WordPress {", "class Gestion_Resenas {", 1)
-text = text.replace("class Kairoseth_Reviews {", "class Gestion_Resenas {", 1)
+text = text.replace("class Gestion_Resenas {", "class Gestion_Resenas {", 1)
 text = text.replace("new Resenas_WordPress();", "new Gestion_Resenas();", 1)
-text = text.replace("new Kairoseth_Reviews();", "new Gestion_Resenas();", 1)
+text = text.replace("new Gestion_Resenas();", "new Gestion_Resenas();", 1)
 
 activate_old = '''    public function activate() {
         $this->install_schema();'''

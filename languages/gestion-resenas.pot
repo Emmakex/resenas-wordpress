@@ -242,15 +242,6 @@ msgstr ""
 msgid "Invalid rating."
 msgstr ""
 
-msgid "Reseñas WordPress"
-msgstr ""
-
-msgid "Reseñas WordPress — Feedback"
-msgstr ""
-
-msgid "Reseñas WordPress — Locations"
-msgstr ""
-
 msgid "Leave a review on Google"
 msgstr ""
 
@@ -354,6 +345,15 @@ msgid "Ref"
 msgstr ""
 
 msgid "Reference: %s"
+msgstr ""
+
+msgid "Reseñas WordPress"
+msgstr ""
+
+msgid "Reseñas WordPress — Feedback"
+msgstr ""
+
+msgid "Reseñas WordPress — Locations"
 msgstr ""
 
 msgid "Review received ratings and quickly find the cases that need follow-up."
