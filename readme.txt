@@ -87,6 +87,12 @@ Send the URL of the WordPress page where you placed `[resenas_wordpress]`, for e
 
 Yes. `[resenas_wordpress]` remains the primary shortcode and the legacy shortcode is retained for compatibility.
 
+= I installed an earlier Reseñas WordPress package manually. Will I lose my data? =
+
+No. Kairoseth Reviews keeps the same option keys, locations data, database table, shortcodes, and feedback records used by the validated legacy version. When the new Store package is activated, it deactivates an active legacy `resenas-wordpress.php` plugin file to avoid duplicate hooks while preserving its existing data.
+
+After confirming Kairoseth Reviews works correctly, the old plugin folder can be removed from the Plugins screen. Do not use a destructive data-removal process for the legacy package during migration.
+
 == Privacy ==
 
 Kairoseth Reviews stores its operational data in the site's own WordPress database.
@@ -114,8 +120,9 @@ Site owners are responsible for informing users about their own data-processing 
 * Secondary Google sharing option after low-rating feedback.
 * Redesigned WordPress-native administration screens.
 * Grouped settings: General, Appearance, Copy, and Notifications.
-* Internationalization groundwork for English and Spanish.
+* English source language with a validated Spanish translation catalog.
 * Reduced collection of unnecessary technical visitor data.
+* Safe migration path from manually installed legacy packages.
 * WordPress.org Store Candidate hardening.
 
 = 1.1.3 =
@@ -127,4 +134,4 @@ Site owners are responsible for informing users about their own data-processing 
 == Upgrade Notice ==
 
 = 1.2.0 =
-Adds the premium accessible interface and service recovery workflow while preserving the existing database table, options, shortcodes, and customer feedback data.
+Adds the premium accessible interface and service recovery workflow while preserving the existing database table, options, locations, shortcodes, and customer feedback data. An active legacy `resenas-wordpress.php` package is deactivated automatically when the Store package is activated.
