@@ -5,9 +5,12 @@ text = PLUGIN.read_text(encoding="utf-8")
 
 # The WordPress.org plugin uses a new Store slug/folder. A distinct class name
 # prevents a fatal redeclaration if the legacy manually-installed plugin is
-# still loaded during the activation request.
-text = text.replace("class Resenas_WordPress {", "class Kairoseth_Reviews {", 1)
-text = text.replace("new Resenas_WordPress();", "new Kairoseth_Reviews();", 1)
+# still loaded during the activation request. Keep the Store class neutral:
+# the commercial product is Reseñas WordPress; Kairoseth is only the author.
+text = text.replace("class Resenas_WordPress {", "class Gestion_Resenas {", 1)
+text = text.replace("class Kairoseth_Reviews {", "class Gestion_Resenas {", 1)
+text = text.replace("new Resenas_WordPress();", "new Gestion_Resenas();", 1)
+text = text.replace("new Kairoseth_Reviews();", "new Gestion_Resenas();", 1)
 
 activate_old = '''    public function activate() {
         $this->install_schema();'''
