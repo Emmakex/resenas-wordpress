@@ -10,6 +10,7 @@ on:
       - scripts/store-candidate-wordpress-org.py
       - scripts/store-candidate-admin-i18n.py
       - scripts/store-candidate-source-english.py
+      - scripts/store-candidate-bundled-translation.py
       - scripts/store-candidate-legacy-migration.py
       - scripts/store-candidate-plugin-check.py
       - scripts/store-candidate-spanish-catalog.py
@@ -40,6 +41,7 @@ jobs:
           python3 scripts/store-candidate-wordpress-org.py
           python3 scripts/store-candidate-admin-i18n.py
           python3 scripts/store-candidate-source-english.py
+          python3 scripts/store-candidate-bundled-translation.py
           python3 scripts/store-candidate-legacy-migration.py
           python3 scripts/store-candidate-plugin-check.py
           python3 scripts/store-candidate-spanish-catalog.py
@@ -59,5 +61,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add resenas-wordpress.php languages/kairoseth-reviews.pot languages/kairoseth-reviews-es_ES.po languages/kairoseth-reviews-es_ES.mo
-          git commit -m "Harden Store Candidate for Plugin Check"
+          git commit -m "Add bundled translation fallback for RC installs"
           git push origin HEAD:feat/v1.2.0-store-candidate
