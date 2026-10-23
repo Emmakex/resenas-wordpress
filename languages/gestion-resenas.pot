@@ -1,0 +1,519 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Gestión de Reseñas 1.2.0\n"
+"Report-Msgid-Bugs-To: https://kairoseth.com/products/resenas-wordpress\n"
+"POT-Creation-Date: 2026-10-23 12:00+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Domain: gestion-resenas\n"
+
+msgid "%d out of 5 stars"
+msgstr ""
+
+msgid "%s. Opens in a new tab."
+msgstr ""
+
+msgid "A rating that requires follow-up has been received."
+msgstr ""
+
+msgid "Accent / star color"
+msgstr ""
+
+msgid "Actions"
+msgstr ""
+
+msgid "Active"
+msgstr ""
+
+msgid "Activity overview"
+msgstr ""
+
+msgid "Add [resenas_wordpress] to the page and publish it."
+msgstr ""
+
+msgid "Add location"
+msgstr ""
+
+msgid "Add your logo, copy, Google review link, and optional locations."
+msgstr ""
+
+msgid "Agent"
+msgstr ""
+
+msgid "All locations"
+msgstr ""
+
+msgid "Also share my experience on Google"
+msgstr ""
+
+msgid "Also share my experience on Google. Opens in a new tab."
+msgstr ""
+
+msgid "Appearance"
+msgstr ""
+
+msgid "Appearance and settings"
+msgstr ""
+
+msgid "Average rating"
+msgstr ""
+
+msgid "Background color"
+msgstr ""
+
+msgid "Briefly describe what happened"
+msgstr ""
+
+msgid "Business identity, Google settings, and follow-up behavior."
+msgstr ""
+
+msgid "Business name"
+msgstr ""
+
+msgid "Button text color"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Card color"
+msgstr ""
+
+msgid "Choose where to receive notifications when a rating needs follow-up."
+msgstr ""
+
+msgid "Clear filter"
+msgstr ""
+
+msgid "Collect ratings, detect customers who need follow-up, and help them share their public experience from a page on your own WordPress site."
+msgstr ""
+
+msgid "Colors and visual settings for the public form."
+msgstr ""
+
+msgid "Comment"
+msgstr ""
+
+msgid "Configure the customer experience, visual identity, and follow-up notifications without leaving WordPress."
+msgstr ""
+
+msgid "Configure the plugin and review customer responses."
+msgstr ""
+
+msgid "Configure your business."
+msgstr ""
+
+msgid "Configured locations"
+msgstr ""
+
+msgid "Copy"
+msgstr ""
+
+msgid "Could not submit. Please try again."
+msgstr ""
+
+msgid "Create a page."
+msgstr ""
+
+msgid "Custom CSS"
+msgstr ""
+
+msgid "Customer service"
+msgstr ""
+
+msgid "Customize the messages customers see during the rating flow."
+msgstr ""
+
+msgid "Dashboard"
+msgstr ""
+
+msgid "Date"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+msgid "Delete this location?"
+msgstr ""
+
+msgid "Each location can have its own Google review link and notification email. If you only have one location, you can use the global settings."
+msgstr ""
+
+msgid "Each location can have its own email. This address is used when the location email is empty."
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "Edit location"
+msgstr ""
+
+msgid "Example: Downtown"
+msgstr ""
+
+msgid "Feedback"
+msgstr ""
+
+msgid "Feedback button text"
+msgstr ""
+
+msgid "Feedback received"
+msgstr ""
+
+msgid "Feedback saved successfully."
+msgstr ""
+
+msgid "Feedback: %s"
+msgstr ""
+
+msgid "Filter"
+msgstr ""
+
+msgid "Finish"
+msgstr ""
+
+msgid "Follow-up text"
+msgstr ""
+
+msgid "Follow-up threshold"
+msgstr ""
+
+msgid "Follow-up title"
+msgstr ""
+
+msgid "For advanced adjustments only. The base design is already optimized for mobile and accessibility."
+msgstr ""
+
+msgid "For example, create a page called Reviews."
+msgstr ""
+
+msgid "General"
+msgstr ""
+
+msgid "Gestión de Reseñas"
+msgstr ""
+
+msgid "Gestión de Reseñas — Feedback"
+msgstr ""
+
+msgid "Gestión de Reseñas — Locations"
+msgstr ""
+
+msgid "Global Google review URL"
+msgstr ""
+
+msgid "Global email"
+msgstr ""
+
+msgid "Global notification email"
+msgstr ""
+
+msgid "Google Reviews"
+msgstr ""
+
+msgid "Google button text"
+msgstr ""
+
+msgid "Google review URL"
+msgstr ""
+
+msgid "Google review option shown"
+msgstr ""
+
+msgid "High-rating text"
+msgstr ""
+
+msgid "High-rating title"
+msgstr ""
+
+msgid "How it works"
+msgstr ""
+
+msgid "How was your experience with our service?"
+msgstr ""
+
+msgid "ID: %d"
+msgstr ""
+
+msgid "Identifier"
+msgstr ""
+
+msgid "Inactive"
+msgstr ""
+
+msgid "Insert the shortcode."
+msgstr ""
+
+msgid "Invalid entry."
+msgstr ""
+
+msgid "Invalid rating."
+msgstr ""
+
+msgid "Leave a review on Google"
+msgstr ""
+
+msgid "Location"
+msgstr ""
+
+msgid "Location deleted successfully."
+msgstr ""
+
+msgid "Location saved successfully."
+msgstr ""
+
+msgid "Location: %s"
+msgstr ""
+
+msgid "Locations"
+msgstr ""
+
+msgid "Logo"
+msgstr ""
+
+msgid "Main reason"
+msgstr ""
+
+msgid "Main title"
+msgstr ""
+
+msgid "Manage locations"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Need follow-up"
+msgstr ""
+
+msgid "No Google review URL is configured for this location."
+msgstr ""
+
+msgid "No location"
+msgstr ""
+
+msgid "No locations have been configured yet. If your business has one location, you can continue using the global Google review URL in Settings."
+msgstr ""
+
+msgid "Not authorized."
+msgstr ""
+
+msgid "Notification email"
+msgstr ""
+
+msgid "Notifications"
+msgstr ""
+
+msgid "Notify when follow-up is required"
+msgstr ""
+
+msgid "One per line."
+msgstr ""
+
+msgid "Open listing"
+msgstr ""
+
+msgid "Optional. The global notification email is used when this is empty."
+msgstr ""
+
+msgid "Order"
+msgstr ""
+
+msgid "Other"
+msgstr ""
+
+msgid "Price"
+msgstr ""
+
+msgid "Primary color"
+msgstr ""
+
+msgid "Quick actions"
+msgstr ""
+
+msgid "Quick reasons"
+msgstr ""
+
+msgid "Rate your experience from 1 to 5 stars"
+msgstr ""
+
+msgid "Rating"
+msgstr ""
+
+msgid "Rating: %d/5"
+msgstr ""
+
+msgid "Ratings at or below this value request internal feedback to support service recovery."
+msgstr ""
+
+msgid "Reason"
+msgstr ""
+
+msgid "Ref"
+msgstr ""
+
+msgid "Reference: %s"
+msgstr ""
+
+msgid "Review received ratings and quickly find the cases that need follow-up."
+msgstr ""
+
+msgid "Save settings"
+msgstr ""
+
+msgid "Saving your rating…"
+msgstr ""
+
+msgid "Select a logo"
+msgstr ""
+
+msgid "Send an automatic email"
+msgstr ""
+
+msgid "Send feedback"
+msgstr ""
+
+msgid "Send the page URL."
+msgstr ""
+
+msgid "Sending your feedback…"
+msgstr ""
+
+msgid "Sending..."
+msgstr ""
+
+msgid "Service"
+msgstr ""
+
+msgid "Service outcome"
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "Settings sections"
+msgstr ""
+
+msgid "Share a URL such as"
+msgstr ""
+
+msgid "Show quick reasons"
+msgstr ""
+
+msgid "Source"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Subtitle"
+msgstr ""
+
+msgid "Tell us about your experience"
+msgstr ""
+
+msgid "Tell us what happened so we can help and keep improving."
+msgstr ""
+
+msgid "Text color"
+msgstr ""
+
+msgid "Thank you for your feedback"
+msgstr ""
+
+msgid "Thank you for your rating"
+msgstr ""
+
+msgid "Thank-you text"
+msgstr ""
+
+msgid "Thank-you title"
+msgstr ""
+
+msgid "The feedback could not be saved."
+msgstr ""
+
+msgid "The link you send to the customer is the URL of the WordPress page where you placed the shortcode."
+msgstr ""
+
+msgid "The rating could not be found."
+msgstr ""
+
+msgid "The rating could not be saved."
+msgstr ""
+
+msgid "The rating identifier is missing."
+msgstr ""
+
+msgid "The selected location is invalid."
+msgstr ""
+
+msgid "The selected location is not available."
+msgstr ""
+
+msgid "There are no responses to display yet."
+msgstr ""
+
+msgid "This business has multiple locations. The link must specify a location."
+msgstr ""
+
+msgid "Total feedback"
+msgstr ""
+
+msgid "Total records:"
+msgstr ""
+
+msgid "Update location"
+msgstr ""
+
+msgid "Upload / choose"
+msgstr ""
+
+msgid "Use logo"
+msgstr ""
+
+msgid "Used in the page URL, for example:"
+msgstr ""
+
+msgid "Used when no locations are configured. With multiple locations, each location can have its own URL."
+msgstr ""
+
+msgid "View feedback"
+msgstr ""
+
+msgid "Wait time"
+msgstr ""
+
+msgid "Waiting for feedback"
+msgstr ""
+
+msgid "We are sorry your experience was not the best"
+msgstr ""
+
+msgid "We cannot identify the location"
+msgstr ""
+
+msgid "We received your response successfully."
+msgstr ""
+
+msgid "We recorded your feedback so the team can review it and follow up."
+msgstr ""
+
+msgid "Would you share your experience on Google?"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "You can add"
+msgstr ""
+
+msgid "Your feedback helps us improve."
+msgstr ""
+
+msgid "[%s] New rating received"
+msgstr ""
+
+msgid "and, for multiple locations,"
+msgstr ""

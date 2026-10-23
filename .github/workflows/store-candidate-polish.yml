@@ -1,0 +1,67 @@
+name: Store Candidate Polish
+
+on:
+  push:
+    branches:
+      - feat/v1.2.0-store-candidate
+    paths:
+      - scripts/store-candidate-polish.py
+      - scripts/store-candidate-i18n-privacy.py
+      - scripts/store-candidate-wordpress-org.py
+      - scripts/store-candidate-admin-i18n.py
+      - scripts/store-candidate-source-english.py
+      - scripts/store-candidate-bundled-translation.py
+      - scripts/store-candidate-legacy-migration.py
+      - scripts/store-candidate-plugin-check.py
+      - scripts/store-candidate-spanish-catalog.py
+      - scripts/store-candidate-commercial-identity.py
+      - .github/workflows/store-candidate-polish.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  polish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout candidate branch
+        uses: actions/checkout@v4
+        with:
+          ref: feat/v1.2.0-store-candidate
+
+      - name: Install gettext tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y gettext
+
+      - name: Apply Store Candidate polish
+        run: |
+          python3 scripts/store-candidate-polish.py
+          python3 scripts/store-candidate-i18n-privacy.py
+          python3 scripts/store-candidate-wordpress-org.py
+          python3 scripts/store-candidate-admin-i18n.py
+          python3 scripts/store-candidate-source-english.py
+          python3 scripts/store-candidate-bundled-translation.py
+          python3 scripts/store-candidate-legacy-migration.py
+          python3 scripts/store-candidate-plugin-check.py
+          python3 scripts/store-candidate-spanish-catalog.py
+          python3 scripts/store-candidate-commercial-identity.py
+          msgfmt --check --check-format languages/gestion-resenas-es_ES.po -o languages/gestion-resenas-es_ES.mo
+
+      - name: Validate PHP and JavaScript
+        run: |
+          php -l resenas-wordpress.php
+          node --check assets/front.js
+
+      - name: Commit generated polish
+        run: |
+          if git diff --quiet; then
+            echo "No generated changes"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Enforce commercial product identity for Store candidate"
+          git push origin HEAD:feat/v1.2.0-store-candidate

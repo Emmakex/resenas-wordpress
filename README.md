@@ -1,4 +1,4 @@
-# Reseñas WordPress
+# Gestión de Reseñas
 
 Plugin gratuito para WordPress desarrollado por Kairoseth para solicitar valoraciones, recoger feedback de clientes y gestionar reseñas para una o múltiples sedes.
 
