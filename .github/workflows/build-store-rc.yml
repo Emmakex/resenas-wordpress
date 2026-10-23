@@ -1,0 +1,52 @@
+name: Build Store RC
+
+on:
+  push:
+    branches:
+      - feat/v1.2.0-store-candidate
+    paths:
+      - resenas-wordpress.php
+      - assets/**
+      - languages/**
+      - readme.txt
+      - LICENSE
+      - scripts/build-store-package.sh
+      - .github/workflows/build-store-rc.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Store Candidate
+        uses: actions/checkout@v4
+
+      - name: Prepare clean package
+        run: bash scripts/build-store-package.sh
+
+      - name: Validate package sources
+        run: |
+          php -l build/kairoseth-reviews/kairoseth-reviews.php
+          node --check build/kairoseth-reviews/assets/front.js
+          test -f build/kairoseth-reviews/languages/kairoseth-reviews-es_ES.mo
+          test -f build/kairoseth-reviews/languages/kairoseth-reviews-es_ES.po
+          test -f build/kairoseth-reviews/languages/kairoseth-reviews.pot
+
+      - name: Create RC ZIP and checksum
+        working-directory: build
+        run: |
+          zip -r kairoseth-reviews-1.2.0-rc3.zip kairoseth-reviews
+          sha256sum kairoseth-reviews-1.2.0-rc3.zip > kairoseth-reviews-1.2.0-rc3.zip.sha256
+          unzip -t kairoseth-reviews-1.2.0-rc3.zip
+
+      - name: Upload RC artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: kairoseth-reviews-1.2.0-rc3
+          path: |
+            build/kairoseth-reviews-1.2.0-rc3.zip
+            build/kairoseth-reviews-1.2.0-rc3.zip.sha256
+          if-no-files-found: error
