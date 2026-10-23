@@ -6,7 +6,7 @@ STORE_SLUG = "gestion-resenas"
 OLD_STORE_SLUG = "kairoseth-reviews"
 
 ROOT = Path(".")
-SKIP_DIRS = {".git", "build", "dist", "node_modules"}
+SKIP_DIRS = {".git", ".github", "build", "dist", "node_modules"}
 TEXT_SUFFIXES = {
     ".php", ".py", ".sh", ".yml", ".yaml", ".json", ".txt", ".md",
     ".po", ".pot", ".js", ".css"
