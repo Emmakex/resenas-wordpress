@@ -1,5 +1,5 @@
 === Reseñas WordPress ===
-Contributors: Emmakex
+Contributors: eduardoyauri
 Tags: reviews, ratings, feedback, google reviews, whatsapp
 Requires at least: 6.4
 Tested up to: 7.1
