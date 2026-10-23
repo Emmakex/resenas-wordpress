@@ -14,6 +14,7 @@ on:
       - scripts/store-candidate-legacy-migration.py
       - scripts/store-candidate-plugin-check.py
       - scripts/store-candidate-spanish-catalog.py
+      - scripts/store-candidate-commercial-identity.py
       - .github/workflows/store-candidate-polish.yml
   workflow_dispatch:
 
@@ -45,7 +46,8 @@ jobs:
           python3 scripts/store-candidate-legacy-migration.py
           python3 scripts/store-candidate-plugin-check.py
           python3 scripts/store-candidate-spanish-catalog.py
-          msgfmt --check --check-format languages/kairoseth-reviews-es_ES.po -o languages/kairoseth-reviews-es_ES.mo
+          python3 scripts/store-candidate-commercial-identity.py
+          msgfmt --check --check-format languages/gestion-resenas-es_ES.po -o languages/gestion-resenas-es_ES.mo
 
       - name: Validate PHP and JavaScript
         run: |
@@ -60,6 +62,6 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add resenas-wordpress.php languages/kairoseth-reviews.pot languages/kairoseth-reviews-es_ES.po languages/kairoseth-reviews-es_ES.mo
-          git commit -m "Add bundled translation fallback for RC installs"
+          git add -A
+          git commit -m "Enforce commercial product identity for Store candidate"
           git push origin HEAD:feat/v1.2.0-store-candidate
