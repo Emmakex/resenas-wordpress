@@ -1,129 +1,130 @@
-=== Reseñas WordPress ===
+=== Kairoseth Reviews ===
 Contributors: eduardoyauri
-Tags: reviews, ratings, feedback, google reviews, whatsapp
+Tags: reviews, ratings, feedback, customer service, multi-location
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.2.0-rc2
+Stable tag: 1.2.0-rc3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Solicita valoraciones, detecta clientes que necesitan seguimiento y gestiona feedback de una o múltiples sedes desde WordPress.
+Collect customer ratings and feedback, manage service recovery, and support one or multiple business locations directly in WordPress.
 
 == Description ==
 
-Reseñas WordPress crea un flujo de valoración post-servicio dentro de tu propio WordPress.
+Kairoseth Reviews adds a simple post-service feedback flow to your WordPress site.
 
-El caso de uso recomendado es crear una página de valoraciones, insertar el shortcode `[resenas_wordpress]` y enviar la URL de esa página al cliente por WhatsApp después de una compra, servicio, reserva, cita o intervención.
+Create a page, insert the `[resenas_wordpress]` shortcode, publish it, and share that page URL with customers. A common workflow is to send the link through WhatsApp after a purchase, service, booking, appointment, or intervention. The same page can also be shared by email, SMS, QR code, your website, or another channel.
 
-Ejemplo:
+The plugin is local-first: its core workflow runs inside your WordPress installation and does not require a Kairoseth account or subscription.
 
-`https://tuweb.com/resenas/`
+= Service recovery workflow =
 
-También puedes utilizar esa misma URL desde web, email, SMS, QR u otros canales.
+When a customer selects a low rating, the plugin can ask what happened, collect a reason and comment, and notify the responsible team so the business can follow up and resolve the issue.
 
-= Qué incluye =
+After the internal feedback is submitted, the customer can still choose to share their experience on Google through a secondary action when a Google review URL is configured.
 
-* Valoraciones de 1 a 5 estrellas.
-* Experiencia optimizada para móvil.
-* Feedback interno para facilitar el seguimiento de clientes insatisfechos.
-* Acceso a Google Reviews cuando la empresa ha configurado una URL de reseña.
-* Una o múltiples sedes.
-* URL de Google independiente por sede.
-* Referencias externas mediante `?ref=`.
-* Selección de sede mediante `?sede=`.
-* Registro del origen de la valoración.
-* Personalización de logo, colores y textos.
-* Avisos por email para valoraciones que requieren seguimiento.
-* Dashboard y gestión de respuestas dentro de WordPress.
-* Datos almacenados localmente en WordPress.
+For higher ratings, the Google review link can remain the primary next action.
 
-= Cómo funciona =
+= Main features =
 
-1. Crea una página en WordPress, por ejemplo "Reseñas".
-2. Inserta `[resenas_wordpress]` dentro de la página.
-3. Publica la página.
-4. Configura tu empresa, enlace de Google y, si lo necesitas, una o varias sedes.
-5. Envía al cliente la URL publicada, por ejemplo `https://tuweb.com/resenas/`.
+* 1-to-5 star customer ratings.
+* Internal feedback and service recovery workflow.
+* Optional Google review links.
+* Single-location and multi-location support.
+* Separate Google review URL and notification email per location.
+* External references using `?ref=`.
+* Location selection using `?sede=`.
+* Operational context such as service, order, agent, and source.
+* Custom logo, colors, copy, and feedback reasons.
+* Email notifications for ratings that require follow-up.
+* Keyboard-accessible rating controls and visible focus states.
+* Responsive interface designed for mobile traffic, including WhatsApp flows.
+* Customer data stored locally in WordPress.
 
-Para añadir una referencia:
+Official product page: https://kairoseth.com/products/resenas-wordpress
 
-`https://tuweb.com/resenas/?ref=ABC123`
+== How it works ==
 
-Para una instalación con varias sedes:
+1. Create a WordPress page, for example **Reviews**.
+2. Insert `[resenas_wordpress]` into that page.
+3. Publish the page. Its URL could be `https://example.com/reviews/`.
+4. Configure your business, Google review URL, appearance, notifications, and optional locations.
+5. Send the published page URL to the customer, for example through WhatsApp.
+6. Optionally add a reference such as `?ref=ORDER-123`.
+7. For multiple locations, add the location identifier, for example `?sede=downtown&ref=ORDER-123`.
 
-`https://tuweb.com/resenas/?sede=sede-centro&ref=ABC123`
-
-= Recuperación del servicio =
-
-Cuando una valoración se encuentra dentro del umbral de seguimiento configurado, Reseñas WordPress solicita un motivo y un comentario interno para que la empresa pueda revisar la experiencia y contactar al cliente si corresponde.
-
-Después de guardar ese feedback, el cliente puede seguir accediendo de forma secundaria al enlace público de Google si está configurado.
-
-Las valoraciones superiores al umbral muestran Google como acción principal cuando existe una URL configurada.
+The plugin does not create a separate public review URL. The URL you share is the WordPress page where the shortcode is placed.
 
 == Installation ==
 
-1. Instala y activa Reseñas WordPress.
-2. Abre `Reseñas WordPress > Apariencia y ajustes`.
-3. Configura el nombre de la empresa, textos, colores y la URL de Google.
-4. Si trabajas con varias ubicaciones, crea las sedes desde `Reseñas WordPress > Sedes`.
-5. Crea una página de WordPress e inserta `[resenas_wordpress]`.
-6. Publica la página y comparte esa URL con tus clientes.
+1. Upload the plugin ZIP from **Plugins > Add Plugin > Upload Plugin** or install it from the WordPress Plugin Directory when available.
+2. Activate **Kairoseth Reviews**.
+3. Open the Kairoseth Reviews menu in WordPress.
+4. Configure your business and optional locations.
+5. Create a page and insert `[resenas_wordpress]`.
+6. Publish the page and share its URL with customers.
 
 == Frequently Asked Questions ==
 
-= ¿Qué enlace tengo que enviar al cliente? =
+= Is Kairoseth Reviews free? =
 
-La URL de la página de WordPress donde hayas insertado `[resenas_wordpress]`. El plugin no crea una URL pública paralela.
+Yes. The core plugin runs locally in WordPress and does not require a Kairoseth subscription.
 
-= ¿Necesito WhatsApp? =
+= Do I need WhatsApp? =
 
-No. WhatsApp es el uso recomendado, pero puedes compartir la misma página por email, SMS, QR, desde tu web o mediante cualquier otro canal.
+No. WhatsApp is a recommended workflow, but the same page URL can be shared through email, SMS, QR codes, your website, or another channel.
 
-= ¿Funciona con varias sedes? =
+= Does it support multiple locations? =
 
-Sí. Cada sede puede tener su propio identificador, URL de Google y email de avisos.
+Yes. Each location can have its own identifier, Google review URL, and notification email.
 
-= ¿Los datos se envían a Kairoseth? =
+= Which URL do I send to customers? =
 
-No. El plugin funciona localmente dentro de tu instalación de WordPress y no envía las valoraciones a Kairoseth.
+Send the URL of the WordPress page where you placed `[resenas_wordpress]`, for example `https://example.com/reviews/`.
 
-= ¿Puedo automatizar el envío del enlace? =
+= Can I keep my existing shortcode from an earlier version? =
 
-El core gratuito no incluye automatizaciones específicas. Kairoseth puede desarrollar integraciones con WhatsApp, WooCommerce, CRM, ERP, reservas o APIs como personalización independiente.
+Yes. `[resenas_wordpress]` remains the primary shortcode and the legacy shortcode is retained for compatibility.
 
 == Privacy ==
 
-Reseñas WordPress almacena localmente en la base de datos de WordPress la valoración y, cuando se proporciona, el motivo, comentario, referencia, sede, origen y otros datos operativos asociados al enlace.
+Kairoseth Reviews stores its operational data in the site's own WordPress database.
 
-La versión actual también puede registrar metadatos técnicos como IP, agente de usuario y URL de la página para contexto operativo y diagnóstico. Antes de utilizar estos datos, el responsable del sitio debe revisar su base jurídica, política de privacidad y plazos de conservación conforme a la normativa aplicable.
+New records in the Store Candidate do not store the visitor IP address, user-agent string, or full page URL. The plugin keeps the information required for the feedback workflow, such as rating, feedback, location, optional reference, service/order context, agent, and source when supplied.
 
-El plugin no transmite estas respuestas a Kairoseth ni requiere una cuenta externa para funcionar.
+The plugin does not send customer feedback to Kairoseth. A configured Google review URL is opened only when the customer chooses that action.
 
-Al pulsar un enlace de Google, el usuario abandona el sitio y accede directamente al servicio externo configurado por el administrador.
+Site owners are responsible for informing users about their own data-processing practices and for applying any retention requirements that apply to their business.
 
 == Screenshots ==
 
-1. Formulario de valoración optimizado para móvil.
-2. Flujo de feedback para una valoración que requiere seguimiento.
-3. Dashboard de Reseñas WordPress.
-4. Gestión de sedes.
-5. Apariencia y ajustes.
+1. Premium mobile-friendly customer rating screen with accessible 1-to-5 star controls.
+2. Service recovery screen for collecting the reason and customer comment after a low rating.
+3. WordPress dashboard with feedback metrics and the page → shortcode → URL → WhatsApp workflow.
+4. Multi-location management with separate Google review links and notification emails.
+5. Grouped settings for General, Appearance, Copy, and Notifications.
 
 == Changelog ==
 
 = 1.2.0 =
-* Nuevo frontend premium y responsive.
-* Mejoras de accesibilidad: teclado, foco visible, estados ARIA y soporte de reducción de movimiento.
-* Semántica accesible disponible desde el marcado del servidor.
-* Nuevo cierre para valoraciones que requieren seguimiento: feedback interno y acceso secundario a Google.
-* Dashboard y pantallas de administración con jerarquía visual mejorada.
-* Bloque "Cómo funciona" dentro del Dashboard.
-* Headers y documentación preparados para WordPress.org.
+* Premium responsive customer experience.
+* Improved keyboard and screen-reader accessibility.
+* Service recovery workflow for ratings that require follow-up.
+* Secondary Google sharing option after low-rating feedback.
+* Redesigned WordPress-native administration screens.
+* Grouped settings: General, Appearance, Copy, and Notifications.
+* Internationalization groundwork for English and Spanish.
+* Reduced collection of unnecessary technical visitor data.
+* WordPress.org Store Candidate hardening.
 
 = 1.1.3 =
-* Core funcional validado.
-* Soporte para una o múltiples sedes.
-* Ciclo completo para valoraciones altas y bajas.
-* Compatibilidad con referencias y origen.
+* Validated functional core.
+* Single-location and multi-location support.
+* Complete rating and feedback cycle.
+* Support for references and source context.
+
+== Upgrade Notice ==
+
+= 1.2.0 =
+Adds the premium accessible interface and service recovery workflow while preserving the existing database table, options, shortcodes, and customer feedback data.
