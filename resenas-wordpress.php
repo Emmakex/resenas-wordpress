@@ -26,6 +26,7 @@ class Kairoseth_Reviews {
     public function __construct() {
         register_activation_hook(__FILE__, [$this, 'activate']);
         add_action('plugins_loaded', [$this, 'maybe_upgrade']);
+        add_action('init', [$this, 'maybe_load_bundled_translation'], 0);
 
         add_action('admin_menu', [$this, 'admin_menu']);
         add_action('admin_init', [$this, 'register_settings']);
@@ -51,6 +52,25 @@ class Kairoseth_Reviews {
 
         add_action('rw_send_low_rating_email', [$this, 'send_low_rating_email_async'], 10, 7);
         add_filter('plugin_action_links_' . plugin_basename(__FILE__), [$this, 'plugin_links']);
+    }
+
+    public function maybe_load_bundled_translation() {
+        $domain = 'kairoseth-reviews';
+        $locale = determine_locale();
+
+        // WordPress.org language packs always take priority when available.
+        $language_pack_mo = WP_LANG_DIR . '/plugins/' . $domain . '-' . $locale . '.mo';
+        $language_pack_php = WP_LANG_DIR . '/plugins/' . $domain . '-' . $locale . '.l10n.php';
+        if (is_readable($language_pack_mo) || is_readable($language_pack_php)) {
+            return;
+        }
+
+        // Manual ZIP installs can use the bundled catalog until a directory
+        // language pack exists. Loading happens at init to avoid early-i18n notices.
+        $bundled_mo = plugin_dir_path(__FILE__) . 'languages/' . $domain . '-' . $locale . '.mo';
+        if (is_readable($bundled_mo)) {
+            load_textdomain($domain, $bundled_mo, $locale);
+        }
     }
 
     public function activate() {
@@ -924,6 +944,7 @@ class Kairoseth_Reviews {
         /* translators: %d is the feedback entry ID. */
         /* translators: %d is the feedback entry ID. */
         /* translators: %d is the feedback entry ID. */
+        /* translators: %d is the feedback entry ID. */
         $message .= sprintf(__('ID: %d', 'kairoseth-reviews'), $entry_id) . "\n";
         /* translators: %s is the location name. */
         /* translators: %s is the location name. */
@@ -934,6 +955,7 @@ class Kairoseth_Reviews {
         /* translators: %d is the customer rating from 1 to 5. */
         /* translators: %d is the customer rating from 1 to 5. */
         $message .= sprintf(__('Rating: %d/5', 'kairoseth-reviews'), $rating) . "\n";
+        /* translators: %s is the customer feedback text. */
         /* translators: %s is the customer feedback text. */
         /* translators: %s is the customer feedback text. */
         /* translators: %s is the customer feedback text. */
