@@ -1,42 +1,57 @@
-# Gestión de Reseñas v1.2.0 — Store Candidate
+# Gestión de Reseñas — Store Candidate 1.2.0
+
+## Identidad
+
+- Nombre comercial: **Gestión de Reseñas**.
+- Autor / fabricante: **Kairoseth**.
+- Slug y text-domain de WordPress.org: `gestion-resenas`.
+- Shortcode principal conservado: `[resenas_wordpress]`.
+- Shortcode legacy conservado: `[lad_review_funnel]`.
 
 ## Objetivo
 
-Preparar el segundo producto Kairoseth para WordPress.org elevando UX, accesibilidad y presentación sin romper el core funcional validado en v1.1.3.
+Convertir el core validado v1.1.3 en una versión pública para WordPress.org sin perder datos ni compatibilidad, elevando UX, accesibilidad, administración y privacidad.
 
-## Bloque 1 — Frontend premium y accesible
+## Store Candidate RC3
 
-- Valoración 1–5 expuesta como `radiogroup` accesible.
-- Navegación por teclado con flechas, Home y End.
-- `aria-checked`, `aria-disabled`, `aria-pressed` y estados `aria-live`.
-- Movimiento de foco al cambiar entre pasos.
-- Label visible para el comentario de feedback.
-- Estados seleccionados perceptibles por forma/check además de color.
-- Objetivos táctiles de al menos 44 px.
-- Foco visible de alto contraste.
-- Soporte `prefers-reduced-motion`.
-- Diseño responsive optimizado para móvil/WhatsApp.
+El candidato `1.2.0-rc3` incluye:
 
-## Regla de recuperación del servicio
+- frontend premium responsive;
+- rating 1–5 accesible por teclado;
+- estados de foco y ARIA;
+- flujo de recuperación del servicio para valoraciones bajas;
+- acceso secundario a Google después del feedback interno;
+- dashboard y administración WordPress-native;
+- ajustes separados en General, Apariencia, Textos y Notificaciones;
+- source strings en inglés + catálogo español;
+- minimización de datos técnicos en registros nuevos;
+- migración automática desde el paquete legacy sin borrar configuración, sedes ni feedback;
+- paquete de distribución limpio en carpeta `gestion-resenas/`.
 
-### 1–3 estrellas
-1. Se registra la valoración.
-2. Se pide motivo/comentario interno.
-3. Se guarda el feedback para seguimiento por el área responsable.
-4. En la pantalla final se ofrece, de forma secundaria, la opción de compartir también la experiencia en Google.
+## Aceptación automática
 
-### 4–5 estrellas
-1. Se registra la valoración.
-2. Se muestra Google como CTA principal.
+Sobre el mismo commit de aceptación del RC3 se han validado:
 
-La finalidad de 1–3 estrellas es recuperación del servicio y resolución de incidencias, no bloquear la posibilidad de publicar una opinión.
+- build del paquete: **success**;
+- `php -l`: **success**;
+- validación JavaScript: **success**;
+- integridad ZIP: **success**;
+- WordPress Plugin Check 2.1.0: **`Success: Checks complete. No errors found.`**;
+- upgrade real v1.1.3 → Store Candidate: **success**;
+- conservación de ajustes legacy: **success**;
+- conservación de sedes: **success**;
+- conservación de feedback: **success**;
+- shortcode `[resenas_wordpress]`: **success**;
+- shortcode `[lad_review_funnel]`: **success**;
+- traducción española empaquetada: **success**.
 
-## Pendiente antes de release
+## Pendiente antes de publicar 1.2.0
 
-- Marcar versión 1.2.0 en PHP/readme.
-- Refactor del marcado PHP para que la semántica accesible no dependa solo de JS.
-- Admin premium + `assets/admin.css`.
-- i18n completa ES/EN.
-- Headers y readme WordPress.org.
-- Assets de tienda y screenshots.
-- Pruebas instalación limpia, upgrade 1.1.3 → 1.2.0, una sede y multisede.
+- auditoría visual manual en WordPress real;
+- prueba explícita de una sede, multisede y `?sede=` inválida;
+- auditoría final de contraste con colores configurables;
+- screenshots reales del plugin;
+- iconos 128/256 y banners 772/1544 para WordPress.org;
+- cambiar versión `1.2.0-rc3` a `1.2.0`;
+- generar ZIP final de publicación y checksum;
+- mantener el PR #2 en draft hasta completar estas comprobaciones.
