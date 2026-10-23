@@ -1,6 +1,6 @@
 === Reseñas WordPress ===
 Contributors: Emmakex
-Tags: reviews, ratings, feedback, google reviews, whatsapp, multi-location
+Tags: reviews, ratings, feedback, google reviews, whatsapp
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
