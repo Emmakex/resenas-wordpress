@@ -51,8 +51,8 @@ start = text.index("    public function admin_menu() {")
 end = text.index("    public function register_settings() {", start)
 admin_menu = '''    public function admin_menu() {
         add_menu_page(
-            __('Reseñas WordPress', 'resenas-wordpress'),
-            __('Reseñas WordPress', 'resenas-wordpress'),
+            __('Gestión de Reseñas', 'resenas-wordpress'),
+            __('Gestión de Reseñas', 'resenas-wordpress'),
             'manage_options',
             'rw-dashboard',
             [$this, 'dashboard_page'],

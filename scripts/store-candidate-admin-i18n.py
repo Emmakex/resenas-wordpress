@@ -52,7 +52,7 @@ text = replace_function(text, "dashboard_page", "settings_page", r'''    public 
         ?>
         <div class="wrap rw-admin">
             <div class="rw-admin-hero">
-                <h1><?php esc_html_e('Reseñas WordPress', 'gestion-resenas'); ?></h1>
+                <h1><?php esc_html_e('Gestión de Reseñas', 'gestion-resenas'); ?></h1>
                 <p><?php esc_html_e('Collect ratings, detect customers who need follow-up, and help them share their public experience from a page on your own WordPress site.', 'gestion-resenas'); ?></p>
             </div>
 
@@ -107,7 +107,7 @@ text = replace_function(text, "locations_page", "save_location", r'''    public 
         $deleted = !empty($_GET['deleted']);
         ?>
         <div class="wrap rw-admin">
-            <h1><?php esc_html_e('Reseñas WordPress — Locations', 'gestion-resenas'); ?></h1>
+            <h1><?php esc_html_e('Gestión de Reseñas — Locations', 'gestion-resenas'); ?></h1>
             <p class="rw-admin-intro"><?php esc_html_e('Each location can have its own Google review link and notification email. If you only have one location, you can use the global settings.', 'gestion-resenas'); ?></p>
 
             <?php if ($updated): ?><div class="notice notice-success is-dismissible"><p><?php esc_html_e('Location saved successfully.', 'gestion-resenas'); ?></p></div><?php endif; ?>
@@ -198,7 +198,7 @@ text = replace_function(text, "entries_page", "shortcode", r'''    public functi
         $locations = $this->get_locations();
         ?>
         <div class="wrap rw-admin">
-            <h1><?php esc_html_e('Reseñas WordPress — Feedback', 'gestion-resenas'); ?></h1>
+            <h1><?php esc_html_e('Gestión de Reseñas — Feedback', 'gestion-resenas'); ?></h1>
             <p class="rw-admin-intro"><?php esc_html_e('Review received ratings and quickly find the cases that need follow-up.', 'gestion-resenas'); ?></p>
             <form class="rw-filter-bar" method="get">
                 <input type="hidden" name="page" value="rw-feedback">

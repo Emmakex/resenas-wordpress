@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Reseñas WordPress
+ * Plugin Name: Gestión de Reseñas
  * Plugin URI: https://kairoseth.com/products/resenas-wordpress
  * Description: Collect customer ratings and feedback, manage one or multiple locations, and support service recovery workflows.
  * Version: 1.2.0-rc3
@@ -257,8 +257,8 @@ class Gestion_Resenas {
 
     public function admin_menu() {
         add_menu_page(
-            __('Reseñas WordPress', 'gestion-resenas'),
-            __('Reseñas WordPress', 'gestion-resenas'),
+            __('Gestión de Reseñas', 'gestion-resenas'),
+            __('Gestión de Reseñas', 'gestion-resenas'),
             'manage_options',
             'rw-dashboard',
             [$this, 'dashboard_page'],
@@ -350,7 +350,7 @@ class Gestion_Resenas {
         ?>
         <div class="wrap rw-admin">
             <div class="rw-admin-hero">
-                <h1><?php esc_html_e('Reseñas WordPress', 'gestion-resenas'); ?></h1>
+                <h1><?php esc_html_e('Gestión de Reseñas', 'gestion-resenas'); ?></h1>
                 <p><?php esc_html_e('Collect ratings, detect customers who need follow-up, and help them share their public experience from a page on your own WordPress site.', 'gestion-resenas'); ?></p>
             </div>
 
@@ -496,7 +496,7 @@ class Gestion_Resenas {
         $deleted = !empty($_GET['deleted']);
         ?>
         <div class="wrap rw-admin">
-            <h1><?php esc_html_e('Reseñas WordPress — Locations', 'gestion-resenas'); ?></h1>
+            <h1><?php esc_html_e('Gestión de Reseñas — Locations', 'gestion-resenas'); ?></h1>
             <p class="rw-admin-intro"><?php esc_html_e('Each location can have its own Google review link and notification email. If you only have one location, you can use the global settings.', 'gestion-resenas'); ?></p>
 
             <?php if ($updated): ?><div class="notice notice-success is-dismissible"><p><?php esc_html_e('Location saved successfully.', 'gestion-resenas'); ?></p></div><?php endif; ?>
@@ -626,7 +626,7 @@ class Gestion_Resenas {
         $locations = $this->get_locations();
         ?>
         <div class="wrap rw-admin">
-            <h1><?php esc_html_e('Reseñas WordPress — Feedback', 'gestion-resenas'); ?></h1>
+            <h1><?php esc_html_e('Gestión de Reseñas — Feedback', 'gestion-resenas'); ?></h1>
             <p class="rw-admin-intro"><?php esc_html_e('Review received ratings and quickly find the cases that need follow-up.', 'gestion-resenas'); ?></p>
             <form class="rw-filter-bar" method="get">
                 <input type="hidden" name="page" value="rw-feedback">

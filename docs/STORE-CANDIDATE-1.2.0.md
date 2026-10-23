@@ -1,4 +1,4 @@
-# Reseñas WordPress v1.2.0 — Store Candidate
+# Gestión de Reseñas v1.2.0 — Store Candidate
 
 ## Objetivo
 

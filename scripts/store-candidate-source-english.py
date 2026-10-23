@@ -22,7 +22,7 @@ translations = {
     "La sede indicada no está disponible.": "The selected location is not available.",
     "Este negocio tiene varias sedes. El enlace debe indicar la sede.": "This business has multiple locations. The link must specify a location.",
     "Ajustes": "Settings",
-    "Reseñas WordPress": "Reseñas WordPress",
+    "Gestión de Reseñas": "Gestión de Reseñas",
     "Sedes": "Locations",
     "Apariencia y ajustes": "Appearance and settings",
     "Configura la experiencia del cliente, la identidad visual y los avisos de seguimiento sin salir de WordPress.": "Configure the customer experience, visual identity, and follow-up notifications without leaving WordPress.",

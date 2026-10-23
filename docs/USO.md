@@ -1,13 +1,13 @@
-# Guía de uso — Reseñas WordPress
+# Guía de uso — Gestión de Reseñas
 
-Reseñas WordPress es un plugin gratuito de Kairoseth para solicitar valoraciones, recoger feedback y gestionar una o múltiples sedes desde WordPress.
+Gestión de Reseñas es un plugin gratuito de Kairoseth para solicitar valoraciones, recoger feedback y gestionar una o múltiples sedes desde WordPress.
 
 ## 1. Instalación
 
 1. Descarga `dist/resenas-wordpress-1.1.3.zip`.
 2. En WordPress entra en **Plugins → Añadir plugin → Subir plugin**.
-3. Sube el ZIP y activa **Reseñas WordPress**.
-4. En el menú **Reseñas WordPress** configura la marca, textos, colores y enlaces de Google.
+3. Sube el ZIP y activa **Gestión de Reseñas**.
+4. En el menú **Gestión de Reseñas** configura la marca, textos, colores y enlaces de Google.
 
 ## 2. Crear la página de valoración
 
@@ -35,7 +35,7 @@ Si existe una única sede activa, el plugin la selecciona automáticamente. Tamb
 
 ## 4. Negocio con varias sedes
 
-Cada sede se configura desde **Reseñas WordPress → Sedes** con:
+Cada sede se configura desde **Gestión de Reseñas → Sedes** con:
 
 - nombre;
 - identificador o slug;
@@ -97,7 +97,7 @@ https://empresa.com/resenas/?sede=centro&ref=SV-2026-001&source=WhatsApp&service
 
 ## 8. Feedback y seguimiento
 
-Desde **Reseñas WordPress → Feedback** se pueden consultar registros con:
+Desde **Gestión de Reseñas → Feedback** se pueden consultar registros con:
 
 - fecha;
 - sede;

@@ -6,7 +6,7 @@ text = PLUGIN.read_text(encoding="utf-8")
 # The WordPress.org plugin uses a new Store slug/folder. A distinct class name
 # prevents a fatal redeclaration if the legacy manually-installed plugin is
 # still loaded during the activation request. Keep the Store class neutral:
-# the commercial product is Reseñas WordPress; Kairoseth is only the author.
+# the commercial product is Gestión de Reseñas; Kairoseth is only the author.
 text = text.replace("class Resenas_WordPress {", "class Gestion_Resenas {", 1)
 text = text.replace("class Gestion_Resenas {", "class Gestion_Resenas {", 1)
 text = text.replace("new Resenas_WordPress();", "new Gestion_Resenas();", 1)
