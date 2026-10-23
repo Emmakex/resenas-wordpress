@@ -15,7 +15,7 @@ cp "$ROOT/assets/admin.css" "$PLUGIN_DIR/assets/admin.css"
 cp "$ROOT/readme.txt" "$PLUGIN_DIR/readme.txt"
 cp "$ROOT/LICENSE" "$PLUGIN_DIR/LICENSE"
 
-for language_file in "$ROOT"/languages/kairoseth-reviews.*; do
+for language_file in "$ROOT"/languages/kairoseth-reviews*; do
   if [[ -f "$language_file" ]]; then
     cp "$language_file" "$PLUGIN_DIR/languages/"
   fi
