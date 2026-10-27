@@ -50,7 +50,13 @@ jobs:
         run: wp-env run cli wp plugin activate gestion-resenas
 
       - name: Run strict Plugin Check
-        run: wp-env run cli wp plugin check gestion-resenas --format=strict-table
+        run: |
+          set -o pipefail
+          wp-env run cli wp plugin check gestion-resenas --format=strict-table | tee /tmp/plugin-check.txt
+          if grep -q $'\tERROR\t' /tmp/plugin-check.txt; then
+            echo "Plugin Check reported one or more ERROR rows."
+            exit 1
+          fi
 
       - name: Stop WordPress
         if: always()
