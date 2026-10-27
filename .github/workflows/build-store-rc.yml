@@ -1,4 +1,4 @@
-name: Build Store RC
+name: Build WordPress.org Release
 
 on:
   push:
@@ -21,10 +21,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Store Candidate
+      - name: Checkout release branch
         uses: actions/checkout@v4
 
-      - name: Prepare clean package
+      - name: Prepare clean WordPress.org package
         run: bash scripts/build-store-package.sh
 
       - name: Validate package sources
@@ -34,19 +34,23 @@ jobs:
           test -f build/gestion-resenas/languages/gestion-resenas-es_ES.mo
           test -f build/gestion-resenas/languages/gestion-resenas-es_ES.po
           test -f build/gestion-resenas/languages/gestion-resenas.pot
+          grep -q "Version: 1.2.0" build/gestion-resenas/gestion-resenas.php
+          grep -q "Stable tag: 1.2.0" build/gestion-resenas/readme.txt
+          ! grep -qi "1.2.0-rc" build/gestion-resenas/gestion-resenas.php
+          ! grep -qi "1.2.0-rc" build/gestion-resenas/readme.txt
 
-      - name: Create RC ZIP and checksum
+      - name: Create final ZIP and checksum
         working-directory: build
         run: |
-          zip -r gestion-resenas-1.2.0-rc4.zip gestion-resenas
-          sha256sum gestion-resenas-1.2.0-rc4.zip > gestion-resenas-1.2.0-rc4.zip.sha256
-          unzip -t gestion-resenas-1.2.0-rc4.zip
+          zip -r gestion-resenas-1.2.0.zip gestion-resenas
+          sha256sum gestion-resenas-1.2.0.zip > gestion-resenas-1.2.0.zip.sha256
+          unzip -t gestion-resenas-1.2.0.zip
 
-      - name: Upload RC artifact
+      - name: Upload final release artifact
         uses: actions/upload-artifact@v4
         with:
-          name: gestion-resenas-1.2.0-rc4
+          name: gestion-resenas-1.2.0
           path: |
-            build/gestion-resenas-1.2.0-rc4.zip
-            build/gestion-resenas-1.2.0-rc4.zip.sha256
+            build/gestion-resenas-1.2.0.zip
+            build/gestion-resenas-1.2.0.zip.sha256
           if-no-files-found: error
