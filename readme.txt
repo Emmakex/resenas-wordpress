@@ -4,7 +4,7 @@ Tags: reviews, ratings, feedback, customer service, multi-location
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.2.0-rc4
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -67,9 +67,9 @@ The plugin does not create a separate public review URL. The URL you share is th
 
 == Compatibility and migration ==
 
-Gestión de Reseñas preserves the option keys, locations data, database table, and shortcodes used by the validated legacy package. This allows existing installations to move to the WordPress.org Store identity without rebuilding their configuration or losing stored feedback.
+Gestión de Reseñas preserves the option keys, locations data, database table, and shortcodes used by the validated legacy package. This allows existing installations to move to the WordPress.org release without rebuilding their configuration or losing stored feedback.
 
-When the Store package is activated, an active legacy plugin whose main file is `resenas-wordpress.php` is deactivated to prevent duplicate hooks and endpoints. Existing data is not deleted.
+When the WordPress.org package is activated, an active legacy plugin whose main file is `resenas-wordpress.php` is deactivated to prevent duplicate hooks and endpoints. Existing data is not deleted.
 
 The source language is English. A validated Spanish catalog is bundled for manual ZIP installs, while WordPress.org language packs take priority when available.
 
@@ -97,7 +97,7 @@ Yes. `[resenas_wordpress]` remains the primary shortcode and the legacy shortcod
 
 = I installed an earlier Gestión de Reseñas package manually. Will I lose my data? =
 
-No. Gestión de Reseñas keeps the same option keys, locations data, database table, shortcodes, and feedback records used by the validated legacy version. When the new Store package is activated, it deactivates an active legacy `resenas-wordpress.php` plugin file to avoid duplicate hooks while preserving its existing data.
+No. Gestión de Reseñas keeps the same option keys, locations data, database table, shortcodes, and feedback records used by the validated legacy version. When the new WordPress.org package is activated, it deactivates an active legacy `resenas-wordpress.php` plugin file to avoid duplicate hooks while preserving its existing data.
 
 After confirming Gestión de Reseñas works correctly, the old plugin folder can be removed from the Plugins screen. Do not use a destructive data-removal process for the legacy package during migration.
 
@@ -105,7 +105,7 @@ After confirming Gestión de Reseñas works correctly, the old plugin folder can
 
 Gestión de Reseñas stores its operational data in the site's own WordPress database.
 
-New records in the Store Candidate do not store the visitor IP address, user-agent string, or full page URL. The plugin keeps the information required for the feedback workflow, such as rating, feedback, location, optional reference, service/order context, agent, and source when supplied.
+New records in Gestión de Reseñas 1.2.0 do not store the visitor IP address, user-agent string, or full page URL. The plugin keeps the information required for the feedback workflow, such as rating, feedback, location, optional reference, service/order context, agent, and source when supplied.
 
 The plugin does not send customer feedback to Kairoseth. A configured Google review URL is opened only when the customer chooses that action.
 
@@ -120,9 +120,7 @@ The plugin does not send customer feedback to Kairoseth. A configured Google rev
 == Changelog ==
 
 = 1.2.0 =
-* RC4 production preview aligns the real frontend and admin UI with the final premium visual direction.
-* RC4 is intended for final live visual acceptance before the WordPress.org submission package is promoted to 1.2.0.
-* Final RC4 packaging is gated by strict WordPress Plugin Check validation before release.
+* Final WordPress.org release of the premium frontend and WordPress-native admin experience.
 * Added admin feedback pagination and visual star/status presentation.
 * Premium responsive frontend and improved accessibility.
 * Accessible 1-to-5 rating control with keyboard support.
@@ -132,7 +130,7 @@ The plugin does not send customer feedback to Kairoseth. A configured Google rev
 * Settings grouped into General, Appearance, Copy, and Notifications.
 * English source strings and bundled Spanish translation for manual installs.
 * Data minimization for new records: IP address, user-agent, and full page URL are no longer stored.
-* Store package migration preserves legacy settings, locations, feedback, and shortcodes.
+* WordPress.org package migration preserves legacy settings, locations, feedback, and shortcodes.
 
 = 1.1.3 =
 * Validated production baseline with complete low-rating feedback cycle.
