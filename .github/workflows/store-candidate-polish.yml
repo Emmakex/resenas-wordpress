@@ -1,4 +1,4 @@
-name: Store Candidate Polish
+name: WordPress.org Release Finalizer
 
 on:
   push:
@@ -23,10 +23,10 @@ permissions:
   contents: write
 
 jobs:
-  polish:
+  finalize:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout candidate branch
+      - name: Checkout release branch
         uses: actions/checkout@v4
         with:
           ref: feat/v1.2.0-store-candidate
@@ -36,7 +36,7 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y gettext
 
-      - name: Apply Store Candidate polish
+      - name: Apply final release transformations
         run: |
           python3 scripts/store-candidate-polish.py
           python3 scripts/store-candidate-i18n-privacy.py
@@ -51,12 +51,16 @@ jobs:
           python3 scripts/store-candidate-production-preview.py
           msgfmt --check --check-format languages/gestion-resenas-es_ES.po -o languages/gestion-resenas-es_ES.mo
 
-      - name: Validate PHP and JavaScript
+      - name: Validate final version and syntax
         run: |
           php -l resenas-wordpress.php
           node --check assets/front.js
+          grep -q "Version: 1.2.0" resenas-wordpress.php
+          grep -q "Stable tag: 1.2.0" readme.txt
+          ! grep -qi "1.2.0-rc" resenas-wordpress.php
+          ! grep -qi "1.2.0-rc" readme.txt
 
-      - name: Commit generated polish
+      - name: Commit generated final release
         run: |
           if git diff --quiet; then
             echo "No generated changes"
@@ -65,5 +69,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
-          git commit -m "Generate v1.2.0 RC4 production preview"
+          git commit -m "Generate final Gestión de Reseñas 1.2.0 release"
           git push origin HEAD:feat/v1.2.0-store-candidate
