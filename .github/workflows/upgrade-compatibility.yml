@@ -1,0 +1,152 @@
+name: Legacy Upgrade Compatibility
+
+on:
+  push:
+    branches:
+      - feat/v1.2.0-store-candidate
+    paths:
+      - resenas-wordpress.php
+      - assets/**
+      - languages/**
+      - readme.txt
+      - scripts/build-store-package.sh
+      - .github/workflows/upgrade-compatibility.yml
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  upgrade:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout full history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Prepare Gestión de Reseñas Store package
+        run: bash scripts/build-store-package.sh
+
+      - name: Prepare validated legacy v1.1.3 fixture from main
+        run: |
+          mkdir -p build/resenas-wordpress/assets
+          git show origin/main:resenas-wordpress.php > build/resenas-wordpress/resenas-wordpress.php
+          git show origin/main:assets/front.css > build/resenas-wordpress/assets/front.css
+          git show origin/main:assets/front.js > build/resenas-wordpress/assets/front.js
+
+      - name: Configure WordPress with both plugin folders
+        run: |
+          cat > .wp-env.json <<'JSON'
+          {
+            "plugins": ["./build/resenas-wordpress", "./build/gestion-resenas"],
+            "config": {
+              "WP_DEBUG": true,
+              "WP_DEBUG_LOG": true,
+              "SCRIPT_DEBUG": true
+            }
+          }
+          JSON
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install wp-env
+        run: npm install --global @wordpress/env@latest
+
+      - name: Start WordPress
+        run: wp-env start
+
+      - name: Establish legacy-only state
+        run: |
+          wp-env run cli wp plugin deactivate gestion-resenas || true
+          wp-env run cli wp plugin activate resenas-wordpress
+          wp-env run cli wp eval '
+            update_option("lad_rf_settings", [
+              "company_name" => "Legacy Company",
+              "google_review_url" => "https://example.com/global-review",
+              "notify_email" => "legacy@example.com",
+              "low_rating_threshold" => 3
+            ]);
+            update_option("rw_locations", [
+              "legacy-center" => [
+                "slug" => "legacy-center",
+                "name" => "Legacy Center",
+                "google_review_url" => "https://example.com/location-review",
+                "notify_email" => "location@example.com",
+                "active" => 1
+              ]
+            ]);
+            global $wpdb;
+            $table = $wpdb->prefix . "lad_review_funnel_entries";
+            $wpdb->insert($table, [
+              "created_at" => current_time("mysql"),
+              "updated_at" => current_time("mysql"),
+              "ref_code" => "LEGACY-123",
+              "company_name" => "Legacy Company",
+              "location_slug" => "legacy-center",
+              "location_name" => "Legacy Center",
+              "rating" => 2,
+              "feedback_reason" => "Wait time",
+              "feedback_text" => "Legacy feedback preserved",
+              "source" => "WhatsApp",
+              "status" => "low_feedback_received"
+            ]);
+            if (!$wpdb->insert_id) {
+              WP_CLI::error("Could not seed legacy feedback row");
+            }
+          '
+
+      - name: Activate Store package and migrate legacy plugin
+        run: wp-env run cli wp plugin activate gestion-resenas
+
+      - name: Verify plugin activation state
+        run: |
+          wp-env run cli wp plugin is-active gestion-resenas
+          if wp-env run cli wp plugin is-active resenas-wordpress; then
+            echo "Legacy plugin is still active"
+            exit 1
+          fi
+
+      - name: Verify legacy data and shortcode survived
+        run: |
+          wp-env run cli wp eval '
+            $settings = get_option("lad_rf_settings", []);
+            if (($settings["company_name"] ?? "") !== "Legacy Company") {
+              WP_CLI::error("Legacy settings were not preserved");
+            }
+            $locations = get_option("rw_locations", []);
+            if (($locations["legacy-center"]["name"] ?? "") !== "Legacy Center") {
+              WP_CLI::error("Legacy locations were not preserved");
+            }
+            global $wpdb;
+            $table = $wpdb->prefix . "lad_review_funnel_entries";
+            $count = (int) $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM %i WHERE ref_code = %s", $table, "LEGACY-123"));
+            if ($count !== 1) {
+              WP_CLI::error("Legacy feedback row was not preserved");
+            }
+            if (!shortcode_exists("resenas_wordpress")) {
+              WP_CLI::error("Primary legacy-compatible shortcode is missing");
+            }
+            if (!shortcode_exists("lad_review_funnel")) {
+              WP_CLI::error("Legacy shortcode is missing");
+            }
+            WP_CLI::success("Legacy settings, locations, feedback and shortcodes preserved");
+          '
+
+      - name: Verify bundled Spanish translation
+        run: |
+          wp-env run cli wp language core install es_ES
+          wp-env run cli wp site switch-language es_ES
+          translated="$(wp-env run cli wp eval 'echo __("How was your experience with our service?", "gestion-resenas");' | tail -n 1)"
+          test "$translated" = "¿Qué te ha parecido nuestro servicio?"
+
+      - name: Stop WordPress
+        if: always()
+        run: wp-env stop

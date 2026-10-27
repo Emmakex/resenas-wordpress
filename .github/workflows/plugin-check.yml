@@ -1,0 +1,63 @@
+name: WordPress Plugin Check
+
+on:
+  push:
+    branches:
+      - feat/v1.2.0-store-candidate
+    paths:
+      - resenas-wordpress.php
+      - assets/**
+      - languages/**
+      - readme.txt
+      - LICENSE
+      - scripts/build-store-package.sh
+      - .wp-env.json
+      - .github/workflows/plugin-check.yml
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  plugin-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout Store Candidate
+        uses: actions/checkout@v4
+
+      - name: Prepare clean WordPress.org package
+        run: bash scripts/build-store-package.sh
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install wp-env
+        run: npm install --global @wordpress/env@latest
+
+      - name: Start WordPress
+        run: wp-env start
+
+      - name: Install official Plugin Check
+        run: wp-env run cli wp plugin install plugin-check --activate
+
+      - name: Activate Gestión de Reseñas
+        run: wp-env run cli wp plugin activate gestion-resenas
+
+      - name: Run strict Plugin Check
+        run: |
+          set -o pipefail
+          wp-env run cli wp plugin check gestion-resenas --format=strict-table | tee /tmp/plugin-check.txt
+          if grep -q $'\tERROR\t' /tmp/plugin-check.txt; then
+            echo "Plugin Check reported one or more ERROR rows."
+            exit 1
+          fi
+
+      - name: Stop WordPress
+        if: always()
+        run: wp-env stop
