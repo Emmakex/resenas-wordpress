@@ -38,15 +38,15 @@ jobs:
       - name: Create RC ZIP and checksum
         working-directory: build
         run: |
-          zip -r gestion-resenas-1.2.0-rc3.zip gestion-resenas
-          sha256sum gestion-resenas-1.2.0-rc3.zip > gestion-resenas-1.2.0-rc3.zip.sha256
-          unzip -t gestion-resenas-1.2.0-rc3.zip
+          zip -r gestion-resenas-1.2.0-rc4.zip gestion-resenas
+          sha256sum gestion-resenas-1.2.0-rc4.zip > gestion-resenas-1.2.0-rc4.zip.sha256
+          unzip -t gestion-resenas-1.2.0-rc4.zip
 
       - name: Upload RC artifact
         uses: actions/upload-artifact@v4
         with:
-          name: gestion-resenas-1.2.0-rc3
+          name: gestion-resenas-1.2.0-rc4
           path: |
-            build/gestion-resenas-1.2.0-rc3.zip
-            build/gestion-resenas-1.2.0-rc3.zip.sha256
+            build/gestion-resenas-1.2.0-rc4.zip
+            build/gestion-resenas-1.2.0-rc4.zip.sha256
           if-no-files-found: error
