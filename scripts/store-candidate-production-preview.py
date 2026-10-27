@@ -69,9 +69,16 @@ if old_feedback in php:
     php = php.replace(old_feedback, new_feedback)
 
 old_rating = "<td><strong><?php echo esc_html($row->rating); ?>/5</strong></td>"
-new_rating = """<td><span class=\"rw-rating\" aria-label=\"<?php echo esc_attr(sprintf(__('%d out of 5 stars', 'gestion-resenas'), (int) $row->rating)); ?>\"><span class=\"rw-rating-stars\" aria-hidden=\"true\"><?php echo esc_html(str_repeat('★', (int) $row->rating) . str_repeat('☆', max(0, 5 - (int) $row->rating))); ?></span><span class=\"rw-rating-number\"><?php echo esc_html($row->rating); ?>/5</span></span></td>"""
+bad_rating = """<td><span class=\"rw-rating\" aria-label=\"<?php echo esc_attr(sprintf(__('%d out of 5 stars', 'gestion-resenas'), (int) $row->rating)); ?>\"><span class=\"rw-rating-stars\" aria-hidden=\"true\"><?php echo esc_html(str_repeat('★', (int) $row->rating) . str_repeat('☆', max(0, 5 - (int) $row->rating))); ?></span><span class=\"rw-rating-number\"><?php echo esc_html($row->rating); ?>/5</span></span></td>"""
+new_rating = """<?php
+                        /* translators: %d: numeric rating from 1 to 5. */
+                        $rating_aria_label = sprintf(__('%d out of 5 stars', 'gestion-resenas'), (int) $row->rating);
+                        ?>
+                        <td><span class=\"rw-rating\" aria-label=\"<?php echo esc_attr($rating_aria_label); ?>\"><span class=\"rw-rating-stars\" aria-hidden=\"true\"><?php echo esc_html(str_repeat('★', (int) $row->rating) . str_repeat('☆', max(0, 5 - (int) $row->rating))); ?></span><span class=\"rw-rating-number\"><?php echo esc_html($row->rating); ?>/5</span></span></td>"""
 if old_rating in php:
     php = php.replace(old_rating, new_rating)
+elif bad_rating in php:
+    php = php.replace(bad_rating, new_rating)
 
 old_status = "<td><span class=\"rw-status-chip\"><?php echo esc_html($this->get_status_label($row->status)); ?></span></td>"
 new_status = """<td><span class=\"rw-status-chip rw-status-<?php echo esc_attr(sanitize_html_class((string) $row->status)); ?>\"><?php echo esc_html($this->get_status_label($row->status)); ?></span></td>"""
