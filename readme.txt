@@ -95,9 +95,9 @@ Send the URL of the WordPress page where `[resenas_wordpress]` is inserted. For 
 
 Yes. `[resenas_wordpress]` remains the primary shortcode and the legacy shortcode is retained for compatibility.
 
-= I installed an earlier version manually. Will I lose my data? =
+= I installed an earlier Gestión de Reseñas package manually. Will I lose my data? =
 
-No. The Store package keeps the same option keys, locations data, database table, shortcodes, and feedback records used by the validated legacy version. When the new Store package is activated, it deactivates an active legacy `resenas-wordpress.php` plugin file to avoid duplicate hooks while preserving its existing data.
+No. Gestión de Reseñas keeps the same option keys, locations data, database table, shortcodes, and feedback records used by the validated legacy version. When the new Store package is activated, it deactivates an active legacy `resenas-wordpress.php` plugin file to avoid duplicate hooks while preserving its existing data.
 
 After confirming Gestión de Reseñas works correctly, the old plugin folder can be removed from the Plugins screen. Do not use a destructive data-removal process for the legacy package during migration.
 
@@ -121,6 +121,7 @@ The plugin does not send customer feedback to Kairoseth. A configured Google rev
 
 = 1.2.0 =
 * RC4 production preview aligns the real frontend and admin UI with the final premium visual direction.
+* RC4 is intended for final live visual acceptance before the WordPress.org submission package is promoted to 1.2.0.
 * Added admin feedback pagination and visual star/status presentation.
 * Premium responsive frontend and improved accessibility.
 * Accessible 1-to-5 rating control with keyboard support.
