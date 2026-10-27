@@ -120,7 +120,7 @@ The plugin does not send customer feedback to Kairoseth. A configured Google rev
 == Changelog ==
 
 = 1.2.0 =
-* Final WordPress.org release of the premium frontend and WordPress-native admin experience.
+* Final WordPress.org 1.2.0 release of the premium frontend and WordPress-native admin experience.
 * Added admin feedback pagination and visual star/status presentation.
 * Premium responsive frontend and improved accessibility.
 * Accessible 1-to-5 rating control with keyboard support.
