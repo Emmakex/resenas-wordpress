@@ -657,7 +657,11 @@ class Gestion_Resenas {
                         <td><?php echo esc_html($row->created_at); ?></td>
                         <td><?php echo esc_html($row->location_name ?: $row->location_slug); ?></td>
                         <td><?php echo esc_html($row->ref_code); ?></td>
-                        <td><span class="rw-rating" aria-label="<?php echo esc_attr(sprintf(__('%d out of 5 stars', 'gestion-resenas'), (int) $row->rating)); ?>"><span class="rw-rating-stars" aria-hidden="true"><?php echo esc_html(str_repeat('★', (int) $row->rating) . str_repeat('☆', max(0, 5 - (int) $row->rating))); ?></span><span class="rw-rating-number"><?php echo esc_html($row->rating); ?>/5</span></span></td>
+                        <?php
+                        /* translators: %d: numeric rating from 1 to 5. */
+                        $rating_aria_label = sprintf(__('%d out of 5 stars', 'gestion-resenas'), (int) $row->rating);
+                        ?>
+                        <td><span class="rw-rating" aria-label="<?php echo esc_attr($rating_aria_label); ?>"><span class="rw-rating-stars" aria-hidden="true"><?php echo esc_html(str_repeat('★', (int) $row->rating) . str_repeat('☆', max(0, 5 - (int) $row->rating))); ?></span><span class="rw-rating-number"><?php echo esc_html($row->rating); ?>/5</span></span></td>
                         <td><?php echo esc_html($row->feedback_reason); ?></td>
                         <td><?php echo esc_html(wp_trim_words($row->feedback_text, 18)); ?></td>
                         <td><?php echo esc_html($row->service_type); ?></td>
