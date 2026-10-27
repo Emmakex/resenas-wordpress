@@ -122,6 +122,7 @@ The plugin does not send customer feedback to Kairoseth. A configured Google rev
 = 1.2.0 =
 * RC4 production preview aligns the real frontend and admin UI with the final premium visual direction.
 * RC4 is intended for final live visual acceptance before the WordPress.org submission package is promoted to 1.2.0.
+* Final RC4 packaging is gated by strict WordPress Plugin Check validation before release.
 * Added admin feedback pagination and visual star/status presentation.
 * Premium responsive frontend and improved accessibility.
 * Accessible 1-to-5 rating control with keyboard support.
