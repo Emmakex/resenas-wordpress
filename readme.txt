@@ -4,7 +4,7 @@ Tags: reviews, ratings, feedback, customer service, multi-location
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.2.0-rc3
+Stable tag: 1.2.0-rc4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -120,6 +120,8 @@ The plugin does not send customer feedback to Kairoseth. A configured Google rev
 == Changelog ==
 
 = 1.2.0 =
+* RC4 production preview aligns the real frontend and admin UI with the final premium visual direction.
+* Added admin feedback pagination and visual star/status presentation.
 * Premium responsive frontend and improved accessibility.
 * Accessible 1-to-5 rating control with keyboard support.
 * Service-recovery flow for ratings that require follow-up.

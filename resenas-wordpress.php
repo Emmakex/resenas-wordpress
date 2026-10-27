@@ -3,7 +3,7 @@
  * Plugin Name: Gestión de Reseñas
  * Plugin URI: https://kairoseth.com/products/resenas-wordpress
  * Description: Collect customer ratings and feedback, manage one or multiple locations, and support service recovery workflows.
- * Version: 1.2.0-rc3
+ * Version: 1.2.0-rc4
  * Requires at least: 6.4
  * Requires PHP: 7.4
  * Author: Kairoseth
@@ -17,7 +17,7 @@
 if (!defined('ABSPATH')) exit;
 
 class Gestion_Resenas {
-    const VERSION = '1.2.0-rc3';
+    const VERSION = '1.2.0-rc4';
     const OPTION_KEY = 'lad_rf_settings'; // Se conserva para migrar sin perder la configuración 1.0.1.
     const LOCATIONS_KEY = 'rw_locations';
     const SCHEMA_KEY = 'rw_schema_version';
@@ -158,11 +158,11 @@ class Gestion_Resenas {
         return [
             'company_name' => get_bloginfo('name'),
             'logo_url' => '',
-            'primary_color' => '#1f2937',
-            'accent_color' => '#f59e0b',
-            'background_color' => '#ffffff',
+            'primary_color' => '#173b71',
+            'accent_color' => '#f6b910',
+            'background_color' => '#f6f9ff',
             'card_color' => '#ffffff',
-            'text_color' => '#111827',
+            'text_color' => '#24324a',
             'button_text_color' => '#ffffff',
             'google_review_url' => '',
             'low_rating_threshold' => 3,
@@ -356,12 +356,13 @@ class Gestion_Resenas {
 
             <div class="rw-metric-grid" aria-label="<?php esc_attr_e('Activity overview', 'gestion-resenas'); ?>">
                 <?php $cards = [
-                    [__('Total feedback', 'gestion-resenas'), $total],
-                    [__('Average rating', 'gestion-resenas'), $total ? number_format_i18n($avg, 2) . ' / 5' : '—'],
-                    [__('Need follow-up', 'gestion-resenas'), $low],
-                    [__('Configured locations', 'gestion-resenas'), count($locations)],
-                ]; foreach ($cards as $card): ?>
-                    <div class="rw-metric-card">
+                    [__('Total feedback', 'gestion-resenas'), $total, 'dashicons-star-filled'],
+                    [__('Average rating', 'gestion-resenas'), $total ? number_format_i18n($avg, 2) . ' / 5' : '—', 'dashicons-chart-line'],
+                    [__('Need follow-up', 'gestion-resenas'), $low, 'dashicons-warning'],
+                    [__('Configured locations', 'gestion-resenas'), count($locations), 'dashicons-location-alt'],
+                ]; foreach ($cards as $index => $card): ?>
+                    <div class="rw-metric-card rw-metric-card-<?php echo esc_attr((string) ($index + 1)); ?>">
+                        <span class="rw-metric-icon dashicons <?php echo esc_attr($card[2]); ?>" aria-hidden="true"></span>
                         <span class="rw-metric-label"><?php echo esc_html($card[0]); ?></span>
                         <strong class="rw-metric-value"><?php echo esc_html($card[1]); ?></strong>
                     </div>
@@ -496,8 +497,10 @@ class Gestion_Resenas {
         $deleted = !empty($_GET['deleted']);
         ?>
         <div class="wrap rw-admin">
-            <h1><?php esc_html_e('Gestión de Reseñas — Locations', 'gestion-resenas'); ?></h1>
-            <p class="rw-admin-intro"><?php esc_html_e('Each location can have its own Google review link and notification email. If you only have one location, you can use the global settings.', 'gestion-resenas'); ?></p>
+            <div class="rw-admin-hero rw-admin-hero-compact">
+                <h1><?php esc_html_e('Gestión de Reseñas — Locations', 'gestion-resenas'); ?></h1>
+                <p><?php esc_html_e('Each location can have its own Google review link and notification email. If you only have one location, you can use the global settings.', 'gestion-resenas'); ?></p>
+            </div>
 
             <?php if ($updated): ?><div class="notice notice-success is-dismissible"><p><?php esc_html_e('Location saved successfully.', 'gestion-resenas'); ?></p></div><?php endif; ?>
             <?php if ($deleted): ?><div class="notice notice-success is-dismissible"><p><?php esc_html_e('Location deleted successfully.', 'gestion-resenas'); ?></p></div><?php endif; ?>
@@ -626,8 +629,10 @@ class Gestion_Resenas {
         $locations = $this->get_locations();
         ?>
         <div class="wrap rw-admin">
-            <h1><?php esc_html_e('Gestión de Reseñas — Feedback', 'gestion-resenas'); ?></h1>
-            <p class="rw-admin-intro"><?php esc_html_e('Review received ratings and quickly find the cases that need follow-up.', 'gestion-resenas'); ?></p>
+            <div class="rw-admin-hero rw-admin-hero-compact">
+                <h1><?php esc_html_e('Gestión de Reseñas — Feedback', 'gestion-resenas'); ?></h1>
+                <p><?php esc_html_e('Review received ratings and quickly find the cases that need follow-up.', 'gestion-resenas'); ?></p>
+            </div>
             <form class="rw-filter-bar" method="get">
                 <input type="hidden" name="page" value="rw-feedback">
                 <div class="rw-filter-field">
@@ -652,20 +657,43 @@ class Gestion_Resenas {
                         <td><?php echo esc_html($row->created_at); ?></td>
                         <td><?php echo esc_html($row->location_name ?: $row->location_slug); ?></td>
                         <td><?php echo esc_html($row->ref_code); ?></td>
-                        <td><strong><?php echo esc_html($row->rating); ?>/5</strong></td>
+                        <td><span class="rw-rating" aria-label="<?php echo esc_attr(sprintf(__('%d out of 5 stars', 'gestion-resenas'), (int) $row->rating)); ?>"><span class="rw-rating-stars" aria-hidden="true"><?php echo esc_html(str_repeat('★', (int) $row->rating) . str_repeat('☆', max(0, 5 - (int) $row->rating))); ?></span><span class="rw-rating-number"><?php echo esc_html($row->rating); ?>/5</span></span></td>
                         <td><?php echo esc_html($row->feedback_reason); ?></td>
                         <td><?php echo esc_html(wp_trim_words($row->feedback_text, 18)); ?></td>
                         <td><?php echo esc_html($row->service_type); ?></td>
                         <td><?php echo esc_html($row->order_id); ?></td>
                         <td><?php echo esc_html($row->tech_name); ?></td>
                         <td><?php echo esc_html($row->source); ?></td>
-                        <td><span class="rw-status-chip"><?php echo esc_html($this->get_status_label($row->status)); ?></span></td>
+                        <td><span class="rw-status-chip rw-status-<?php echo esc_attr(sanitize_html_class((string) $row->status)); ?>"><?php echo esc_html($this->get_status_label($row->status)); ?></span></td>
                     </tr>
                 <?php endforeach; else: ?>
                     <tr><td class="rw-empty" colspan="12"><?php esc_html_e('There are no responses to display yet.', 'gestion-resenas'); ?></td></tr>
                 <?php endif; ?>
                 </tbody>
             </table>
+            <?php
+            $total_pages = max(1, (int) ceil($total / $per_page));
+            if ($total_pages > 1):
+                $big = 999999999;
+                $pagination_url = add_query_arg(
+                    ['page' => 'rw-feedback', 'paged' => $big],
+                    admin_url('admin.php')
+                );
+                if ($selected_location) {
+                    $pagination_url = add_query_arg('location', $selected_location, $pagination_url);
+                }
+                $pagination = paginate_links([
+                    'base' => str_replace((string) $big, '%#%', $pagination_url),
+                    'format' => '',
+                    'current' => $paged,
+                    'total' => $total_pages,
+                    'type' => 'list',
+                ]);
+                if ($pagination): ?>
+                    <nav class="rw-pagination" aria-label="<?php esc_attr_e('Feedback', 'gestion-resenas'); ?>"><?php echo wp_kses_post($pagination); ?></nav>
+                <?php endif;
+            endif;
+            ?>
         </div>
         <?php
     }
@@ -744,7 +772,11 @@ class Gestion_Resenas {
         ob_start(); ?>
         <div class="lad-rf-wrap" style="--lad-rf-primary: <?php echo esc_attr($s['primary_color']); ?>; --lad-rf-accent: <?php echo esc_attr($s['accent_color']); ?>; --lad-rf-bg: <?php echo esc_attr($s['background_color']); ?>; --lad-rf-card: <?php echo esc_attr($s['card_color']); ?>; --lad-rf-text: <?php echo esc_attr($s['text_color']); ?>; --lad-rf-button-text: <?php echo esc_attr($s['button_text_color']); ?>;">
             <div class="lad-rf-card">
-                <?php if (!empty($s['logo_url'])): ?><div class="lad-rf-logo"><img src="<?php echo esc_url($s['logo_url']); ?>" alt="<?php echo esc_attr($s['company_name']); ?>"></div><?php endif; ?>
+                <?php if (!empty($s['logo_url'])): ?>
+                    <div class="lad-rf-logo"><img src="<?php echo esc_url($s['logo_url']); ?>" alt="<?php echo esc_attr($s['company_name']); ?>"></div>
+                <?php elseif (!empty($s['company_name'])): ?>
+                    <div class="lad-rf-business-name"><span class="lad-rf-business-mark" aria-hidden="true">★</span><span><?php echo esc_html($s['company_name']); ?></span></div>
+                <?php endif; ?>
 
                 <?php if ($resolved['error']): ?>
                     <div class="lad-rf-step is-active" role="alert">
