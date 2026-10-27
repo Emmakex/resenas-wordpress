@@ -1,26 +1,26 @@
-# Gestión de Reseñas — Store Candidate 1.2.0
+# Gestión de Reseñas — WordPress.org 1.2.0
 
 ## Identidad
 
 - Nombre comercial: **Gestión de Reseñas**.
 - Autor / fabricante: **Kairoseth**.
 - Slug y text-domain de WordPress.org: `gestion-resenas`.
+- Versión pública: **1.2.0**.
 - Shortcode principal conservado: `[resenas_wordpress]`.
 - Shortcode legacy conservado: `[lad_review_funnel]`.
 
-## Objetivo
+## Release final
 
-Convertir el core validado v1.1.3 en una versión pública para WordPress.org sin perder datos ni compatibilidad, elevando UX, accesibilidad, administración y privacidad.
+La versión 1.2.0 promueve el RC4 validado a release pública sin cambiar el comportamiento funcional aceptado en producción.
 
-## Store Candidate RC3
-
-El candidato `1.2.0-rc3` incluye:
+Incluye:
 
 - frontend premium responsive;
 - rating 1–5 accesible por teclado;
 - estados de foco y ARIA;
 - flujo de recuperación del servicio para valoraciones bajas;
 - acceso secundario a Google después del feedback interno;
+- Google como acción principal para valoraciones altas cuando está configurado;
 - dashboard y administración WordPress-native;
 - ajustes separados en General, Apariencia, Textos y Notificaciones;
 - source strings en inglés + catálogo español;
@@ -28,30 +28,30 @@ El candidato `1.2.0-rc3` incluye:
 - migración automática desde el paquete legacy sin borrar configuración, sedes ni feedback;
 - paquete de distribución limpio en carpeta `gestion-resenas/`.
 
-## Aceptación automática
+## Compatibilidad WordPress.org
 
-Sobre el mismo commit de aceptación del RC3 se han validado:
+- `Version: 1.2.0` en el plugin principal.
+- `Stable tag: 1.2.0` en `readme.txt`.
+- `Requires at least: 6.4`.
+- `Tested up to: 7.1`.
+- `Requires PHP: 7.4`.
+- GPL v2 o posterior.
+- Slug y text-domain alineados en `gestion-resenas`.
 
-- build del paquete: **success**;
-- `php -l`: **success**;
-- validación JavaScript: **success**;
-- integridad ZIP: **success**;
-- WordPress Plugin Check 2.1.0: **`Success: Checks complete. No errors found.`**;
-- upgrade real v1.1.3 → Store Candidate: **success**;
-- conservación de ajustes legacy: **success**;
-- conservación de sedes: **success**;
-- conservación de feedback: **success**;
-- shortcode `[resenas_wordpress]`: **success**;
-- shortcode `[lad_review_funnel]`: **success**;
-- traducción española empaquetada: **success**.
+## Gates de publicación
 
-## Pendiente antes de publicar 1.2.0
+La release debe considerarse publicable únicamente cuando los tres gates se ejecuten sobre el mismo head final:
 
-- auditoría visual manual en WordPress real;
-- prueba explícita de una sede, multisede y `?sede=` inválida;
-- auditoría final de contraste con colores configurables;
-- screenshots reales del plugin;
-- iconos 128/256 y banners 772/1544 para WordPress.org;
-- cambiar versión `1.2.0-rc3` a `1.2.0`;
-- generar ZIP final de publicación y checksum;
-- mantener el PR #2 en draft hasta completar estas comprobaciones.
+- **Build WordPress.org Release**: PHP, JavaScript, versión, stable tag, ZIP e integridad.
+- **WordPress Plugin Check**: Plugin Check oficial sin errores.
+- **Legacy Upgrade Compatibility**: migración real desde v1.1.3 preservando ajustes, sedes, feedback, shortcodes y traducción española.
+
+Además, la aceptación manual en WordPress real ya cubre el frontend y los flujos funcionales que se utilizarán en producción.
+
+## Artefacto
+
+El artefacto instalable final es:
+
+`gestion-resenas-1.2.0.zip`
+
+El paquete contiene únicamente el plugin. Los banners, iconos y screenshots de la ficha de WordPress.org se publican aparte en el directorio `assets/` del SVN de WordPress.org y no deben incluirse dentro del ZIP instalable.
